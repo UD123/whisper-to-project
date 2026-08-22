@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import heroImg from "@/assets/hero.jpg";
+
 
 function useTicker() {
   const [t, setT] = useState(0);
@@ -61,13 +61,22 @@ export function Hero() {
                 <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" /> inference active
               </span>
             </div>
-            <img
-              src={heroImg}
-              alt="Robot-mounted 2D camera projecting a holographic 3D pose bounding box onto a metal part"
-              width={1600}
-              height={1000}
-              className="w-full object-cover"
-            />
+            <div className="relative aspect-video w-full bg-black">
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                src="https://files.catbox.moe/uib6co.mp4"
+                className="absolute inset-0 h-full w-full object-cover"
+              />
+              <div className="pointer-events-none absolute top-3 left-3 z-10 rounded-lg border border-border bg-card/95 px-3 py-2 shadow-lg backdrop-blur">
+                <span className="mono-label flex items-center gap-1.5 text-signal">
+                  <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-signal" />
+                  LIVE 6DOF PERCEPTION <span className="text-muted-foreground">| Latency: 38ms</span>
+                </span>
+              </div>
+            </div>
           </div>
 
           <div className="pointer-events-none absolute bottom-4 left-4 right-4 flex flex-wrap gap-2 sm:bottom-6 sm:left-6 sm:right-auto">
@@ -88,6 +97,7 @@ export function Hero() {
             </div>
           </div>
         </div>
+
       </div>
     </section>
   );
