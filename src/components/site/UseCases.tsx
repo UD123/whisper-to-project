@@ -40,7 +40,7 @@ const cases = [
 ];
 
 export function UseCases() {
-  const [active, setActive] = useState(cases[0].id);
+  const [active, setActive] = useState("bin");
   const current = cases.find((c) => c.id === active)!;
 
   return (
