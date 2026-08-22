@@ -50,10 +50,11 @@ export function Hero() {
           ))}
         </dl>
 
-        <div className="relative mt-10">
+        <div className="relative mx-auto mt-10 max-w-4xl">
           <MediaSlot
-            label="cam_00 · rgb 1920×1080 · 30fps"
-            caption="Drop real MP4 / YouTube / screenshot URL here"
+            tone="dark"
+            label="CAM_01 · RGB STREAM · 1080P"
+            caption="Drop a lightweight looping MP4 or screenshot URL here"
             className="shadow-[0_30px_60px_-40px_oklch(0.21_0.03_264/0.45)]"
           >
             <div className="pointer-events-none absolute top-3 left-3 z-10 rounded-lg border border-border bg-card/95 px-3 py-2 shadow-lg backdrop-blur">
