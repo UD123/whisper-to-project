@@ -36,7 +36,7 @@ export function Hero() {
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <a
               href="#demo"
-              className="rounded-md bg-primary px-5 py-3 text-sm font-medium text-primary-foreground transition-all duration-200 hover:opacity-90 hover:shadow-[0_10px_28px_-10px_var(--primary)]"
+              className="rounded-md bg-signal px-5 py-3 text-sm font-medium text-signal-foreground transition-all duration-200 hover:opacity-90 hover:shadow-[0_10px_28px_-10px_var(--signal)]"
             >
               Schedule Live Demo
             </a>

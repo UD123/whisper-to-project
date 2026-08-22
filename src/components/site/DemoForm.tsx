@@ -50,7 +50,7 @@ export function DemoForm() {
 
             <button
               type="submit"
-              className="sm:col-span-2 rounded-md bg-primary px-5 py-3 text-sm font-medium text-primary-foreground transition-all duration-200 hover:opacity-90 hover:shadow-[0_10px_28px_-10px_var(--primary)]"
+              className="sm:col-span-2 rounded-md bg-signal px-5 py-3 text-sm font-medium text-signal-foreground transition-all duration-200 hover:opacity-90 hover:shadow-[0_10px_28px_-10px_var(--signal)]"
             >
               {sent ? "Request Sent ✓" : "Request Custom Evaluation"}
             </button>

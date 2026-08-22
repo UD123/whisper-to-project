@@ -1,3 +1,5 @@
+import { LogoMark } from "./Logo";
+
 const links = [
   { label: "Technology", href: "#technology" },
   { label: "Use Cases", href: "#use-cases" },
@@ -10,7 +12,10 @@ export function Navbar() {
     <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
         <a href="#top" className="flex items-center gap-3">
-          <span className="text-[17px] font-semibold tracking-tight">RobotAI</span>
+          <span className="flex items-center gap-2 text-[17px] font-semibold tracking-tight">
+            <LogoMark className="h-5 w-5 text-primary" />
+            RobotAI
+          </span>
           <span className="hidden items-center gap-1.5 rounded-full border border-border bg-card px-2 py-1 sm:inline-flex">
             <span className="relative flex h-1.5 w-1.5">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-70" />
@@ -41,7 +46,7 @@ export function Navbar() {
           </a>
           <a
             href="#demo"
-            className="rounded-md bg-primary px-3.5 py-2 text-sm font-medium text-primary-foreground transition-all duration-200 hover:opacity-90 hover:shadow-[0_6px_20px_-8px_var(--primary)]"
+            className="rounded-md bg-foreground px-3.5 py-2 text-sm font-medium text-background transition-all duration-200 hover:opacity-90"
           >
             Request Demo
           </a>

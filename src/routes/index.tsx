@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Navbar } from "@/components/site/Navbar";
 import { Hero } from "@/components/site/Hero";
+import { ControlPanel } from "@/components/site/ControlPanel";
 import { PerceptionSlider } from "@/components/site/PerceptionSlider";
 import { ValueProps } from "@/components/site/ValueProps";
 import { UseCases } from "@/components/site/UseCases";
@@ -32,6 +33,7 @@ function Index() {
       <Navbar />
       <main>
         <Hero />
+        <ControlPanel />
         <PerceptionSlider />
         <ValueProps />
         <UseCases />
