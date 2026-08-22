@@ -74,9 +74,10 @@ export function Workflow() {
 
         {/* RESERVED MEDIA SLOT — [SCANNING_PROCESS_VIDEO_URL] */}
         <MediaSlot
-          className="mt-8 bg-background"
-          label="workflow_scanning_process.mp4"
-          caption="Workflow demo video — paste a direct MP4 or YouTube URL"
+          tone="dark"
+          className="mx-auto mt-8 max-w-4xl"
+          label="OBJECT SCANNING · STEP 01/02"
+          caption="Paste a direct MP4 or YouTube URL"
           src=""
         />
 
