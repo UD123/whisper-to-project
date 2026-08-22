@@ -19,8 +19,8 @@ export function Navbar() {
           </span>
           <span className="hidden items-center gap-1.5 rounded-full border border-border bg-card px-2 py-1 sm:inline-flex">
             <span className="relative flex h-1.5 w-1.5">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-70" />
-              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-primary" />
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-500 opacity-70" />
+              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-red-500" />
             </span>
             <span className="mono-label text-muted-foreground">Live 6DOF</span>
           </span>
