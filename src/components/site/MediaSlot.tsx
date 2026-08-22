@@ -92,11 +92,24 @@ export function MediaSlot({
           />
         )}
         {k === "empty" && (
-          <div className="cad-grid absolute inset-0 flex flex-col items-center justify-center gap-2 text-center">
-            <Film className="h-5 w-5 text-muted-foreground" strokeWidth={1.5} />
-            <span className="mono-label text-muted-foreground">reserved media slot</span>
+          <div
+            className={`absolute inset-0 flex flex-col items-center justify-center gap-2 text-center ${
+              dark ? "dark-grid" : "cad-grid"
+            }`}
+          >
+            <Film
+              className={`h-5 w-5 ${dark ? "text-background/55" : "text-muted-foreground"}`}
+              strokeWidth={1.5}
+            />
+            <span className={`mono-label ${dark ? "text-background/65" : "text-muted-foreground"}`}>
+              reserved media slot
+            </span>
             {caption ? (
-              <span className="mono-label max-w-[85%] text-muted-foreground/70 normal-case tracking-normal">
+              <span
+                className={`mono-label max-w-[85%] normal-case tracking-normal ${
+                  dark ? "text-background/45" : "text-muted-foreground/70"
+                }`}
+              >
                 {caption}
               </span>
             ) : null}
