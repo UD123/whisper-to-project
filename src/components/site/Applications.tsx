@@ -67,9 +67,10 @@ export function Applications() {
               className="flex flex-col rounded-xl border border-border bg-card p-4 transition-all duration-300 hover:-translate-y-1 hover:border-foreground/20 hover:shadow-[0_24px_50px_-32px_oklch(0.21_0.03_264/0.6)]"
             >
               <MediaSlot
-                label={`${a.id}.mp4`}
-                caption={a.title}
-                aspect="aspect-[4/3]"
+                tone="dark"
+                label={`${a.id}.png`}
+                caption="screenshot / diagram slot"
+                aspect="aspect-video"
                 src={a.src}
               />
               <h3 className="mt-5 px-1 text-base font-semibold tracking-tight">{a.title}</h3>
