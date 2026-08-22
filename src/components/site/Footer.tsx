@@ -11,7 +11,7 @@ export function Footer() {
           <div className="flex flex-wrap gap-3">
             <a
               href="#demo"
-              className="rounded-md bg-signal px-5 py-3 text-sm font-medium text-signal-foreground transition-all duration-200 hover:opacity-90 hover:shadow-[0_10px_28px_-10px_var(--signal)]"
+              className="rounded-md bg-foreground px-5 py-3 text-sm font-medium text-background transition-all duration-200 hover:opacity-90 hover:shadow-[0_10px_28px_-12px_var(--foreground)]"
             >
               Book a Demo
             </a>
