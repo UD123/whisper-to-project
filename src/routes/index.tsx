@@ -1,17 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Navbar } from "@/components/site/Navbar";
 import { Hero } from "@/components/site/Hero";
-import { ControlPanel } from "@/components/site/ControlPanel";
-import { PerceptionSlider } from "@/components/site/PerceptionSlider";
-import { ValueProps } from "@/components/site/ValueProps";
-import { UseCases } from "@/components/site/UseCases";
-import { Specs } from "@/components/site/Specs";
+import { RgbAdvantage } from "@/components/site/RgbAdvantage";
+import { Applications } from "@/components/site/Applications";
+import { Workflow } from "@/components/site/Workflow";
+import { Ecosystem } from "@/components/site/Ecosystem";
+import { ObjectCatalog } from "@/components/site/ObjectCatalog";
 import { DemoForm } from "@/components/site/DemoForm";
 import { Footer } from "@/components/site/Footer";
 
-const title = "RobotAI — 3D Robotic Vision from a Single 2D Camera";
+const title = "RobotAI — 6DOF Pose Estimation from a Standard 2D Camera";
 const description =
-  "Turn standard RGB cameras into 6DOF spatial sensors. Real-time AI pose estimation for bin picking, machine tending and assembly — without 3D LiDAR.";
+  "Turn any RGB camera into a 3D measurement device. Sub-millimeter 6DOF pose estimation under 30ms for bin picking, machine tending and assembly — no LiDAR required.";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -33,14 +33,15 @@ function Index() {
       <Navbar />
       <main>
         <Hero />
-        <ControlPanel />
-        <PerceptionSlider />
-        <ValueProps />
-        <UseCases />
-        <Specs />
+        <RgbAdvantage />
+        <Applications />
+        <Workflow />
+        <Ecosystem />
+        <ObjectCatalog />
         <DemoForm />
       </main>
       <Footer />
     </div>
   );
 }
+

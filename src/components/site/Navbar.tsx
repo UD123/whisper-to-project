@@ -2,8 +2,9 @@ import { LogoMark } from "./Logo";
 
 const links = [
   { label: "Technology", href: "#technology" },
-  { label: "Use Cases", href: "#use-cases" },
-  { label: "Specs & ROS", href: "#specs" },
+  { label: "Applications", href: "#use-cases" },
+  { label: "Workflow", href: "#workflow" },
+  { label: "Compatibility", href: "#specs" },
   { label: "About", href: "#about" },
 ];
 
