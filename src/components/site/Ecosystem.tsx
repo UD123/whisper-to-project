@@ -55,7 +55,7 @@ const groups = [
   },
 ];
 
-function EcosystemItem({ label, logos }: { label: string; logos?: Record<string, string> }) {
+function EcosystemItem({ label, logos }: { label: string; logos?: Record<string, string> | undefined }) {
   if (logos && logos[label]) {
     return <BrandLogo name={label} domain={logos[label]} />;
   }
