@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import heroImg from "@/assets/hero.jpg";
+
 
 function useTicker() {
   const [t, setT] = useState(0);
