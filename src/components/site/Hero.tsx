@@ -67,7 +67,8 @@ export function Hero() {
                 loop
                 muted
                 playsInline
-                src="https://files.catbox.moe/uib6co.mp4"
+                preload="auto"
+                src="/media/hero.mp4"
                 className="absolute inset-0 h-full w-full object-cover"
               />
               <div className="pointer-events-none absolute top-3 left-3 z-10 rounded-lg border border-border bg-card/95 px-3 py-2 shadow-lg backdrop-blur">
