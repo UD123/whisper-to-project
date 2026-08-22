@@ -7,6 +7,8 @@ export type MediaSlotProps = {
   caption?: string;
   aspect?: string;
   className?: string;
+  /** "light" = default lab frame, "dark" = deep slate technical viewport */
+  tone?: "light" | "dark";
   children?: React.ReactNode;
 };
 
