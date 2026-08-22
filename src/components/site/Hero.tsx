@@ -57,11 +57,10 @@ export function Hero() {
             caption="Drop a lightweight looping MP4 or screenshot URL here"
             className="shadow-[0_30px_60px_-40px_oklch(0.21_0.03_264/0.45)]"
           >
-            <div className="pointer-events-none absolute top-3 left-3 z-10 rounded-lg border border-border bg-card/95 px-3 py-2 shadow-lg backdrop-blur">
+            <div className="pointer-events-none absolute top-3 left-3 z-10 rounded-lg border border-background/15 bg-foreground/80 px-3 py-2 shadow-lg backdrop-blur">
               <span className="mono-label flex items-center gap-1.5 text-signal">
                 <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-signal" />
-                LIVE 6DOF PERCEPTION{" "}
-                <span className="text-muted-foreground">| Latency: 28ms | Output: XYZ + RxRyRz</span>
+                LIVE 6DOF PERCEPTION <span className="text-background/70">| Latency: 28ms</span>
               </span>
             </div>
           </MediaSlot>
