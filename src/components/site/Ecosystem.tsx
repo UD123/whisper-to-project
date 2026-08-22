@@ -1,7 +1,31 @@
+import { BrandLogo } from "./BrandLogo";
+
+const CAMERA_BRANDS: Record<string, string> = {
+  IDS: "ids-imaging.com",
+  Basler: "baslerweb.com",
+  RealSense: "intelrealsense.com",
+  "Allied Vision": "alliedvision.com",
+};
+
+const ROBOT_BRANDS: Record<string, string> = {
+  "Universal Robots": "universal-robots.com",
+  Fanuc: "fanuc.com",
+  Kuka: "kuka.com",
+  ABB: "abb.com",
+  Yaskawa: "yaskawa.com",
+  Hanwha: "hanwha.com",
+  "TM Robots": "tm-robot.com",
+  Denso: "denso.com",
+  Nachi: "nachi.com",
+  Mitsubishi: "mitsubishi.com",
+  Dobot: "dobot.cc",
+};
+
 const groups = [
   {
     label: "Camera interfaces",
     items: ["Balluff / Matrix V", "IDS", "Basler", "RealSense", "Allied Vision", "Miniature USB RGB"],
+    logos: CAMERA_BRANDS,
   },
   {
     label: "Robot brands",
@@ -19,6 +43,7 @@ const groups = [
       "Mitsubishi",
       "Dobot",
     ],
+    logos: ROBOT_BRANDS,
   },
   {
     label: "Communication protocols",
@@ -29,6 +54,18 @@ const groups = [
     items: ["Windows industrial PC", "Linux industrial PC", "NVIDIA GPU (sub-30 ms)"],
   },
 ];
+
+function EcosystemItem({ label, logos }: { label: string; logos?: Record<string, string> | undefined }) {
+  if (logos && logos[label]) {
+    return <BrandLogo name={label} domain={logos[label]} />;
+  }
+
+  return (
+    <li className="rounded-md border border-border bg-background px-3 py-1.5 font-mono text-[12px] tracking-tight">
+      {label}
+    </li>
+  );
+}
 
 export function Ecosystem() {
   return (
@@ -51,12 +88,7 @@ export function Ecosystem() {
               <h3 className="mono-label text-muted-foreground">{g.label}</h3>
               <ul className="mt-5 flex flex-wrap gap-2">
                 {g.items.map((i) => (
-                  <li
-                    key={i}
-                    className="rounded-md border border-border bg-background px-3 py-1.5 font-mono text-[12px] tracking-tight"
-                  >
-                    {i}
-                  </li>
+                  <EcosystemItem key={i} label={i} logos={g.logos} />
                 ))}
               </ul>
             </div>
