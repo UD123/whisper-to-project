@@ -34,7 +34,7 @@ const categories = [
   },
   {
     label: "Agri & organic",
-    items: ["Apples", "Mushrooms", "Agricultural produce"],
+    items: ["Agri Produce", "Mushrooms", "Agricultural produce"],
   },
 ];
 
