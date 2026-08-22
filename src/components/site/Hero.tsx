@@ -1,3 +1,5 @@
+import { MediaSlot } from "./MediaSlot";
+
 const stats = [
   ["Speed", "< 30 ms", "1 MPix · GPU"],
   ["Precision", "Sub-millimeter", "translation + rotation"],
@@ -49,33 +51,19 @@ export function Hero() {
         </dl>
 
         <div className="relative mt-10">
-          <div className="overflow-hidden rounded-xl border border-border bg-card shadow-[0_30px_60px_-40px_oklch(0.21_0.03_264/0.45)]">
-            <div className="flex items-center justify-between border-b border-border px-4 py-2.5">
-              <span className="mono-label text-muted-foreground">cam_00 · rgb 1920×1080 · 30fps</span>
-              <span className="mono-label flex items-center gap-1.5 text-primary">
-                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" /> inference active
+          <MediaSlot
+            label="cam_00 · rgb 1920×1080 · 30fps"
+            caption="Drop real MP4 / YouTube / screenshot URL here"
+            className="shadow-[0_30px_60px_-40px_oklch(0.21_0.03_264/0.45)]"
+          >
+            <div className="pointer-events-none absolute top-3 left-3 z-10 rounded-lg border border-border bg-card/95 px-3 py-2 shadow-lg backdrop-blur">
+              <span className="mono-label flex items-center gap-1.5 text-signal">
+                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-signal" />
+                LIVE 6DOF PERCEPTION{" "}
+                <span className="text-muted-foreground">| Latency: 28ms | Output: XYZ + RxRyRz</span>
               </span>
             </div>
-            {/* RESERVED MEDIA SLOT — replace src with [REAL_HERO_VIDEO_URL] */}
-            <div className="relative aspect-video w-full bg-black">
-              <video
-                autoPlay
-                loop
-                muted
-                playsInline
-                preload="auto"
-                src="/media/hero.mp4"
-                className="absolute inset-0 h-full w-full object-cover"
-              />
-              <div className="pointer-events-none absolute top-3 left-3 z-10 rounded-lg border border-border bg-card/95 px-3 py-2 shadow-lg backdrop-blur">
-                <span className="mono-label flex items-center gap-1.5 text-signal">
-                  <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-signal" />
-                  LIVE 6DOF PERCEPTION{" "}
-                  <span className="text-muted-foreground">| Latency: 28ms | Output: XYZ + RxRyRz</span>
-                </span>
-              </div>
-            </div>
-          </div>
+          </MediaSlot>
         </div>
       </div>
     </section>
