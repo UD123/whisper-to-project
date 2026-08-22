@@ -34,23 +34,35 @@ export function MediaSlot({
   caption,
   aspect = "aspect-video",
   className = "",
+  tone = "light",
   children,
 }: MediaSlotProps) {
   const k = kind(src);
+  const dark = tone === "dark";
 
   return (
     <div
-      className={`overflow-hidden rounded-xl border border-border bg-card ${className}`}
+      className={`overflow-hidden rounded-xl border ${
+        dark ? "border-foreground/25 bg-foreground" : "border-border bg-card"
+      } ${className}`}
     >
-      <div className="flex items-center justify-between border-b border-border px-3 py-2">
-        <span className="mono-label truncate text-muted-foreground">{label}</span>
+      <div
+        className={`flex items-center justify-between border-b px-3 py-2 ${
+          dark ? "border-background/15" : "border-border"
+        }`}
+      >
+        <span
+          className={`mono-label truncate ${dark ? "text-background/65" : "text-muted-foreground"}`}
+        >
+          {label}
+        </span>
         <span className="mono-label flex items-center gap-1.5 text-signal">
           <span className="h-1.5 w-1.5 rounded-full bg-signal" />
           {k === "empty" ? "slot" : "media"}
         </span>
       </div>
 
-      <div className={`relative w-full ${aspect} bg-background`}>
+      <div className={`relative w-full ${aspect} ${dark ? "bg-foreground" : "bg-background"}`}>
         {k === "video" && (
           <video
             autoPlay
