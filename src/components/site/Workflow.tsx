@@ -1,3 +1,4 @@
+import { MediaSlot } from "./MediaSlot";
 
 const steps = [
   [
@@ -70,6 +71,14 @@ export function Workflow() {
             </article>
           ))}
         </div>
+
+        <MediaSlot
+          tone="dark"
+          className="mx-auto mt-8 max-w-4xl"
+          label="OBJECT SCANNING · STEP 01/02"
+          caption="Paste a direct MP4 or YouTube URL"
+          src=""
+        />
 
         <div className="mt-20 max-w-2xl">
           <span className="mono-label text-primary">03.1 — Software suite</span>
