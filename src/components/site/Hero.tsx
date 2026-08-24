@@ -53,6 +53,7 @@ export function Hero() {
         <div className="relative mx-auto mt-10 max-w-4xl">
           <MediaSlot
             tone="dark"
+            slotId="hero_stream"
             label="CAM_01 · RGB STREAM · 1080P"
             caption="Drop a lightweight looping MP4 or screenshot URL here"
             className="shadow-[0_30px_60px_-40px_oklch(0.21_0.03_264/0.45)]"

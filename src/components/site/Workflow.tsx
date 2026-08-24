@@ -76,6 +76,7 @@ export function Workflow() {
         <MediaSlot
           tone="dark"
           className="mx-auto mt-8 max-w-4xl"
+          slotId="object_scanning"
           label="OBJECT SCANNING · STEP 01/02"
           caption="Paste a direct MP4 or YouTube URL"
           src=""

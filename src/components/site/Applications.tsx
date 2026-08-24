@@ -68,6 +68,7 @@ export function Applications() {
             >
               <MediaSlot
                 tone="dark"
+                slotId={a.id}
                 label={`${a.id}.png`}
                 caption="screenshot / diagram slot"
                 aspect="aspect-video"

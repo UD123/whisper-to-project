@@ -1,8 +1,12 @@
 import { Film } from "lucide-react";
+import { useSiteMedia } from "@/lib/site-media";
+import { MediaSlotEditor } from "./MediaSlotEditor";
 
 export type MediaSlotProps = {
   /** Direct MP4 URL, YouTube URL/embed, or image URL (PNG/JPG). Leave empty to render the reserved placeholder frame. */
   src?: string;
+  /** Stable id used to store/replace this slot's media from the admin UI */
+  slotId?: string;
   label: string;
   caption?: string;
   aspect?: string;
@@ -30,6 +34,7 @@ function youtubeEmbed(src: string) {
  */
 export function MediaSlot({
   src,
+  slotId,
   label,
   caption,
   aspect = "aspect-video",
@@ -37,7 +42,10 @@ export function MediaSlot({
   tone = "light",
   children,
 }: MediaSlotProps) {
-  const k = kind(src);
+  const { resolved, isAdmin } = useSiteMedia();
+  const managed = slotId ? resolved[slotId] : undefined;
+  const effective = managed || src;
+  const k = kind(effective);
   const dark = tone === "dark";
 
   return (
@@ -70,13 +78,13 @@ export function MediaSlot({
             muted
             playsInline
             preload="auto"
-            src={src}
+            src={effective}
             className="absolute inset-0 h-full w-full object-cover"
           />
         )}
         {k === "youtube" && (
           <iframe
-            src={youtubeEmbed(src!)}
+            src={youtubeEmbed(effective!)}
             title={label}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
@@ -85,7 +93,7 @@ export function MediaSlot({
         )}
         {k === "image" && (
           <img
-            src={src}
+            src={effective}
             alt={caption ?? label}
             loading="lazy"
             className="absolute inset-0 h-full w-full object-cover"
@@ -116,6 +124,7 @@ export function MediaSlot({
           </div>
         )}
         {children}
+        {slotId && isAdmin ? <MediaSlotEditor slotId={slotId} /> : null}
       </div>
     </div>
   );
