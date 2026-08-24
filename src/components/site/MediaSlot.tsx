@@ -1,12 +1,8 @@
 import { Film } from "lucide-react";
-import { useSiteMedia } from "@/lib/site-media";
-import { MediaSlotEditor } from "./MediaSlotEditor";
 
 export type MediaSlotProps = {
   /** Direct MP4 URL, YouTube URL/embed, or image URL (PNG/JPG). Leave empty to render the reserved placeholder frame. */
   src?: string;
-  /** Stable id used to store/replace this slot's media from the admin UI */
-  slotId?: string;
   label: string;
   caption?: string;
   aspect?: string;
@@ -34,7 +30,6 @@ function youtubeEmbed(src: string) {
  */
 export function MediaSlot({
   src,
-  slotId,
   label,
   caption,
   aspect = "aspect-video",
@@ -42,9 +37,7 @@ export function MediaSlot({
   tone = "light",
   children,
 }: MediaSlotProps) {
-  const { resolved, isAdmin } = useSiteMedia();
-  const managed = slotId ? resolved[slotId] : undefined;
-  const effective = managed || src;
+  const effective = src;
   const k = kind(effective);
   const dark = tone === "dark";
 
@@ -124,7 +117,7 @@ export function MediaSlot({
           </div>
         )}
         {children}
-        {slotId && isAdmin ? <MediaSlotEditor slotId={slotId} /> : null}
+        
       </div>
     </div>
   );

@@ -61,10 +61,7 @@ export function Footer() {
               ))}
             </nav>
             <p className="mono-label text-muted-foreground">
-              © 2025-2026 RobotAI Ltd. All rights reserved. ·{" "}
-              <a href="/auth" className="transition-colors hover:text-foreground">
-                Content admin
-              </a>
+              © 2025-2026 RobotAI Ltd. All rights reserved.
             </p>
 
           </div>
