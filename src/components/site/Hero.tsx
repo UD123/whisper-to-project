@@ -1,4 +1,3 @@
-import { MediaSlot } from "./MediaSlot";
 
 const stats = [
   ["Speed", "< 30 ms", "1 MPix · GPU"],
