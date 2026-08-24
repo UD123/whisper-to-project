@@ -45,8 +45,6 @@ function AuthPage() {
       if (mode === "signin") {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
-        toast.success("Вход выполнен");
-        void navigate({ to: "/" });
       } else {
         const { error } = await supabase.auth.signUp({
           email,
@@ -54,9 +52,15 @@ function AuthPage() {
           options: { emailRedirectTo: `${window.location.origin}/` },
         });
         if (error) throw error;
-        toast.success("Аккаунт создан — теперь войдите");
-        setMode("signin");
+        if (!(await supabase.auth.getSession()).data.session) {
+          const { error: signInError } = await supabase.auth.signInWithPassword({ email, password });
+          if (signInError) throw signInError;
+        }
       }
+      // Первый зарегистрированный пользователь становится администратором контента
+      await supabase.rpc("claim_admin");
+      toast.success("Готово — теперь на главной у каждого окна есть кнопка загрузки");
+      void navigate({ to: "/" });
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Ошибка авторизации");
     } finally {
