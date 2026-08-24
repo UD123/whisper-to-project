@@ -30,7 +30,6 @@ function youtubeEmbed(src: string) {
  */
 export function MediaSlot({
   src,
-  slotId,
   label,
   caption,
   aspect = "aspect-video",
