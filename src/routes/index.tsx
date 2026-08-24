@@ -8,7 +8,6 @@ import { Ecosystem } from "@/components/site/Ecosystem";
 import { ObjectCatalog } from "@/components/site/ObjectCatalog";
 import { DemoForm } from "@/components/site/DemoForm";
 import { Footer } from "@/components/site/Footer";
-import { SiteMediaProvider } from "@/lib/site-media";
 
 const title = "RobotAI — 6DOF Pose Estimation from a Standard 2D Camera";
 const description =

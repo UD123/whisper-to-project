@@ -37,9 +37,7 @@ export function MediaSlot({
   tone = "light",
   children,
 }: MediaSlotProps) {
-  const { resolved, isAdmin } = useSiteMedia();
-  const managed = slotId ? resolved[slotId] : undefined;
-  const effective = managed || src;
+  const effective = src;
   const k = kind(effective);
   const dark = tone === "dark";
 
@@ -119,7 +117,7 @@ export function MediaSlot({
           </div>
         )}
         {children}
-        {slotId && isAdmin ? <MediaSlotEditor slotId={slotId} /> : null}
+        
       </div>
     </div>
   );
