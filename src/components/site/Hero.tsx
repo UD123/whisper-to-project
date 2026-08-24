@@ -60,17 +60,11 @@ export function Hero() {
                 live
               </span>
             </div>
-            <div className="relative aspect-video w-full bg-foreground">
-              <video
-                autoPlay
-                loop
-                muted
-                playsInline
-                controls={false}
-                preload="auto"
-                src="/media/hero.mp4"
-                className="absolute inset-0 h-full w-full rounded-b-lg object-cover"
-              />
+            <div className="dark-grid relative flex aspect-video w-full flex-col items-center justify-center gap-2 bg-foreground text-center">
+              <span className="mono-label text-background/65">reserved media slot</span>
+              <span className="mono-label max-w-[85%] normal-case tracking-normal text-background/45">
+                Paste a direct MP4 or YouTube URL
+              </span>
               <div className="pointer-events-none absolute top-3 left-3 z-10 rounded-lg border border-background/15 bg-foreground/80 px-3 py-2 shadow-lg backdrop-blur">
                 <span className="mono-label flex items-center gap-1.5 text-signal">
                   <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-signal" />
@@ -78,6 +72,7 @@ export function Hero() {
                 </span>
               </div>
             </div>
+
           </div>
         </div>
       </div>
