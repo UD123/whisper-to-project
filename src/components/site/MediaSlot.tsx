@@ -1,12 +1,8 @@
 import { Film } from "lucide-react";
-import { useSiteMedia } from "@/lib/site-media";
-import { MediaSlotEditor } from "./MediaSlotEditor";
 
 export type MediaSlotProps = {
   /** Direct MP4 URL, YouTube URL/embed, or image URL (PNG/JPG). Leave empty to render the reserved placeholder frame. */
   src?: string;
-  /** Stable id used to store/replace this slot's media from the admin UI */
-  slotId?: string;
   label: string;
   caption?: string;
   aspect?: string;
