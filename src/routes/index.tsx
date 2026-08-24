@@ -8,6 +8,7 @@ import { Ecosystem } from "@/components/site/Ecosystem";
 import { ObjectCatalog } from "@/components/site/ObjectCatalog";
 import { DemoForm } from "@/components/site/DemoForm";
 import { Footer } from "@/components/site/Footer";
+import { SiteMediaProvider } from "@/lib/site-media";
 
 const title = "RobotAI — 6DOF Pose Estimation from a Standard 2D Camera";
 const description =
@@ -29,6 +30,7 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   return (
+    <SiteMediaProvider>
     <div className="min-h-screen bg-background">
       <Navbar />
       <main>
@@ -42,6 +44,7 @@ function Index() {
       </main>
       <Footer />
     </div>
+    </SiteMediaProvider>
   );
 }
 
