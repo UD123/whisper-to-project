@@ -29,7 +29,6 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   return (
-    <SiteMediaProvider>
     <div className="min-h-screen bg-background">
       <Navbar />
       <main>
@@ -43,7 +42,6 @@ function Index() {
       </main>
       <Footer />
     </div>
-    </SiteMediaProvider>
   );
 }
 

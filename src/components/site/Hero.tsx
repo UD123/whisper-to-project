@@ -51,20 +51,35 @@ export function Hero() {
         </dl>
 
         <div className="relative mx-auto mt-10 max-w-4xl">
-          <MediaSlot
-            tone="dark"
-            slotId="hero_stream"
-            label="CAM_01 · RGB STREAM · 1080P"
-            caption="Drop a lightweight looping MP4 or screenshot URL here"
-            className="shadow-[0_30px_60px_-40px_oklch(0.21_0.03_264/0.45)]"
-          >
-            <div className="pointer-events-none absolute top-3 left-3 z-10 rounded-lg border border-background/15 bg-foreground/80 px-3 py-2 shadow-lg backdrop-blur">
+          <div className="overflow-hidden rounded-xl border border-foreground/25 bg-foreground shadow-[0_30px_60px_-40px_oklch(0.21_0.03_264/0.45)]">
+            <div className="flex items-center justify-between border-b border-background/15 px-3 py-2">
+              <span className="mono-label truncate text-background/65">
+                CAM_01 · RGB STREAM · 1080P
+              </span>
               <span className="mono-label flex items-center gap-1.5 text-signal">
-                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-signal" />
-                LIVE 6DOF PERCEPTION <span className="text-background/70">| Latency: 28ms</span>
+                <span className="h-1.5 w-1.5 rounded-full bg-signal" />
+                live
               </span>
             </div>
-          </MediaSlot>
+            <div className="relative aspect-video w-full bg-foreground">
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                controls={false}
+                preload="auto"
+                src="/media/hero.mp4"
+                className="absolute inset-0 h-full w-full rounded-b-lg object-cover"
+              />
+              <div className="pointer-events-none absolute top-3 left-3 z-10 rounded-lg border border-background/15 bg-foreground/80 px-3 py-2 shadow-lg backdrop-blur">
+                <span className="mono-label flex items-center gap-1.5 text-signal">
+                  <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-signal" />
+                  LIVE 6DOF PERCEPTION <span className="text-background/70">| LATENCY: 28MS</span>
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
