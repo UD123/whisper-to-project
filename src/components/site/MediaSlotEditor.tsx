@@ -89,7 +89,7 @@ export function MediaSlotEditor({ slotId }: { slotId: string }) {
           className="absolute top-2 right-2 z-20 flex items-center gap-1.5 rounded-md border border-background/25 bg-foreground/85 px-2.5 py-1.5 text-background shadow-lg backdrop-blur transition hover:bg-foreground"
         >
           <Upload className="h-3 w-3" strokeWidth={2} />
-          <span className="mono-label">заменить</span>
+          <span className="mono-label">видео / фото</span>
         </button>
       </DialogTrigger>
       <DialogContent>
