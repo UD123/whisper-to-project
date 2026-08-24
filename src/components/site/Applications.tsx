@@ -1,4 +1,5 @@
 import { MediaSlot } from "./MediaSlot";
+import objectLocalizationVideo from "@/assets/object-localization.mp4.asset.json";
 
 const apps = [
   {
@@ -17,7 +18,7 @@ const apps = [
     id: "object_localization",
     title: "Single & Multiple Object 3D Localization",
     desc: "Polished metal, translucent plastic, small bolts, laminated items.",
-    src: "", // [SINGLE_MULTI_OBJECT_IMAGE_URL]
+    src: objectLocalizationVideo.url,
   },
   {
     id: "palletizing",
@@ -66,14 +67,16 @@ export function Applications() {
               key={a.id}
               className="flex flex-col rounded-xl border border-border bg-card p-4 transition-all duration-300 hover:-translate-y-1 hover:border-foreground/20 hover:shadow-[0_24px_50px_-32px_oklch(0.21_0.03_264/0.6)]"
             >
-              <MediaSlot
-                tone="dark"
-                label={`${a.id}.png`}
-                caption="screenshot / diagram slot"
-                aspect="aspect-video"
-                src={a.src}
-              />
-              <h3 className="mt-5 px-1 text-base font-semibold tracking-tight">{a.title}</h3>
+              {a.src ? (
+                <MediaSlot
+                  tone="dark"
+                  label={`${a.id}.mp4`}
+                  caption={a.title}
+                  aspect="aspect-video"
+                  src={a.src}
+                />
+              ) : null}
+              <h3 className="mt-4 px-1 text-base font-semibold tracking-tight">{a.title}</h3>
               <p className="mt-2 px-1 pb-2 text-sm leading-relaxed text-muted-foreground">{a.desc}</p>
             </article>
           ))}
