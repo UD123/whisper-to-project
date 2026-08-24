@@ -35,9 +35,9 @@ export function RgbAdvantage() {
             Comparing standard 2D RGB AI perception against RealSense, stereo cameras and LIDARs.
           </p>
           <blockquote className="mt-8 border-l-2 border-signal pl-5 text-sm leading-relaxed text-muted-foreground italic">
-            “Active 3D sensors present built-in industrial flaws: noise, shadows, distance limits,
+            Active 3D sensors present built-in industrial flaws: noise, shadows, distance limits,
             material sensitivity and texture blindness. At the end of the day, you still need to find
-            an object in a heavy point cloud.”
+            an object in a heavy point cloud.
           </blockquote>
         </div>
 
