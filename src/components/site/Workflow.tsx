@@ -52,7 +52,7 @@ const modules = [
 export function Workflow() {
   return (
     <section id="workflow" className="border-b border-border bg-card">
-      <div className="mx-auto max-w-7xl px-6 py-20 md:py-28">
+      <div className="mx-auto max-w-7xl px-6 py-16 md:py-20">
         <div className="max-w-2xl">
           <span className="mono-label text-primary">03 — Workflow</span>
           <h2 className="mt-4 text-3xl font-semibold tracking-[-0.02em] md:text-4xl">
@@ -75,9 +75,8 @@ export function Workflow() {
 
         <MediaSlot
           tone="dark"
-          className="mx-auto mt-8 max-w-4xl"
+          className="mx-auto mt-8 max-w-3xl"
           label="OBJECT SCANNING · STEP 01/02"
-          caption="Paste a direct MP4 or YouTube URL"
           src={objectScanningVideo.url}
         />
 

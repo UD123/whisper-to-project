@@ -61,17 +61,32 @@ export function Hero() {
                 live
               </span>
             </div>
-            <div className="relative aspect-video w-full bg-foreground">
+            <div className="relative aspect-video w-full overflow-hidden bg-foreground">
               <img
                 src={hero6dof.url}
                 alt="Робот-манипулятор с 6DOF координатами объекта в реальном времени"
-                className="media-grade absolute inset-0 h-full w-full object-cover"
+                className="media-grade absolute inset-0 h-full w-full origin-right scale-[1.62] object-cover object-right"
               />
-              <div className="pointer-events-none absolute top-3 left-3 z-10 rounded-lg border border-background/15 bg-foreground/80 px-3 py-2 shadow-lg backdrop-blur">
-                <span className="mono-label flex items-center gap-1.5 text-signal">
+              <div className="pointer-events-none absolute top-3 left-3 z-10 rounded-lg border border-background/15 bg-foreground/75 px-3 py-2.5 shadow-lg backdrop-blur">
+                <div className="mono-label flex items-center gap-1.5 text-background/70">
                   <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-signal" />
-                  LIVE 6DOF PERCEPTION <span className="text-background/70">| LATENCY: 28MS</span>
-                </span>
+                  6DOF pose · latency 28 ms
+                </div>
+                <dl className="mt-2 grid grid-cols-2 gap-x-5 gap-y-1 font-mono text-[11px] text-background/85">
+                  {[
+                    ["Tx", "-168.50 mm"],
+                    ["Rx", "-168.50°"],
+                    ["Ty", "+41.81 mm"],
+                    ["Ry", "+41.81°"],
+                    ["Tz", "+20.21 mm"],
+                    ["Rz", "+65.39°"],
+                  ].map(([k, v]) => (
+                    <div key={k} className="flex items-center gap-2">
+                      <dt className="text-background/45">{k}</dt>
+                      <dd className="tabular-nums">{v}</dd>
+                    </div>
+                  ))}
+                </dl>
               </div>
             </div>
 
