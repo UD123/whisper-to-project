@@ -9,7 +9,7 @@ const apps = [
     id: "bin_picking",
     title: "Random Bin Picking",
     desc: "Small parts, reflective bolts, chaotic orientation in deep bins.",
-    src: "", // [BIN_PICKING_VIDEO_OR_IMAGE_URL]
+    src: randomBinPickingVideo.url,
   },
   {
     id: "machine_tending",
