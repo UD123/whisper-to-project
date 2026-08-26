@@ -4,6 +4,7 @@ import machineTendingVideo from "@/assets/machine-tending.mp4.asset.json";
 import randomBinPickingVideo from "@/assets/random-bin-picking.mp4.asset.json";
 import palletizingVideo from "@/assets/palletizing.mp4.asset.json";
 import assemblyVideo from "@/assets/assembly.mp4.asset.json";
+import agvDockingVideo from "@/assets/agv-docking.mp4.asset.json";
 
 
 
@@ -42,7 +43,7 @@ const apps = [
     id: "agv_docking",
     title: "AGV, Forklift & Pallet Docking",
     desc: "Pallet relative positioning under varying load conditions.",
-    src: "", // [DOCKING_IMAGE_URL]
+    src: agvDockingVideo.url,
   },
   {
     id: "agritech",

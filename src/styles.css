@@ -135,7 +135,7 @@
 
 /* Unified technical color grade for all real media (videos / photos) */
 @utility media-grade {
-  filter: saturate(0.82) contrast(1.07) brightness(1.03);
+  filter: saturate(0.82) contrast(1.12) brightness(1.18);
 }
 
 @utility mono-label {
