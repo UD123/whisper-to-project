@@ -133,6 +133,11 @@
     100px 100px;
 }
 
+/* Unified technical color grade for all real media (videos / photos) */
+@utility media-grade {
+  filter: saturate(0.82) contrast(1.07) brightness(1.03);
+}
+
 @utility mono-label {
   font-family: var(--font-mono);
   font-size: 0.6875rem;
