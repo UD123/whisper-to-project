@@ -1,6 +1,8 @@
 import { MediaSlot } from "./MediaSlot";
 import objectLocalizationVideo from "@/assets/object-localization.mp4.asset.json";
 import machineTendingVideo from "@/assets/machine-tending.mp4.asset.json";
+import randomBinPickingVideo from "@/assets/random-bin-picking.mp4.asset.json";
+
 
 const apps = [
   {
