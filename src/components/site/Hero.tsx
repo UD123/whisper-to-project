@@ -65,7 +65,7 @@ export function Hero() {
               <img
                 src={hero6dof.url}
                 alt="Робот-манипулятор с 6DOF координатами объекта в реальном времени"
-                className="absolute inset-0 h-full w-full object-cover"
+                className="media-grade absolute inset-0 h-full w-full object-cover"
               />
               <div className="pointer-events-none absolute top-3 left-3 z-10 rounded-lg border border-background/15 bg-foreground/80 px-3 py-2 shadow-lg backdrop-blur">
                 <span className="mono-label flex items-center gap-1.5 text-signal">

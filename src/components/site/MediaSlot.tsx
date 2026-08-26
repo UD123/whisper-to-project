@@ -72,7 +72,7 @@ export function MediaSlot({
             playsInline
             preload="auto"
             src={effective}
-            className="absolute inset-0 h-full w-full object-cover"
+            className="media-grade absolute inset-0 h-full w-full object-cover"
           />
         )}
         {k === "youtube" && (
@@ -89,7 +89,7 @@ export function MediaSlot({
             src={effective}
             alt={caption ?? label}
             loading="lazy"
-            className="absolute inset-0 h-full w-full object-cover"
+            className="media-grade absolute inset-0 h-full w-full object-cover"
           />
         )}
         {k === "empty" && (
