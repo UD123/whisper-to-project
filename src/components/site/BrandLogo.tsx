@@ -63,7 +63,7 @@ export function BrandLogo({ name, className = "" }: BrandLogoProps) {
         src={src}
         alt={`${name} logo`}
         loading="lazy"
-        className="h-6 w-auto max-w-[104px] object-contain grayscale opacity-60 transition duration-300 group-hover:grayscale-0 group-hover:opacity-100"
+        className="logo-muted h-6 w-auto max-w-[104px] object-contain opacity-90 transition duration-300 group-hover:opacity-100 group-hover:[filter:none]"
       />
     </li>
   );
