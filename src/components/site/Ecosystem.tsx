@@ -1,4 +1,4 @@
-import { BrandLogo, hasBrandLogo } from "./BrandLogo";
+import { BrandLogo } from "./BrandLogo";
 
 const groups = [
   {
