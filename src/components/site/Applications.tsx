@@ -5,6 +5,8 @@ import randomBinPickingVideo from "@/assets/random-bin-picking.mp4.asset.json";
 import palletizingVideo from "@/assets/palletizing.mp4.asset.json";
 import assemblyVideo from "@/assets/assembly.mp4.asset.json";
 import agvDockingVideo from "@/assets/agv-docking.mp4.asset.json";
+import agritechVideo from "@/assets/agritech.mp4.asset.json";
+
 
 
 
@@ -49,7 +51,7 @@ const apps = [
     id: "agritech",
     title: "AgriTech / Special Applications",
     desc: "Mushroom growth analysis, leaf detection, flower cutting point estimation.",
-    src: "", // [AGRI_IMAGE_URL]
+    src: agritechVideo.url,
   },
 ];
 
