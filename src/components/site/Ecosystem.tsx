@@ -3,7 +3,7 @@ import { BrandLogo } from "./BrandLogo";
 const groups = [
   {
     label: "Camera interfaces",
-    items: ["Balluff / Matrix V", "IDS", "Basler", "RealSense", "Allied Vision", "Miniature USB RGB"],
+    items: ["IDS", "Basler", "RealSense", "Allied Vision", "Balluff / Matrix V", "Miniature USB RGB"],
   },
   {
     label: "Robot brands",

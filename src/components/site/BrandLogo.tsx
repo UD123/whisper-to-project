@@ -47,7 +47,7 @@ export function BrandLogo({ name, className = "" }: BrandLogoProps) {
   if (!src) {
     return (
       <li
-        className={`rounded-md border border-border bg-background px-3 py-1.5 font-mono text-[12px] tracking-tight ${className}`}
+        className={`flex h-11 items-center rounded-md border border-dashed border-border bg-muted px-3 font-mono text-[12px] tracking-tight text-muted-foreground ${className}`}
       >
         {name}
       </li>
@@ -56,14 +56,14 @@ export function BrandLogo({ name, className = "" }: BrandLogoProps) {
 
   return (
     <li
-      className={`group flex items-center justify-center rounded-md border border-border bg-background px-3 py-2 transition hover:border-foreground/20 ${className}`}
+      className={`group flex h-11 min-w-[112px] items-center justify-center rounded-md border border-border bg-background px-4 transition hover:border-foreground/20 ${className}`}
       title={name}
     >
       <img
         src={src}
         alt={`${name} logo`}
         loading="lazy"
-        className="logo-muted h-6 w-auto max-w-[104px] object-contain opacity-90 transition duration-300 group-hover:opacity-100 group-hover:[filter:none]"
+        className="logo-muted h-5 max-h-5 w-auto max-w-[96px] object-contain opacity-90 transition duration-300 group-hover:opacity-100 group-hover:[filter:none]"
       />
     </li>
   );
