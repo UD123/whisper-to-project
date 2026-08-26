@@ -36,7 +36,7 @@ const apps = [
     id: "assembly",
     title: "Precise Positioning & Assembly",
     desc: "Connector insertion, electronic board alignment, trajectory tracking.",
-    src: "", // [ASSEMBLY_IMAGE_URL]
+    src: assemblyVideo.url,
   },
   {
     id: "agv_docking",
