@@ -47,7 +47,7 @@ export function BrandLogo({ name, className = "" }: BrandLogoProps) {
   if (!src) {
     return (
       <li
-        className={`flex h-11 items-center rounded-md border border-dashed border-border bg-muted px-3 font-mono text-[12px] tracking-tight text-muted-foreground ${className}`}
+        className={`flex h-11 items-center rounded-md border border-border bg-muted px-4 font-mono text-[12px] tracking-tight text-muted-foreground ${className}`}
       >
         {name}
       </li>
