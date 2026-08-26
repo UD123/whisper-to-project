@@ -58,7 +58,7 @@ const apps = [
 export function Applications() {
   return (
     <section id="use-cases" className="border-b border-border">
-      <div className="mx-auto max-w-7xl px-6 py-20 md:py-28">
+      <div className="mx-auto max-w-7xl px-6 py-16 md:py-20">
         <div className="max-w-2xl">
           <span className="mono-label text-primary">02 — Applications</span>
           <h2 className="mt-4 text-3xl font-semibold tracking-[-0.02em] md:text-4xl">
