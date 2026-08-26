@@ -138,6 +138,11 @@
   filter: saturate(0.82) contrast(1.12) brightness(1.18);
 }
 
+/* Muted brand logos for Clean Lab palette */
+@utility logo-muted {
+  filter: saturate(0.65) brightness(0.93);
+}
+
 @utility mono-label {
   font-family: var(--font-mono);
   font-size: 0.6875rem;
