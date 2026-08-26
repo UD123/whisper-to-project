@@ -1,25 +1,46 @@
 import { AlertTriangle, Check } from "lucide-react";
 
 const limitations = [
-  ["Noise & Edge Artifacts", "Dense error margins on sharp contours."],
-  ["Shadow Occlusions", "Dead zones created by active light emitters."],
-  ["Fixed Working Distances", "Inflexible setup ranges."],
   [
-    "Material Sensitivity",
-    "Complete failure on shiny, polished, metallic, translucent or reflective parts.",
+    "Hardware Cost & CapEx",
+    "Expensive industrial 3D sensors, LIDARs, and high-end processing servers.",
   ],
-  ["Texture Blindness", "Inability to process visual markings or surface contrast."],
-  ["Heavy Processing Bottleneck", "Requires complex point cloud segmentation algorithms."],
+  [
+    "Surface & Material Limitations",
+    "Complete failure or severe noise on polished metal, reflective bolts, and translucent parts.",
+  ],
+  [
+    "Shadows, Edges & Occlusions",
+    "Dense error margins on sharp contours and dead zones caused by active light emitters.",
+  ],
+  ["Setup Flexibility & Range", "Inflexible working distances and rigid calibration ranges."],
+  [
+    "Processing Overhead",
+    "Heavy performance bottlenecks requiring complex point cloud segmentation algorithms.",
+  ],
 ];
 
 const advantages = [
-  ["Direct 6DOF Vector Output", "Instant XYZ + RxRyRz coordinates without point cloud overhead."],
   [
-    "Material Agnostic",
-    "Seamlessly handles polished metal, reflective bolts, translucent plastic and laminated parts.",
+    "Hardware Cost & CapEx",
+    "Cost-Efficient Setup — works with standard RGB cameras (including compact USB options) and standard industrial PCs.",
   ],
-  ["Full Texture Awareness", "Utilizes RGB contrast, fine visual edges and surface markings."],
-  ["Total Setup Flexibility", "Adjustable camera-to-object distances and compact sensor sizes."],
+  [
+    "Surface & Material Limitations",
+    "Material Agnostic — seamlessly handles shiny, reflective, and multi-texture parts without issues.",
+  ],
+  [
+    "Shadows, Edges & Occlusions",
+    "Direct 6DOF Output — instant XYZ and rotation vectors utilizing clear RGB contrast and visual edges.",
+  ],
+  [
+    "Setup Flexibility & Range",
+    "Total Setup Flexibility — adjustable camera-to-object distances and compact footprint.",
+  ],
+  [
+    "Processing Overhead",
+    "Sub-30 ms Inference — lightweight processing delivering fast coordinates without point cloud overhead.",
+  ],
 ];
 
 export function RgbAdvantage() {
@@ -29,16 +50,12 @@ export function RgbAdvantage() {
         <div className="max-w-3xl">
           <span className="mono-label text-primary">01 — Technology</span>
           <h2 className="mt-4 text-3xl font-semibold tracking-[-0.02em] md:text-4xl">
-            Why Active 3D Vision Fails on Real Production Lines
+            Comparison: Traditional 3D Vision vs. RobotAI
           </h2>
           <p className="mt-4 text-muted-foreground">
-            Comparing standard 2D RGB AI perception against RealSense, stereo cameras and LIDARs.
+            A direct comparison across the five most critical dimensions for production-grade robotic
+            vision.
           </p>
-          <blockquote className="mt-8 border-l-2 border-signal pl-5 text-sm leading-relaxed text-muted-foreground italic">
-            Active 3D sensors present built-in industrial flaws: noise, shadows, distance limits,
-            material sensitivity and texture blindness. At the end of the day, you still need to find
-            an object in a heavy point cloud.
-          </blockquote>
         </div>
 
         <div className="mt-12 grid gap-6 lg:grid-cols-2">
