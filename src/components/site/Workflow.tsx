@@ -1,4 +1,5 @@
 import { MediaSlot } from "./MediaSlot";
+import objectScanningVideo from "@/assets/object-scanning.mp4.asset.json";
 
 const steps = [
   [
@@ -77,7 +78,7 @@ export function Workflow() {
           className="mx-auto mt-8 max-w-4xl"
           label="OBJECT SCANNING · STEP 01/02"
           caption="Paste a direct MP4 or YouTube URL"
-          src=""
+          src={objectScanningVideo.url}
         />
 
         <div className="mt-20 max-w-2xl">
