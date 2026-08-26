@@ -1,4 +1,5 @@
 import { MediaSlot } from "./MediaSlot";
+import objectScanningVideo from "@/assets/object-scanning.mp4.asset.json";
 
 const steps = [
   [
