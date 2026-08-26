@@ -135,7 +135,7 @@
 
 /* Unified technical color grade for all real media (videos / photos) */
 @utility media-grade {
-  filter: saturate(0.82) contrast(1.12) brightness(1.18);
+  filter: saturate(0.88) contrast(1.02) brightness(1.06);
 }
 
 /* Muted brand logos for Clean Lab palette */
