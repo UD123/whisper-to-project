@@ -1,5 +1,6 @@
 import { MediaSlot } from "./MediaSlot";
 import objectLocalizationVideo from "@/assets/object-localization.mp4.asset.json";
+import machineTendingVideo from "@/assets/machine-tending.mp4.asset.json";
 
 const apps = [
   {
@@ -12,7 +13,7 @@ const apps = [
     id: "machine_tending",
     title: "Machine Tending",
     desc: "Exact positioning, CNC loading/unloading, press operation.",
-    src: "", // [MACHINE_TENDING_VIDEO_OR_IMAGE_URL]
+    src: machineTendingVideo.url, // [MACHINE_TENDING_VIDEO_OR_IMAGE_URL]
   },
   {
     id: "object_localization",
