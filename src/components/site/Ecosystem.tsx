@@ -33,7 +33,7 @@ const groups = [
 
 export function Ecosystem() {
   return (
-    <section id="specs" className="border-b border-border">
+    <section id="ecosystem" className="border-b border-border">
       <div className="mx-auto max-w-7xl px-6 py-16 md:py-20">
         <div className="max-w-2xl">
           <span className="mono-label text-primary">04 — Ecosystem</span>
