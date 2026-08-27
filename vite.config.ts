@@ -10,7 +10,7 @@ import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 // It skips the nitro Cloudflare worker build, whose bundle cannot boot in the
 // Node preview server TanStack Start uses for prerendering. Lovable builds keep
 // the default SSR + nitro behavior.
-const isStaticBuild = process.env.BUILD_STATIC === "true";
+const isStaticBuild = process.env["BUILD_STATIC"] === "true";
 
 export default defineConfig({
   ...(isStaticBuild ? { nitro: false } : {}),
