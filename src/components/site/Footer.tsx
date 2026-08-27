@@ -2,7 +2,7 @@ import { LogoMark } from "./Logo";
 
 export function Footer() {
   return (
-    <footer id="about">
+    <footer>
       <div className="border-b border-border bg-card">
         <div className="mx-auto flex max-w-7xl flex-col items-start gap-6 px-6 py-16 md:flex-row md:items-center md:justify-between md:py-20">
           <h2 className="max-w-xl text-2xl font-semibold tracking-[-0.02em] md:text-3xl">

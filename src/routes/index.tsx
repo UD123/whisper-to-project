@@ -1,11 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Navbar } from "@/components/site/Navbar";
 import { Hero } from "@/components/site/Hero";
+import { TrustMetrics } from "@/components/site/TrustMetrics";
 import { RgbAdvantage } from "@/components/site/RgbAdvantage";
 import { Applications } from "@/components/site/Applications";
 import { Workflow } from "@/components/site/Workflow";
 import { Ecosystem } from "@/components/site/Ecosystem";
+import { Specs } from "@/components/site/Specs";
 import { ObjectCatalog } from "@/components/site/ObjectCatalog";
+import { About } from "@/components/site/About";
+import { FAQ } from "@/components/site/FAQ";
 import { DemoForm } from "@/components/site/DemoForm";
 import { Footer } from "@/components/site/Footer";
 
@@ -33,15 +37,20 @@ function Index() {
       <Navbar />
       <main>
         <Hero />
+        <TrustMetrics />
         <RgbAdvantage />
         <Applications />
         <Workflow />
         <Ecosystem />
+        <Specs />
         <ObjectCatalog />
+        <About />
+        <FAQ />
         <DemoForm />
       </main>
       <Footer />
     </div>
   );
 }
+
 
