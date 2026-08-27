@@ -4,8 +4,11 @@ const links = [
   { label: "Technology", href: "#technology" },
   { label: "Applications", href: "#use-cases" },
   { label: "Workflow", href: "#workflow" },
-  { label: "Compatibility", href: "#specs" },
+  { label: "Ecosystem", href: "#ecosystem" },
+  { label: "Specs", href: "#specs" },
+  { label: "Catalog", href: "#objects" },
   { label: "About", href: "#about" },
+  { label: "FAQ", href: "#faq" },
 ];
 
 export function Navbar() {
