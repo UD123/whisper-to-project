@@ -11,7 +11,7 @@ export function Specs() {
     <section id="specs" className="border-b border-border bg-card">
       <div className="mx-auto max-w-7xl px-6 py-16 md:py-20">
         <div className="max-w-2xl">
-          <span className="mono-label text-primary">04 — Specifications</span>
+          <span className="mono-label text-primary">05 — Specifications</span>
           <h2 className="mt-4 text-3xl font-semibold tracking-[-0.02em] md:text-4xl">
             Technical Specifications
           </h2>

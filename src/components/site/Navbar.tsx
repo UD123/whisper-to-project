@@ -4,8 +4,11 @@ const links = [
   { label: "Technology", href: "#technology" },
   { label: "Applications", href: "#use-cases" },
   { label: "Workflow", href: "#workflow" },
-  { label: "Compatibility", href: "#specs" },
+  { label: "Ecosystem", href: "#ecosystem" },
+  { label: "Specs", href: "#specs" },
+  { label: "Catalog", href: "#objects" },
   { label: "About", href: "#about" },
+  { label: "FAQ", href: "#faq" },
 ];
 
 export function Navbar() {
@@ -26,7 +29,7 @@ export function Navbar() {
           </span>
         </a>
 
-        <nav className="hidden items-center gap-8 md:flex">
+        <nav className="hidden items-center gap-6 xl:flex">
           {links.map((l) => (
             <a
               key={l.href}
@@ -41,7 +44,7 @@ export function Navbar() {
         <div className="flex items-center gap-2">
           <a
             href="#specs"
-            className="hidden rounded-md border border-border bg-card px-3.5 py-2 text-sm font-medium transition-all duration-200 hover:border-foreground/25 hover:shadow-sm sm:inline-flex"
+            className="hidden rounded-md border border-border bg-card px-3.5 py-2 text-sm font-medium transition-all duration-200 hover:border-foreground/25 hover:shadow-sm xl:inline-flex"
           >
             Developer Docs
           </a>
