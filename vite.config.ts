@@ -13,4 +13,27 @@ export default defineConfig({
     server: { entry: "server" },
     prerender: { enabled: true },
   },
+  vite: {
+    plugins: [
+      {
+        // The prerender preview server imports dist/server/server.js (named after the
+        // server entry), while the nitro cloudflare preset emits index.mjs. Write a
+        // re-export shim after the app build so prerendering can boot the server.
+        name: "prerender-server-entry-shim",
+        apply: "build",
+        buildApp: {
+          order: "post",
+          async handler() {
+            const { writeFileSync, existsSync } = await import("node:fs");
+            if (existsSync("dist/server/index.mjs")) {
+              writeFileSync(
+                "dist/server/server.js",
+                'export { default } from "./index.mjs";\n',
+              );
+            }
+          },
+        },
+      },
+    ],
+  },
 });
