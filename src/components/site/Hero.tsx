@@ -1,4 +1,4 @@
-import hero6dof from "@/assets/hero-6dof.png.asset.json";
+import heroVideo from "@/assets/object-scanning.mp4.asset.json";
 
 const stats = [
   ["Speed", "< 30 ms", "1 MPix · GPU"],
