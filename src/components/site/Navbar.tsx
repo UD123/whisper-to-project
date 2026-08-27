@@ -44,7 +44,7 @@ export function Navbar() {
         <div className="flex items-center gap-2">
           <a
             href="#specs"
-            className="hidden rounded-md border border-border bg-card px-3.5 py-2 text-sm font-medium transition-all duration-200 hover:border-foreground/25 hover:shadow-sm sm:inline-flex"
+            className="hidden rounded-md border border-border bg-card px-3.5 py-2 text-sm font-medium transition-all duration-200 hover:border-foreground/25 hover:shadow-sm xl:inline-flex"
           >
             Developer Docs
           </a>
