@@ -73,27 +73,6 @@ export function Hero() {
               />
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-foreground/45 via-transparent to-transparent" />
               <div className="pointer-events-none absolute inset-0 ring-1 ring-background/10 ring-inset" />
-              <div className="pointer-events-none absolute top-3 left-3 z-10 rounded-lg border border-background/15 bg-foreground/75 px-3 py-2.5 shadow-lg backdrop-blur">
-                <div className="mono-label flex items-center gap-1.5 text-background/70">
-                  <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-signal" />
-                  6DOF pose · latency 28 ms
-                </div>
-                <dl className="mt-2 grid grid-cols-2 gap-x-5 gap-y-1 font-mono text-[11px] text-background/85">
-                  {[
-                    ["Tx", "-168.50 mm"],
-                    ["Rx", "-168.50°"],
-                    ["Ty", "+41.81 mm"],
-                    ["Ry", "+41.81°"],
-                    ["Tz", "+20.21 mm"],
-                    ["Rz", "+65.39°"],
-                  ].map(([k, v]) => (
-                    <div key={k} className="flex items-center gap-2">
-                      <dt className="text-background/45">{k}</dt>
-                      <dd className="tabular-nums">{v}</dd>
-                    </div>
-                  ))}
-                </dl>
-              </div>
             </div>
 
 
