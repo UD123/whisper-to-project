@@ -1,4 +1,4 @@
-import hero6dof from "@/assets/hero-6dof.png.asset.json";
+import heroVideo from "@/assets/object-scanning.mp4.asset.json";
 
 const stats = [
   ["Speed", "< 30 ms", "1 MPix · GPU"],
@@ -62,11 +62,17 @@ export function Hero() {
               </span>
             </div>
             <div className="relative aspect-video w-full overflow-hidden bg-foreground">
-              <img
-                src={hero6dof.url}
-                alt="Робот-манипулятор с 6DOF координатами объекта в реальном времени"
-                className="media-grade absolute inset-0 h-full w-full origin-right scale-[1.62] object-cover object-right"
+              <video
+                src={heroVideo.url}
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="metadata"
+                className="media-grade absolute inset-0 h-full w-full object-cover"
               />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-foreground/45 via-transparent to-transparent" />
+              <div className="pointer-events-none absolute inset-0 ring-1 ring-background/10 ring-inset" />
               <div className="pointer-events-none absolute top-3 left-3 z-10 rounded-lg border border-background/15 bg-foreground/75 px-3 py-2.5 shadow-lg backdrop-blur">
                 <div className="mono-label flex items-center gap-1.5 text-background/70">
                   <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-signal" />
