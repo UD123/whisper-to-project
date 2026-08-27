@@ -8,7 +8,7 @@ export function DemoForm() {
     <section id="demo" className="border-b border-border bg-card">
       <div className="mx-auto max-w-3xl px-6 py-16 md:py-20">
         <div className="rounded-xl border border-border bg-background p-8 md:p-10">
-          <span className="mono-label text-primary">06 — Evaluation</span>
+          <span className="mono-label text-primary">09 — Evaluation</span>
           <h2 className="mt-4 text-2xl font-semibold tracking-[-0.02em] md:text-3xl">
             Test RobotAI with Your Manufacturing Parts
           </h2>

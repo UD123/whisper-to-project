@@ -43,7 +43,7 @@ export function ObjectCatalog() {
     <section id="objects" className="border-b border-border bg-card">
       <div className="mx-auto max-w-7xl px-6 py-16 md:py-20">
         <div className="max-w-2xl">
-          <span className="mono-label text-primary">05 — Catalog</span>
+          <span className="mono-label text-primary">06 — Catalog</span>
           <h2 className="mt-4 text-3xl font-semibold tracking-[-0.02em] md:text-4xl">
             Trained Object Capability Catalog
           </h2>
