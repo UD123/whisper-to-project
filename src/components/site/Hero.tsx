@@ -1,6 +1,6 @@
 import { AutoVideo } from "./AutoVideo";
 
-const heroVideoUrl = "/media/hero-6dof-continuous.mp4?v=2";
+const heroVideoUrl = "/media/hero-6dof-continuous.mp4?v=3";
 
 const stats = [
   ["Speed", "< 30 ms", "1 MPix · GPU"],
