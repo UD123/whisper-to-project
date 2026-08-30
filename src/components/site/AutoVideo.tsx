@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 type AutoVideoProps = {
   src: string;
@@ -14,7 +14,6 @@ type AutoVideoProps = {
  */
 export function AutoVideo({ src, className = "", rootMargin = "400px" }: AutoVideoProps) {
   const ref = useRef<HTMLVideoElement>(null);
-  const [active, setActive] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
@@ -27,7 +26,6 @@ export function AutoVideo({ src, className = "", rootMargin = "400px" }: AutoVid
 
     const tryPlay = () => {
       if (!el.isConnected) return;
-      setActive(true);
       const p = el.play();
       if (p && typeof p.catch === "function") p.catch(() => {});
     };
@@ -76,7 +74,7 @@ export function AutoVideo({ src, className = "", rootMargin = "400px" }: AutoVid
   return (
     <video
       ref={ref}
-      src={active ? src : undefined}
+      src={src}
       autoPlay
       loop
       muted
