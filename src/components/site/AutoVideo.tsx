@@ -12,7 +12,7 @@ type AutoVideoProps = {
  * plays whenever it is visible and reliably resumes after tab switches
  * or interrupted autoplay attempts.
  */
-export function AutoVideo({ src, className = "", rootMargin = "300px" }: AutoVideoProps) {
+export function AutoVideo({ src, className = "", rootMargin = "400px" }: AutoVideoProps) {
   const ref = useRef<HTMLVideoElement>(null);
   const [active, setActive] = useState(false);
 
@@ -20,40 +20,45 @@ export function AutoVideo({ src, className = "", rootMargin = "300px" }: AutoVid
     const el = ref.current;
     if (!el) return;
 
+    const onScreen = () => {
+      const r = el.getBoundingClientRect();
+      return r.bottom > -400 && r.top < window.innerHeight + 400;
+    };
+
     const tryPlay = () => {
+      if (!el.isConnected) return;
+      setActive(true);
       const p = el.play();
       if (p && typeof p.catch === "function") p.catch(() => {});
     };
 
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries.some((e) => e.isIntersecting)) {
-          setActive(true);
-          tryPlay();
-        } else {
-          el.pause();
-        }
+        if (entries.some((e) => e.isIntersecting)) tryPlay();
+        else el.pause();
       },
       { rootMargin, threshold: 0.01 },
     );
     observer.observe(el);
 
+    // Fallback: observers never fire for tabs/iframes rendered offscreen,
+    // so start anyway shortly after mount.
+    const boot = window.setTimeout(tryPlay, 400);
+
     const onVisibility = () => {
-      if (document.visibilityState === "visible" && el.getBoundingClientRect().top < innerHeight) {
-        tryPlay();
-      }
+      if (document.visibilityState === "visible" && onScreen()) tryPlay();
+    };
+    const onPause = () => {
+      if (!document.hidden && onScreen()) tryPlay();
     };
 
     el.addEventListener("canplay", tryPlay);
     el.addEventListener("loadeddata", tryPlay);
-    el.addEventListener("pause", () => {
-      // browsers sometimes pause background media; resume if still on screen
-      const r = el.getBoundingClientRect();
-      if (!document.hidden && r.bottom > 0 && r.top < innerHeight) tryPlay();
-    });
+    el.addEventListener("pause", onPause);
     el.addEventListener("stalled", tryPlay);
-    el.addEventListener("suspend", tryPlay);
+    el.addEventListener("ended", tryPlay);
     document.addEventListener("visibilitychange", onVisibility);
+    window.addEventListener("focus", onVisibility);
 
     return () => {
       observer.disconnect();
