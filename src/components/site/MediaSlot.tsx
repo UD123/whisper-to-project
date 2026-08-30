@@ -1,4 +1,5 @@
 import { Film } from "lucide-react";
+import { AutoVideo } from "./AutoVideo";
 
 export type MediaSlotProps = {
   /** Direct MP4 URL, YouTube URL/embed, or image URL (PNG/JPG). Leave empty to render the reserved placeholder frame. */
@@ -65,13 +66,8 @@ export function MediaSlot({
 
       <div className={`relative w-full ${aspect} ${dark ? "bg-foreground" : "bg-background"}`}>
         {k === "video" && (
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="auto"
-            src={effective}
+          <AutoVideo
+            src={effective!}
             className="media-grade absolute inset-0 h-full w-full object-cover"
           />
         )}
