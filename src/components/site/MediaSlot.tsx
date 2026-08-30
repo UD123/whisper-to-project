@@ -65,13 +65,8 @@ export function MediaSlot({
 
       <div className={`relative w-full ${aspect} ${dark ? "bg-foreground" : "bg-background"}`}>
         {k === "video" && (
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="auto"
-            src={effective}
+          <AutoVideo
+            src={effective!}
             className="media-grade absolute inset-0 h-full w-full object-cover"
           />
         )}
