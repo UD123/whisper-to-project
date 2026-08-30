@@ -1,6 +1,6 @@
 import { MediaSlot } from "./MediaSlot";
 
-const objectScanningVideoUrl = "/media/hero-6dof-continuous.mp4?v=2";
+const objectScanningVideoUrl = "/media/hero-6dof-continuous.mp4?v=3";
 
 const steps = [
   [
