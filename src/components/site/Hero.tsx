@@ -62,13 +62,8 @@ export function Hero() {
               </span>
             </div>
             <div className="relative aspect-video w-full overflow-hidden bg-foreground">
-              <video
+              <AutoVideo
                 src={heroVideo.url}
-                autoPlay
-                loop
-                muted
-                playsInline
-                preload="metadata"
                 className="media-grade absolute inset-0 h-full w-full object-cover"
               />
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-foreground/45 via-transparent to-transparent" />
