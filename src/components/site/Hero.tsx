@@ -65,9 +65,9 @@ export function Hero() {
             <div className="relative aspect-video w-full overflow-hidden bg-foreground">
               <AutoVideo
                 src={heroVideo.url}
-                className="media-grade absolute inset-0 h-full w-full object-cover"
+                className="absolute inset-0 h-full w-full object-cover"
               />
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-foreground/45 via-transparent to-transparent" />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-foreground/25 via-transparent to-transparent" />
               <div className="pointer-events-none absolute inset-0 ring-1 ring-background/10 ring-inset" />
             </div>
 
