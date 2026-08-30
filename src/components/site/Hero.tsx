@@ -1,4 +1,5 @@
 import heroVideo from "@/assets/object-scanning.mp4.asset.json";
+import { AutoVideo } from "./AutoVideo";
 
 const stats = [
   ["Speed", "< 30 ms", "1 MPix · GPU"],
