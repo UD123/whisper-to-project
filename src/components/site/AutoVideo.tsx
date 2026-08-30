@@ -26,8 +26,8 @@ export function AutoVideo({ src, className = "", rootMargin = "300px" }: AutoVid
     };
 
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
           setActive(true);
           tryPlay();
         } else {
@@ -73,8 +73,6 @@ export function AutoVideo({ src, className = "", rootMargin = "300px" }: AutoVid
       loop
       muted
       playsInline
-      // @ts-expect-error vendor attribute for iOS/Safari inline autoplay
-      webkit-playsinline="true"
       preload="metadata"
       disablePictureInPicture
       className={className}
