@@ -1,4 +1,5 @@
 import { Film } from "lucide-react";
+import { AutoVideo } from "./AutoVideo";
 
 export type MediaSlotProps = {
   /** Direct MP4 URL, YouTube URL/embed, or image URL (PNG/JPG). Leave empty to render the reserved placeholder frame. */
