@@ -62,11 +62,14 @@ export function AutoVideo({ src, className = "", rootMargin = "400px" }: AutoVid
 
     return () => {
       observer.disconnect();
+      window.clearTimeout(boot);
       el.removeEventListener("canplay", tryPlay);
       el.removeEventListener("loadeddata", tryPlay);
+      el.removeEventListener("pause", onPause);
       el.removeEventListener("stalled", tryPlay);
-      el.removeEventListener("suspend", tryPlay);
+      el.removeEventListener("ended", tryPlay);
       document.removeEventListener("visibilitychange", onVisibility);
+      window.removeEventListener("focus", onVisibility);
     };
   }, [rootMargin]);
 
