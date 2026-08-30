@@ -1,4 +1,4 @@
-import heroVideo from "@/assets/object-scanning.mp4.asset.json";
+import heroVideo from "@/assets/hero-6dof.mp4.asset.json";
 import { AutoVideo } from "./AutoVideo";
 
 const stats = [
