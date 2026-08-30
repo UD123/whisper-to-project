@@ -1,5 +1,6 @@
-import heroVideo from "@/assets/hero-6dof.mp4.asset.json";
 import { AutoVideo } from "./AutoVideo";
+
+const heroVideoUrl = "/media/hero-6dof-continuous.mp4";
 
 const stats = [
   ["Speed", "< 30 ms", "1 MPix · GPU"],
@@ -64,7 +65,7 @@ export function Hero() {
             </div>
             <div className="relative aspect-video w-full overflow-hidden bg-foreground">
               <AutoVideo
-                src={heroVideo.url}
+                src={heroVideoUrl}
                 className="absolute inset-0 h-full w-full object-cover"
               />
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-foreground/25 via-transparent to-transparent" />
