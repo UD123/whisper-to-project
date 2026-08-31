@@ -1,23 +1,23 @@
+import { useT } from "@/i18n/LanguageProvider";
+
 export function About() {
+  const t = useT();
+
   return (
     <section id="about" className="border-b border-border">
       <div className="mx-auto max-w-7xl px-6 py-16 md:py-20">
         <div className="grid gap-10 md:items-center lg:grid-cols-2">
           <div>
-            <span className="mono-label text-primary">07 — About</span>
+            <span className="mono-label text-primary">{t.about.eyebrow}</span>
             <h2 className="mt-4 text-3xl font-semibold tracking-[-0.02em] md:text-4xl">
-              About RobotAI
+              {t.about.title}
             </h2>
           </div>
           <p className="text-base leading-relaxed text-muted-foreground md:text-lg">
-            We are a deep-tech software company disrupting industrial automation. By replacing complex,
-            expensive 3D hardware and lidars with high-performance RGB-based vision algorithms, we empower
-            robotic systems with instant, material-agnostic 6DOF perception at a fraction of traditional
-            costs.
+            {t.about.body}
           </p>
         </div>
       </div>
     </section>
   );
 }
-

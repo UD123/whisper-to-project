@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { LanguageProvider } from "@/i18n/LanguageProvider";
 import { Navbar } from "@/components/site/Navbar";
 import { Hero } from "@/components/site/Hero";
 import { TrustMetrics } from "@/components/site/TrustMetrics";
@@ -25,6 +26,8 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: title },
       { property: "og:description", content: description },
       { property: "og:type", content: "website" },
+      { property: "og:locale", content: "en_US" },
+      { property: "og:locale:alternate", content: "zh_CN" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
@@ -33,24 +36,24 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   return (
-    <div className="min-h-screen bg-background">
-      <Navbar />
-      <main>
-        <Hero />
-        <TrustMetrics />
-        <RgbAdvantage />
-        <Applications />
-        <Workflow />
-        <Ecosystem />
-        <Specs />
-        <ObjectCatalog />
-        <About />
-        <FAQ />
-        <DemoForm />
-      </main>
-      <Footer />
-    </div>
+    <LanguageProvider>
+      <div className="min-h-screen bg-background">
+        <Navbar />
+        <main>
+          <Hero />
+          <TrustMetrics />
+          <RgbAdvantage />
+          <Applications />
+          <Workflow />
+          <Ecosystem />
+          <Specs />
+          <ObjectCatalog />
+          <About />
+          <FAQ />
+          <DemoForm />
+        </main>
+        <Footer />
+      </div>
+    </LanguageProvider>
   );
 }
-
-

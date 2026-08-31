@@ -1,46 +1,27 @@
 import { Plus, Minus } from "lucide-react";
 import { useState } from "react";
-
-const faqs = [
-  {
-    q: "Do we need to buy expensive new cameras or LIDARs?",
-    a: "No. RobotAI is hardware-agnostic and works with standard industrial or compact USB RGB cameras you might already have.",
-  },
-  {
-    q: "How long does integration take?",
-    a: "Integration typically takes only a few days using standard industrial protocols (ROS, ROS2, Modbus, TCP/IP).",
-  },
-  {
-    q: "How does the custom part evaluation work?",
-    a: "You submit your part geometry and application type through our form. Our engine runs a pose-estimation evaluation on your specific components and we report back with the accuracy and performance metrics.",
-  },
-  {
-    q: "What hardware is required for processing?",
-    a: "Standard Windows or Linux industrial PCs equipped with an NVIDIA GPU for sub-30 ms inference.",
-  },
-];
+import { useT } from "@/i18n/LanguageProvider";
 
 export function FAQ() {
+  const t = useT();
   const [open, setOpen] = useState<number | null>(0);
 
   return (
     <section id="faq" className="border-b border-border bg-card">
       <div className="mx-auto max-w-7xl px-6 py-16 md:py-20">
         <div className="max-w-2xl">
-          <span className="mono-label text-primary">08 — FAQ</span>
+          <span className="mono-label text-primary">{t.faq.eyebrow}</span>
           <h2 className="mt-4 text-3xl font-semibold tracking-[-0.02em] md:text-4xl">
-            B2B FAQ
+            {t.faq.title}
           </h2>
-          <p className="mt-4 text-muted-foreground">
-            Common questions from engineering and procurement teams.
-          </p>
+          <p className="mt-4 text-muted-foreground">{t.faq.subtitle}</p>
         </div>
 
         <div className="mt-12 max-w-3xl divide-y divide-border rounded-xl border border-border bg-background">
-          {faqs.map((f, i) => {
+          {t.faq.items.map((f, i) => {
             const isOpen = open === i;
             return (
-              <div key={i} className="px-6 py-5">
+              <div key={f.q} className="px-6 py-5">
                 <button
                   onClick={() => setOpen(isOpen ? null : i)}
                   className="flex w-full items-center justify-between gap-4 text-left"
