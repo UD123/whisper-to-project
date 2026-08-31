@@ -10,7 +10,7 @@ import agritechVideo from "@/assets/agritech.mp4.asset.json";
 
 
 
-const apps = [
+const apps: { id: string; title: string; desc: string; src: string; wide?: boolean }[] = [
   {
     id: "bin_picking",
     title: "Random Bin Picking",
