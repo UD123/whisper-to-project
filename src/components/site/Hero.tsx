@@ -1,6 +1,4 @@
-import { AutoVideo } from "./AutoVideo";
-
-const heroVideoUrl = "/media/hero-6dof-continuous.mp4?v=3";
+import objectScanFrame from "@/assets/object-scan-frame.png.asset.json";
 
 const stats = [
   ["Speed", "< 30 ms", "1 MPix · GPU"],
@@ -64,8 +62,9 @@ export function Hero() {
               </span>
             </div>
             <div className="relative aspect-video w-full overflow-hidden bg-foreground">
-              <AutoVideo
-                src={heroVideoUrl}
+              <img
+                src={objectScanFrame.url}
+                alt="RobotAI live 6DOF object pose estimation: X, Y, Z, Rx, Ry, Rz telemetry over an industrial part"
                 className="absolute inset-0 h-full w-full object-cover"
               />
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-foreground/25 via-transparent to-transparent" />
