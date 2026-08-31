@@ -1,7 +1,7 @@
 import { MediaSlot } from "./MediaSlot";
 import objectLocalizationVideo from "@/assets/object-localization.mp4.asset.json";
-import machineTendingVideo from "@/assets/machine-tending.mp4.asset.json";
-import randomBinPickingVideo from "@/assets/random-bin-picking.mp4.asset.json";
+import machineTendingVideo from "@/assets/machine-tending-loop.mp4.asset.json";
+import randomBinPickingVideo from "@/assets/bin-picking-wide.mp4.asset.json";
 import palletizingVideo from "@/assets/palletizing.mp4.asset.json";
 import assemblyVideo from "@/assets/assembly.mp4.asset.json";
 import agvDockingVideo from "@/assets/agv-docking.mp4.asset.json";
@@ -16,6 +16,7 @@ const apps = [
     title: "Random Bin Picking",
     desc: "Small parts, reflective bolts, chaotic orientation in deep bins.",
     src: randomBinPickingVideo.url,
+    wide: true,
   },
   {
     id: "machine_tending",
@@ -74,13 +75,13 @@ export function Applications() {
           {apps.map((a, i) => (
             <article
               key={a.id}
-              className="flex flex-col rounded-xl border border-border bg-card p-4 transition-all duration-300 hover:-translate-y-1 hover:border-foreground/20 hover:shadow-[0_24px_50px_-32px_oklch(0.21_0.03_264/0.6)]"
+              className={`flex flex-col rounded-xl border border-border bg-card p-4${a.wide ? " lg:col-span-2" : ""} transition-all duration-300 hover:-translate-y-1 hover:border-foreground/20 hover:shadow-[0_24px_50px_-32px_oklch(0.21_0.03_264/0.6)]`}
             >
               <MediaSlot
                 tone="dark"
                 label={`CAM_${String(i + 2).padStart(2, "0")} · 1080P`}
                 caption={a.src ? a.title : "screenshot / diagram slot"}
-                aspect="aspect-video"
+                aspect={a.wide ? "aspect-[21/9]" : "aspect-video"}
                 src={a.src}
               />
               <h3 className="mt-5 px-1 text-base font-semibold tracking-tight">{a.title}</h3>
@@ -89,7 +90,7 @@ export function Applications() {
             </article>
           ))}
 
-          <article className="flex flex-col justify-between rounded-xl border border-dashed border-border bg-background p-7 md:col-span-1 lg:col-span-2">
+          <article className="flex flex-col justify-between rounded-xl border border-dashed border-border bg-background p-7 md:col-span-1">
             <div>
               <span className="mono-label text-primary">Your part</span>
               <h3 className="mt-4 text-lg font-semibold tracking-tight">
