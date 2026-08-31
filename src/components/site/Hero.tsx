@@ -1,4 +1,5 @@
-import objectScanFrame from "@/assets/object-scan-frame.png.asset.json";
+import heroLoop from "@/assets/hero-6dof-boomerang.mp4.asset.json";
+import { AutoVideo } from "./AutoVideo";
 
 const stats = [
   ["Speed", "< 30 ms", "1 MPix · GPU"],
