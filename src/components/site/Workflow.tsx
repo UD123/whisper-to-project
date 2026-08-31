@@ -1,6 +1,8 @@
 import { MediaSlot } from "./MediaSlot";
 
-const objectScanningVideoUrl = "/media/hero-6dof-continuous.mp4?v=3";
+import objectScanningVideo from "@/assets/object-scanning-loop.mp4.asset.json";
+
+const objectScanningVideoUrl = objectScanningVideo.url;
 
 const steps = [
   [
