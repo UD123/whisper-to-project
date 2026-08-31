@@ -1,4 +1,4 @@
-import heroLoop from "@/assets/hero-forward-loop.mp4.asset.json";
+import heroLoop from "@/assets/hero-16x9-loop.mp4.asset.json";
 import { AutoVideo } from "./AutoVideo";
 import { useT } from "@/i18n/LanguageProvider";
 
