@@ -5,3 +5,4 @@
 - [ ] Multilingual support: Chinese (Simplified) + English
   - [ ] Language switcher in navbar next to "Request Demo"
   - [ ] Translate all sections: hero, comparison table, applications, workflow, ecosystem, specs, catalog, about, FAQ, footer, forms
+- [x] Object Scanning video: telemetry re-rendered without black box, text overlaid directly on video, seamless 20s boomerang
