@@ -1,6 +1,6 @@
 import { MediaSlot } from "./MediaSlot";
 import { useT } from "@/i18n/LanguageProvider";
-import objectScanningVideo from "@/assets/object-scanning-loop.mp4.asset.json";
+import objectScanningVideo from "@/assets/object-scanning-zoom.mp4.asset.json";
 
 export function Workflow() {
   const t = useT();
