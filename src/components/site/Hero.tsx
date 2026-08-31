@@ -1,4 +1,4 @@
-import heroLoop from "@/assets/hero-6dof-boomerang.mp4.asset.json";
+import heroLoop from "@/assets/hero-manipulation-loop.mp4.asset.json";
 import { AutoVideo } from "./AutoVideo";
 
 const stats = [
