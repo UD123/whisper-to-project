@@ -144,7 +144,7 @@ export const en = {
         desc: "Real-time pose estimation detecting objects and streaming 6DOF vectors to the robot.",
       },
     ],
-    mediaLabel: "OBJECT SCANNING · STEP 01/02",
+    mediaLabel: "OBJECT SCANNING · STEP 01/03",
     suiteEyebrow: "03.1 — Software suite",
     suiteTitle: "Modular Software Suite",
     modules: [
