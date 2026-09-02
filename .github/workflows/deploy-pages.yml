@@ -30,6 +30,14 @@ jobs:
       - name: SPA fallback for deep links
         run: cp dist/client/index.html dist/client/404.html
 
+      # Videos/images live on the Lovable CDN at /__l5e/... — that path only
+      # exists on Lovable hosting. Point those URLs at the published Lovable
+      # site so they also resolve on GitHub Pages.
+      - name: Rewrite Lovable CDN asset URLs to absolute
+        run: |
+          grep -rl '/__l5e/' dist/client --include='*.html' --include='*.js' \
+            | xargs sed -i 's|"/__l5e/|"https://whisper-to-project.lovable.app/__l5e/|g'
+
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist/client
