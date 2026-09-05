@@ -46,7 +46,10 @@ jobs:
           media_dir = root / "media"
           media_dir.mkdir(exist_ok=True)
           files = list(root.rglob("*.html")) + list(root.rglob("*.js"))
-          pattern = re.compile(r'(?:https://whisper-to-project\.lovable\.app)?(/__l5e/assets-v1/[^"\'\\)]+)')
+          pattern = re.compile(
+            r'(?:https://whisper-to-project\.lovable\.app)?'
+            r'(/__l5e/assets-v1/[^"\'`\\)]+?\.(?:mp4|webm|mov|png|jpe?g|webp))'
+          )
           replacements = {}
 
           for file in files:
