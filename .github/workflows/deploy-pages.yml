@@ -30,13 +30,54 @@ jobs:
       - name: SPA fallback for deep links
         run: cp dist/client/index.html dist/client/404.html
 
-      # Videos/images live on the Lovable CDN at /__l5e/... — that path only
-      # exists on Lovable hosting. Point those URLs at the published Lovable
-      # site so they also resolve on GitHub Pages.
-      - name: Rewrite Lovable CDN asset URLs to absolute
+      # Bundle CDN-hosted media into the Pages artifact. Serving videos from
+      # the same domain avoids cross-origin playback failures and removes the
+      # runtime dependency on the Lovable deployment.
+      - name: Bundle media for GitHub Pages
         run: |
-          grep -rl '/__l5e/' dist/client --include='*.html' --include='*.js' \
-            | xargs sed -i 's|"/__l5e/|"https://whisper-to-project.lovable.app/__l5e/|g'
+          python3 - <<'PY'
+          from pathlib import Path
+          from urllib.parse import urlparse
+          from urllib.request import Request, urlopen
+          import hashlib
+          import re
+
+          root = Path("dist/client")
+          media_dir = root / "media"
+          media_dir.mkdir(exist_ok=True)
+          files = list(root.rglob("*.html")) + list(root.rglob("*.js"))
+          pattern = re.compile(
+            r'(?:https://whisper-to-project\.lovable\.app)?'
+            r'(/__l5e/assets-v1/[^"\'`\\)]+?\.(?:mp4|webm|mov|png|jpe?g|webp))'
+          )
+          replacements = {}
+
+          for file in files:
+            text = file.read_text()
+            for path in pattern.findall(text):
+              if path in replacements:
+                continue
+              source = f"https://whisper-to-project.lovable.app{path}"
+              basename = Path(urlparse(path).path).name
+              prefix = hashlib.sha256(path.encode()).hexdigest()[:10]
+              target_name = f"{prefix}-{basename}"
+              target = media_dir / target_name
+              request = Request(source, headers={"User-Agent": "GitHub-Actions"})
+              with urlopen(request, timeout=120) as response, target.open("wb") as output:
+                while chunk := response.read(1024 * 1024):
+                  output.write(chunk)
+              replacements[path] = f"/media/{target_name}"
+
+          for file in files:
+            text = file.read_text()
+            for source_path, local_path in replacements.items():
+              text = text.replace(
+                f"https://whisper-to-project.lovable.app{source_path}", local_path
+              ).replace(source_path, local_path)
+            file.write_text(text)
+
+          print(f"Bundled {len(replacements)} media assets")
+          PY
 
       - uses: actions/upload-pages-artifact@v3
         with:
