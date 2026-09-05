@@ -9,3 +9,4 @@
 - [x] Global footprint: add China and Japan alongside Korea and Poland
 - [x] Object Scanning video: sharper native-resolution telemetry text
 - [x] Object 3D Localization video: repair frames with missing telemetry
+- [ ] Restore video playback on the published GitHub Pages site and verify all media URLs
