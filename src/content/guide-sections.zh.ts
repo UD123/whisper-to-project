@@ -1,10 +1,10 @@
 import type { GuideSection } from "./guide-sections";
 
-/** Simplified Chinese version of sections 02–07. */
+/** Simplified Chinese version of sections 03–11. */
 export const guideSectionsZh: GuideSection[] = [
   {
     id: "optics",
-    n: "02",
+    n: "03",
     title: "相机与光学配置",
     summary: "选择相机、镜头与工作距离，确保工件在图像中足够大。",
     blocks: [
@@ -60,7 +60,7 @@ export const guideSectionsZh: GuideSection[] = [
   },
   {
     id: "scanning",
-    n: "03",
+    n: "04",
     title: "工件扫描与数据采集",
     summary: "从多个位置录制工件视频，作为 3D 模型的原始数据。",
     blocks: [
@@ -105,7 +105,7 @@ export const guideSectionsZh: GuideSection[] = [
   },
   {
     id: "calibration",
-    n: "04",
+    n: "05",
     title: "相机标定",
     summary: "在工作距离处使用棋盘格标定板完成相机标定。",
     blocks: [
@@ -141,7 +141,7 @@ export const guideSectionsZh: GuideSection[] = [
   },
   {
     id: "measurements",
-    n: "05",
+    n: "06",
     title: "工件测量",
     summary: "提供工件真实尺寸，确保模型比例正确。",
     blocks: [
@@ -160,8 +160,78 @@ export const guideSectionsZh: GuideSection[] = [
     ],
   },
   {
+    id: "upload-data",
+    n: "07",
+    title: "上传工件数据",
+    summary: "将图像、相机标定数据与工件尺寸一并发送给 RobotAI。",
+    blocks: [
+      {
+        t: "p",
+        text: "完成扫描、相机标定和测量后，将完整的工件数据打包发送给 RobotAI。",
+      },
+      {
+        t: "bullets",
+        items: [
+          "从不同位置拍摄的工件图像（第 04 节）",
+          "棋盘格标定流程生成的相机标定数据（第 05 节）",
+          "工件尺寸信息 —— 图纸或实测尺寸（第 06 节）",
+        ],
+      },
+      {
+        t: "note",
+        label: "无需特殊格式",
+        text: "共享文件夹链接或 zip 压缩包均可。我们会在开始建模前检查数据完整性并与您确认。",
+      },
+    ],
+  },
+  {
+    id: "model",
+    n: "08",
+    title: "RobotAI 构建模型",
+    summary: "我们为您的工件训练检测模型并交付给您 —— 您无需安装任何内容。",
+    blocks: [
+      {
+        t: "p",
+        text: "此步骤在 RobotAI 完成。我们根据您上传的数据为工件创建模型，并将完成的模型分享给您。",
+      },
+      {
+        t: "note",
+        label: "保持沟通",
+        text: "如果数据有缺失或不一致，我们会在开始前与您联系。您也可以随时通过下方演示申请表单联系团队。",
+      },
+    ],
+  },
+  {
+    id: "test-detection",
+    n: "09",
+    title: "检测测试",
+    summary: "用与 USB 测试数据完全相同的方式验证您的模型。",
+    blocks: [
+      {
+        t: "p",
+        text: "测试您自己的模型与第 02 节的软件验证流程相同 —— 加载项目目录，在录制视频或实时相机上运行检测，并检查输出的位姿。",
+      },
+      {
+        t: "steps",
+        items: [
+          {
+            menu: ["Project", "Select Object Directory"],
+            body: "选择包含工件及 RobotAI 交付模型的文件夹。",
+          },
+          {
+            menu: ["Detect", "Run Video from File"],
+            body: "或在实时相机上运行。检测到的位姿会叠加显示在工件上。",
+          },
+          {
+            body: "按 q 停止。如果位姿正确跟随工件，则检测运行正常。",
+          },
+        ],
+      },
+    ],
+  },
+  {
     id: "robot-calibration",
-    n: "06",
+    n: "10",
     title: "相机–机器人标定",
     summary: "手眼标定：将检测结果转换到机器人坐标系。",
     blocks: [
@@ -240,7 +310,7 @@ export const guideSectionsZh: GuideSection[] = [
   },
   {
     id: "communication",
-    n: "07",
+    n: "11",
     title: "机器人通信",
     summary: "Pose6D 作为 TCP 服务器：机器人请求位姿，返回六个数值。",
     blocks: [
