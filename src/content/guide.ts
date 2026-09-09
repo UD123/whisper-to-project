@@ -230,7 +230,7 @@ export const guide = {
     { id: "main-steps", label: "Main steps" },
     { id: "video", label: "Video guide" },
     { id: "installation", label: "01 — Installation" },
-    { id: "verification", label: "Verification" },
+    { id: "verification", label: "Verification", sub: true },
     { id: "optics", label: "02 — Camera & optics" },
     { id: "scanning", label: "03 — Object scanning" },
     { id: "calibration", label: "04 — Camera calibration" },
