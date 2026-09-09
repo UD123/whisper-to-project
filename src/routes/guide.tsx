@@ -322,7 +322,7 @@ function GuideContent() {
                   </GuideAccordion>
 
                   {/* Sections 02–07 */}
-                  {guideSections.map((s) => (
+                  {sections.map((s) => (
                     <GuideAccordion
                       key={s.id}
                       id={s.id}
