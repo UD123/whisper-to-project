@@ -4,7 +4,7 @@ export type Block =
   | { t: "steps"; items: { menu?: string[]; body: string; path?: string }[] }
   | { t: "note"; label: string; text: string }
   | { t: "table"; head: string[]; rows: string[][] }
-  | { t: "videos"; label: string; items: { name: string; url: string }[] }
+  | { t: "videos"; label: string; items: { name: string; key: string }[] }
   | { t: "code"; label: string; lines: string[] }
   | { t: "h"; text: string };
 
@@ -12,7 +12,6 @@ export type GuideSection = {
   id: string;
   n: string;
   title: string;
-  updated: string;
   summary: string;
   blocks: Block[];
 };
