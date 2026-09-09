@@ -27,7 +27,7 @@ export const guide = {
   steps: {
     eyebrow: "Route",
     title: "Main steps for a single-object pose estimation",
-    subtitle: "Eleven steps. Sections marked as coming soon will be published here shortly.",
+    subtitle: "Eleven steps. Click a step to jump to its instructions.",
     items: [
       {
         n: "01",
@@ -45,22 +45,25 @@ export const guide = {
         n: "03",
         title: "Define your setup",
         detail: "Camera, working distance and object size in the image.",
+        href: "#optics",
       },
       {
         n: "04",
         title: "Collect image data",
         detail: "Record the object from different positions according to your setup.",
+        href: "#scanning",
       },
       {
         n: "05",
         title: "Camera calibration",
         detail: "Run the calibration procedure with the printed checkerboard pattern.",
-        href: "#downloads",
+        href: "#calibration",
       },
       {
         n: "06",
         title: "Provide object dimensions",
         detail: "Measure the part and supply its size information.",
+        href: "#measurements",
       },
       {
         n: "07",
@@ -82,11 +85,13 @@ export const guide = {
         n: "10",
         title: "Hand-eye calibration",
         detail: "Transform the result into your robot coordinate frame.",
+        href: "#robot-calibration",
       },
       {
         n: "11",
         title: "Robot communication",
         detail: "Connect the output to your controller — the interface is flexible.",
+        href: "#communication",
       },
     ] as GuideStep[],
     soon: "coming soon",
@@ -201,7 +206,7 @@ export const guide = {
 
   setupNote: {
     label: "Next section preview",
-    text: "For your own part, keep the object at 250 × 250 pixels or more in the image. Camera, optics and working distance follow from that requirement — this is covered in the next section.",
+    text: "For your own part, the object must cover at least 200 × 200 pixels in a 1280 × 720 image — about one third to one quarter of the field of view. Camera, optics and working distance follow from that, and are covered in the next section.",
   },
 
   downloads: {
@@ -235,8 +240,13 @@ export const guide = {
     { id: "video", label: "Video guide" },
     { id: "installation", label: "01 — Installation" },
     { id: "verification", label: "Verification" },
+    { id: "optics", label: "02 — Camera & optics" },
+    { id: "scanning", label: "03 — Object scanning" },
+    { id: "calibration", label: "04 — Camera calibration" },
+    { id: "measurements", label: "05 — Object measurements" },
+    { id: "robot-calibration", label: "06 — Camera–robot calibration" },
+    { id: "communication", label: "07 — Robot communication" },
     { id: "downloads", label: "Documents" },
-    { id: "upcoming", label: "Coming next" },
   ],
 
   help: {
