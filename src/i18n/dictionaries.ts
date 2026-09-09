@@ -40,6 +40,10 @@ export const en = {
     { value: "< 30 ms", label: "Latency", sub: "NVIDIA GPU accelerated" },
     { value: "Global", label: "Deployment", sub: "China · Japan · Singapore" },
   ],
+  clients: {
+    eyebrow: "Trusted by industrial teams",
+    note: "Selected manufacturers and integrators working with RobotAI technology.",
+  },
   technology: {
     eyebrow: "01 — Technology",
     title: "Comparison: Traditional 3D Vision vs. RobotAI",
@@ -356,6 +360,10 @@ export const zh: Dict = {
     { value: "< 30 毫秒", label: "延迟", sub: "NVIDIA GPU 加速" },
     { value: "全球", label: "部署", sub: "中国 · 日本 · 新加坡" },
   ],
+  clients: {
+    eyebrow: "获得工业客户信赖",
+    note: "部分与 RobotAI 技术合作的制造企业与系统集成商。",
+  },
   technology: {
     eyebrow: "01 — 技术",
     title: "对比：传统 3D 视觉 vs. RobotAI",
