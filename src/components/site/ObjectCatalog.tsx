@@ -1,4 +1,5 @@
 import { useT } from "@/i18n/LanguageProvider";
+import { ObjectGallery } from "@/components/site/ObjectGallery";
 
 export function ObjectCatalog() {
   const t = useT();
@@ -31,6 +32,8 @@ export function ObjectCatalog() {
             </div>
           ))}
         </div>
+
+        <ObjectGallery />
       </div>
     </section>
   );

@@ -219,6 +219,9 @@ export const en = {
     eyebrow: "06 — Catalog",
     title: "Trained Object Capability Catalog",
     subtitle: "Proven 3D pose detection across diverse geometry and surface physics.",
+    galleryTitle: "Detected objects — examples",
+    galleryNote: "Click a card to play a short clip",
+    galleryClose: "Close",
     categories: [
       {
         label: "Components & metal",
@@ -506,6 +509,9 @@ export const zh: Dict = {
     eyebrow: "06 — 物体目录",
     title: "已训练物体能力目录",
     subtitle: "在多样几何形状与表面物理特性上验证过的 3D 位姿检测能力。",
+    galleryTitle: "检测物体示例",
+    galleryNote: "点击卡片播放短视频",
+    galleryClose: "关闭",
     categories: [
       {
         label: "零部件与金属件",
