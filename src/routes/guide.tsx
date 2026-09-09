@@ -167,15 +167,16 @@ function GuideContent() {
               <section className="mt-16">
                 <div className="flex items-end justify-between gap-4">
                   <h2 className="text-2xl font-semibold tracking-[-0.02em] md:text-3xl">
-                    Instructions
+                    {g.instructions.title}
                   </h2>
                   <button
                     type="button"
                     onClick={() => (acc.allOpen ? acc.collapseAll() : acc.expandAll())}
                     className="mono-label rounded-md border border-border bg-card px-3 py-2 text-muted-foreground transition-colors hover:text-foreground"
                   >
-                    {acc.allOpen ? "Collapse all" : "Expand all"}
+                    {acc.allOpen ? g.instructions.collapse : g.instructions.expand}
                   </button>
+
                 </div>
 
                 <div className="mt-6">
