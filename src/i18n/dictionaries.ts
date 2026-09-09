@@ -198,7 +198,7 @@ export const en = {
       "Computing hardware",
     ],
     computing: ["Windows industrial PC", "Linux industrial PC", "NVIDIA GPU (sub-30 ms)"],
-    cameraExtra: ["Miniature USB RGB"],
+    cameraExtra: [] as string[],
   },
   specs: {
     eyebrow: "05 — Specifications",
@@ -491,7 +491,7 @@ export const zh: Dict = {
     subtitle: "无厂商绑定，可与您现有的工业电脑和机器人产线无缝集成。",
     groups: ["相机接口", "机器人品牌", "通信协议", "算力硬件"],
     computing: ["Windows 工业电脑", "Linux 工业电脑", "NVIDIA GPU（30 毫秒内）"],
-    cameraExtra: ["微型 USB RGB 相机"],
+    cameraExtra: [] as string[],
   },
   specs: {
     eyebrow: "05 — 技术参数",
