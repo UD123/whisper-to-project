@@ -301,6 +301,11 @@ function GuidePage() {
                 <Callout label={g.setupNote.label}>{g.setupNote.text}</Callout>
               </section>
 
+              {/* Sections 02–07 */}
+              {guideSections.map((s) => (
+                <GuideSectionView key={s.id} section={s} />
+              ))}
+
               {/* Documents */}
               <section id="downloads" className="mt-20 scroll-mt-24">
                 <span className="mono-label text-primary">{g.downloads.eyebrow}</span>
@@ -325,22 +330,8 @@ function GuidePage() {
                 </div>
               </section>
 
-              {/* Coming next */}
-              <section id="upcoming" className="mt-20 scroll-mt-24">
-                <h2 className="text-2xl font-semibold tracking-[-0.02em]">{g.upcoming.title}</h2>
-                <ul className="mt-6 grid gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-2">
-                  {g.upcoming.items.map((i) => (
-                    <li
-                      key={i}
-                      className="flex items-center justify-between gap-4 bg-card px-5 py-4 text-sm text-muted-foreground"
-                    >
-                      {i}
-                      <span className="mono-label shrink-0 text-muted-foreground/70">
-                        {g.steps.soon}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
+              <section className="mt-20">
+
 
                 <div className="mt-10 flex flex-wrap items-center justify-between gap-4 rounded-xl border border-border bg-card p-6">
                   <div>
