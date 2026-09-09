@@ -1,9 +1,9 @@
 # План: структура сайта (Product / Docs / Billing) + настоящий логотип JAKA
 
-## 1. Логотип JAKA Robotics (Ecosystem)
-- Источник: официальный логотип со страницы профиля JAKA (b2bindustry.net) — красный wordmark JAKA® на белом, 1000×1000.
-- Обрезать белые поля, векторизовать в чистый SVG (potrace) → `src/assets/logos/jaka.svg`.
-- Заменить текущий самодельный `jaka.svg`, который уже подключён в `BrandLogo.tsx` (grayscale → цвет при hover сохранится автоматически).
+## 1. Логотипы JAKA и Dobot (Ecosystem)
+- **JAKA**: официальный логотип с профиля JAKA (b2bindustry.net) — красный wordmark JAKA®, 1000×1000 JPG. Обрезать белые поля, векторизовать в чистый SVG (potrace) → заменить самодельный `src/assets/logos/jaka.svg`.
+- **Dobot**: официальный SVG с Wikimedia Commons (горизонтальный wordmark, синий #0047BA, viewBox 292×108) — уже скачан. Обрезать лишнее, положить в `src/assets/logos/dobot.svg` вместо текущего.
+- Оба уже подключены в `BrandLogo.tsx` — grayscale → цвет при hover сохранится автоматически.
 - Проверить рендер в секции 04 Ecosystem.
 
 ## 2. Переключатель разделов в шапке
