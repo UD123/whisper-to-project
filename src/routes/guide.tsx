@@ -56,7 +56,7 @@ function GuidePage() {
   return (
     <LanguageProvider>
       <div className="min-h-screen bg-background">
-        <Navbar hashBase="/" solid />
+        <Navbar hashBase="/" solid section="docs" />
 
         <main id="top">
           {/* Page header */}

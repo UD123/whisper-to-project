@@ -38,7 +38,7 @@ function Index() {
   return (
     <LanguageProvider>
       <div className="min-h-screen bg-background">
-        <Navbar />
+        <Navbar section="product" />
         <main>
           <Hero />
           <TrustMetrics />

@@ -1,1 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 48"><text x="8" y="33" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="900" letter-spacing="1" fill="#F39800">TM</text><text x="62" y="24" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700" letter-spacing="1.2" fill="#4D4D4F">TECHMAN</text><text x="62" y="39" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700" letter-spacing="1.2" fill="#4D4D4F">ROBOT</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 48">
+  <!-- TM icon -->
+  <g transform="translate(2, 6) scale(1.1)">
+    <path d="M2 4 h12 v4 h-4 v17 h-4 v-17 h-4 z" fill="#00A651"/>
+    <path d="M18 4 h6 l6 12.5 l6 -12.5 h6 v21 h-4.5 v-12 l-5 12 h-2.5 l-5 -12 v12 h-4.5 z" fill="#0082C6"/>
+  </g>
+  <text x="48" y="20" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="700" letter-spacing="0.1em" fill="#555555">TECHMAN</text>
+  <text x="48" y="35" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="11" font-weight="700" letter-spacing="0.1em" fill="#555555">ROBOT</text>
+</svg>
