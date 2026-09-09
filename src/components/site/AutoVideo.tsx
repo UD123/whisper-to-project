@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 
 type AutoVideoProps = {
   src: string;
+  poster?: string;
   className?: string;
   /** Start loading when the slot is this far from the viewport */
   rootMargin?: string;
@@ -12,7 +13,7 @@ type AutoVideoProps = {
  * plays whenever it is visible and reliably resumes after tab switches
  * or interrupted autoplay attempts.
  */
-export function AutoVideo({ src, className = "", rootMargin = "400px" }: AutoVideoProps) {
+export function AutoVideo({ src, poster, className = "", rootMargin = "400px" }: AutoVideoProps) {
   const ref = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -75,6 +76,7 @@ export function AutoVideo({ src, className = "", rootMargin = "400px" }: AutoVid
     <video
       ref={ref}
       src={src}
+      poster={poster}
       autoPlay
       loop
       muted
