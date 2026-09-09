@@ -36,7 +36,7 @@ export const en = {
     live: "live",
   },
   trust: [
-    { value: "5+", label: "Active Industrial Pilots", sub: "Production environments" },
+    { value: "10+", label: "Active Industrial Pilots", sub: "Production environments" },
     { value: "< 30 ms", label: "Latency", sub: "NVIDIA GPU accelerated" },
     { value: "Global", label: "Deployment", sub: "China · Japan · Singapore" },
   ],
@@ -356,7 +356,7 @@ export const zh: Dict = {
     live: "实时",
   },
   trust: [
-    { value: "5+", label: "在运工业试点项目", sub: "真实生产环境" },
+    { value: "10+", label: "在运工业试点项目", sub: "真实生产环境" },
     { value: "< 30 毫秒", label: "延迟", sub: "NVIDIA GPU 加速" },
     { value: "全球", label: "部署", sub: "中国 · 日本 · 新加坡" },
   ],
