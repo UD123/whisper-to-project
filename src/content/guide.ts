@@ -38,7 +38,7 @@ export const guide = {
         n: "01",
         title: "Get the software",
         detail: "Download the free POC version (CPU only) together with its documentation.",
-        href: "#installation",
+        href: "#get-software",
       },
       {
         n: "02",
@@ -74,17 +74,19 @@ export const guide = {
         n: "07",
         title: "Upload the object data",
         detail: "Send images, calibration and size data to RobotAI.",
+        href: "#upload-data",
       },
       {
         n: "08",
         title: "RobotAI builds the model",
         detail: "We train the model for your part and share it back with you.",
+        href: "#model",
       },
       {
         n: "09",
         title: "Test detection",
         detail: "Verify results with the same steps used for the USB model.",
-        href: "#verification",
+        href: "#test-detection",
       },
       {
         n: "10",
@@ -110,8 +112,21 @@ export const guide = {
     key: "usb-quickstart",
   },
 
+  getSoftware: {
+    eyebrow: "01 — Get the software",
+    title: "Download the free POC version",
+    subtitle: "The proof-of-concept build is free and runs on CPU only — no GPU needed.",
+    bullets: [
+      "Pose6D POC build (CPU only) for Windows 10",
+      "Documentation — the short version is this page",
+      "usb_test sample data for verifying the installation (section 02)",
+    ],
+    hint: "The download link and the usb_test archive are provided by RobotAI on request.",
+    cta: "Request the download link",
+  },
+
   installation: {
-    eyebrow: "01 — Hardware & Software Installation",
+    eyebrow: "02 — Hardware & Software Installation",
     title: "Install Pose6D and verify it in about 15 minutes",
     subtitle:
       "Everything in this section refers to the free POC build (CPU only) running on Windows 10.",
@@ -165,7 +180,7 @@ export const guide = {
       { k: "videos", v: "Data collected for training" },
     ],
 
-    verificationEyebrow: "Section 01 · Part 2 of 2",
+    verificationEyebrow: "Section 02 · Part 2 of 2",
     verificationTitle: "Software verification",
     verificationSubtitle:
       "Two checks: first on the recorded data we ship, then on your own camera.",
@@ -230,14 +245,18 @@ export const guide = {
     { id: "overview", label: "Overview" },
     { id: "main-steps", label: "Main steps" },
     { id: "video", label: "Video guide" },
-    { id: "installation", label: "01 — Installation" },
+    { id: "get-software", label: "01 — Get the software" },
+    { id: "installation", label: "02 — Installation" },
     { id: "verification", label: "Verification", sub: true },
-    { id: "optics", label: "02 — Camera & optics" },
-    { id: "scanning", label: "03 — Object scanning" },
-    { id: "calibration", label: "04 — Camera calibration" },
-    { id: "measurements", label: "05 — Object measurements" },
-    { id: "robot-calibration", label: "06 — Camera–robot calibration" },
-    { id: "communication", label: "07 — Robot communication" },
+    { id: "optics", label: "03 — Camera & optics" },
+    { id: "scanning", label: "04 — Object scanning" },
+    { id: "calibration", label: "05 — Camera calibration" },
+    { id: "measurements", label: "06 — Object measurements" },
+    { id: "upload-data", label: "07 — Upload data" },
+    { id: "model", label: "08 — Your model" },
+    { id: "test-detection", label: "09 — Test detection" },
+    { id: "robot-calibration", label: "10 — Camera–robot calibration" },
+    { id: "communication", label: "11 — Robot communication" },
     { id: "downloads", label: "Documents" },
   ],
 

@@ -44,6 +44,7 @@ const pdfs: Record<string, string> = {
 
 const accordionIds = [
   "video",
+  "get-software",
   "installation",
   ...guideSections.map((s) => s.id),
   "downloads",
@@ -195,10 +196,41 @@ function GuideContent() {
                     />
                   </GuideAccordion>
 
+                  {/* Get the software */}
+                  <GuideAccordion
+                    id="get-software"
+                    n="01"
+                    title={g.getSoftware.title}
+                    summary={g.getSoftware.subtitle}
+                    open={acc.isOpen("get-software")}
+                    onToggle={acc.toggle}
+                  >
+                    <ul className="mt-2 space-y-2.5">
+                      {g.getSoftware.bullets.map((b) => (
+                        <li
+                          key={b}
+                          className="flex gap-3 text-sm text-muted-foreground"
+                        >
+                          <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
+                          {b}
+                        </li>
+                      ))}
+                    </ul>
+                    <p className="mt-5 text-sm text-muted-foreground">
+                      {g.getSoftware.hint}
+                    </p>
+                    <a
+                      href="/#demo"
+                      className="mt-4 inline-flex rounded-md bg-foreground px-4 py-2.5 text-sm font-medium text-background transition-opacity hover:opacity-90"
+                    >
+                      {g.getSoftware.cta}
+                    </a>
+                  </GuideAccordion>
+
                   {/* Installation */}
                   <GuideAccordion
                     id="installation"
-                    n="01"
+                    n="02"
                     title={g.installation.title}
                     summary={g.installation.subtitle}
                     open={acc.isOpen("installation")}
