@@ -39,8 +39,9 @@ const pdfs: Record<string, string> = {
 
 function GuidePage() {
   const g = guide;
-  const [tab, setTab] = useState(g.installation.tabs[0].id);
-  const active = g.installation.tabs.find((t) => t.id === tab) ?? g.installation.tabs[0];
+  const tabs = g.installation.tabs;
+  const [tab, setTab] = useState(tabs[0]!.id);
+  const active = tabs.find((t) => t.id === tab) ?? tabs[0]!;
 
   return (
     <LanguageProvider>
@@ -313,7 +314,7 @@ function GuidePage() {
                       key={d.id}
                       name={d.name}
                       note={d.note}
-                      url={pdfs[d.id]}
+                      url={pdfs[d.id]!}
                       labels={{
                         open: g.downloads.open,
                         close: g.downloads.close,
