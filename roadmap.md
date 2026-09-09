@@ -1,12 +1,16 @@
-# Roadmap
+# Roadmap — /guide improvements + JAKA logo
 
-- [x] Hero video: forward-only seamless loop (no reverse playback)
-- [x] Hero video: axis-arrow flicker removed (11 bad frames repaired, forward-only loop)
-- [ ] Multilingual support: Chinese (Simplified) + English
-  - [ ] Language switcher in navbar next to "Request Demo"
-  - [ ] Translate all sections: hero, comparison table, applications, workflow, ecosystem, specs, catalog, about, FAQ, footer, forms
-- [x] Object Scanning video: telemetry re-rendered without black box, text overlaid directly on video, seamless 20s boomerang
-- [x] Global footprint: add China and Japan alongside Korea and Poland
-- [x] Object Scanning video: sharper native-resolution telemetry text
-- [x] Object 3D Localization video: repair frames with missing telemetry
-- [x] Restore video playback on the published GitHub Pages site and verify all media URLs
+All done:
+
+- [x] Solid (non-transparent) navbar on /guide
+- [x] Poster frames for 9 guide videos + dark placeholder
+- [x] Stripped audio from usb-quickstart.mp4, re-uploaded asset
+- [x] Full-height sticky sidebar + mobile TOC chips (<1024px)
+- [x] Compact step cards (less whitespace)
+- [x] Renamed "ROUTE" eyebrow → "11 STEPS"
+- [x] Placeholder download chips: usb_test.zip + POC installer ("Link on request")
+- [x] Documents section verified — checkerboard PDF + user guide present
+- [x] JAKA Robotics logo added to Ecosystem (grayscale → color on hover)
+- [x] Build + Playwright verification (9 videos with posters, no console errors)
+
+Still needed from the user: real download links/files for usb_test.zip and the POC installer.

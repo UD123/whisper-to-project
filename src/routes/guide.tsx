@@ -56,7 +56,7 @@ function GuidePage() {
   return (
     <LanguageProvider>
       <div className="min-h-screen bg-background">
-        <Navbar hashBase="/" />
+        <Navbar hashBase="/" solid />
 
         <main id="top">
           {/* Page header */}
@@ -174,7 +174,7 @@ function GuidePage() {
                     onToggle={acc.toggle}
                   >
                     <GuideVideo
-                      src={guideVideo[g.video.key]!}
+                      video={guideVideo[g.video.key]!}
                       label={g.video.label}
                       caption={g.video.title}
                     />
@@ -214,24 +214,29 @@ function GuidePage() {
                       caption={g.installation.diagramCaption}
                     />
 
-                    <h3 className="mt-14 text-lg font-semibold tracking-tight">
+                    <h3 className="mt-12 text-lg font-semibold tracking-tight">
                       {g.installation.installTitle}
                     </h3>
-                    <ol className="mt-5 space-y-4">
+                    <ol className="mt-4 space-y-3">
                       {g.installation.installSteps.map((s, i) => (
                         <li
                           key={s.title}
-                          className="rounded-xl border border-border bg-card p-5 sm:flex sm:gap-5"
+                          className="rounded-xl border border-border bg-card px-4 py-3.5 sm:flex sm:gap-4"
                         >
                           <span className="font-mono text-sm text-primary">
                             {String(i + 1).padStart(2, "0")}
                           </span>
-                          <div className="mt-2 sm:mt-0">
+                          <div className="mt-1.5 sm:mt-0">
                             <p className="text-sm font-semibold tracking-tight">{s.title}</p>
-                            <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
+                            <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
                               {s.body}
                             </p>
                             {s.path ? <PathChip value={s.path} /> : null}
+                            {"file" in s && s.file ? (
+                              <span className="mt-2 inline-flex items-center gap-2 rounded-md border border-dashed border-border bg-background px-3 py-1.5 font-mono text-xs text-muted-foreground">
+                                {s.file} · {g.installation.fileSoon}
+                              </span>
+                            ) : null}
                           </div>
                         </li>
                       ))}
@@ -273,16 +278,16 @@ function GuidePage() {
                         {active.intro}
                       </p>
 
-                      <ol className="mt-6 space-y-4">
+                      <ol className="mt-5 space-y-3">
                         {active.steps.map((s, i) => (
                           <li
                             key={`${active.id}-${i}`}
-                            className="rounded-xl border border-border bg-card p-5 sm:flex sm:gap-5"
+                            className="rounded-xl border border-border bg-card px-4 py-3.5 sm:flex sm:gap-4"
                           >
                             <span className="font-mono text-sm text-primary">
                               {String(i + 1).padStart(2, "0")}
                             </span>
-                            <div className="mt-2 min-w-0 sm:mt-0">
+                            <div className="mt-1.5 min-w-0 sm:mt-0">
                               {"menu" in s && s.menu ? <MenuPath parts={s.menu} /> : null}
                               <p
                                 className={`text-sm leading-relaxed ${

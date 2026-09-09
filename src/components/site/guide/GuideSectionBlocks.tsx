@@ -24,16 +24,19 @@ function BlockView({ b }: { b: Block }) {
       return <Callout label={b.label}>{b.text}</Callout>;
     case "steps":
       return (
-        <ol className="mt-6 space-y-3">
+        <ol className="mt-5 space-y-3">
           {b.items.map((s, i) => (
-            <li key={i} className="rounded-xl border border-border bg-card p-5 sm:flex sm:gap-5">
+            <li
+              key={i}
+              className="rounded-xl border border-border bg-card px-4 py-3.5 sm:flex sm:gap-4"
+            >
               <span className="font-mono text-sm text-primary">
                 {String(i + 1).padStart(2, "0")}
               </span>
-              <div className="mt-2 min-w-0 sm:mt-0">
+              <div className="mt-1.5 min-w-0 sm:mt-0">
                 {s.menu ? <MenuPath parts={s.menu} /> : null}
                 <p
-                  className={`text-sm leading-relaxed text-muted-foreground ${s.menu ? "mt-3" : ""}`}
+                  className={`text-sm leading-relaxed text-muted-foreground ${s.menu ? "mt-2.5" : ""}`}
                 >
                   {s.body}
                 </p>
@@ -92,7 +95,7 @@ function BlockView({ b }: { b: Block }) {
           label={b.label}
           items={b.items
             .filter((v) => guideVideo[v.key])
-            .map((v) => ({ name: v.name, src: guideVideo[v.key]! }))}
+            .map((v) => ({ name: v.name, ...guideVideo[v.key]! }))}
         />
       );
     default:

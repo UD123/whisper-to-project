@@ -23,7 +23,7 @@ export const guide = {
   },
 
   steps: {
-    eyebrow: "Route",
+    eyebrow: "11 steps",
     title: "Main steps for a single-object pose estimation",
     subtitle: "Eleven steps. Click a step to jump to its instructions.",
     items: [
@@ -130,6 +130,7 @@ export const guide = {
         title: "Download the installer",
         body: "Save Pose6D-XXXX-cpu.exe into a folder on your computer. XXXX stands for the version number.",
         path: "C:\\RobotAI\\SW",
+        file: "Pose6D-XXXX-cpu.exe",
       },
       {
         title: "Create a parts directory",
@@ -139,6 +140,7 @@ export const guide = {
       {
         title: "Download the test data",
         body: "Get usb_test.zip — the reference object used to verify the installation.",
+        file: "usb_test.zip",
       },
       {
         title: "Unzip into the parts directory",
@@ -146,6 +148,7 @@ export const guide = {
         path: "C:\\RobotAI\\Parts\\usb_test",
       },
     ],
+    fileSoon: "Link on request",
     structureLabel: "usb_test · FOLDER STRUCTURE",
     structure: [
       { k: "cameras", v: "Camera interfaces and parameters" },

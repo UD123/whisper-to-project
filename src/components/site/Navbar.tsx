@@ -4,11 +4,15 @@ import { LanguageSwitcher } from "./LanguageSwitcher";
 import { useT } from "@/i18n/LanguageProvider";
 
 /** `hashBase` is "/" on sub-pages so in-page anchors point back to the landing page. */
-export function Navbar({ hashBase = "" }: { hashBase?: string }) {
+export function Navbar({ hashBase = "", solid = false }: { hashBase?: string; solid?: boolean }) {
   const t = useT();
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-xl">
+    <header
+      className={`sticky top-0 z-50 border-b border-border ${
+        solid ? "bg-background" : "bg-background/80 backdrop-blur-xl"
+      }`}
+    >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
         <a href={`${hashBase}#top`} className="flex items-center gap-3">
           <span className="flex items-center gap-2 text-[17px] font-semibold tracking-tight">

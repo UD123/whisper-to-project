@@ -1,7 +1,16 @@
 import { AutoVideo } from "../AutoVideo";
+import type { GuideVideoRef } from "@/content/guide-media";
 
-/** Full walkthrough video with player controls (has narration). */
-export function GuideVideo({ src, label, caption }: { src: string; label: string; caption?: string }) {
+/** Full walkthrough video with player controls (silent — no audio track). */
+export function GuideVideo({
+  video,
+  label,
+  caption,
+}: {
+  video: GuideVideoRef;
+  label: string;
+  caption?: string;
+}) {
   return (
     <figure className="mt-8 overflow-hidden rounded-xl border border-foreground/25 bg-foreground">
       <div className="flex items-center justify-between border-b border-background/15 px-3 py-2">
@@ -12,9 +21,11 @@ export function GuideVideo({ src, label, caption }: { src: string; label: string
         </span>
       </div>
       <video
-        src={src}
+        src={video.src}
+        poster={video.poster}
         controls
         playsInline
+        muted
         preload="metadata"
         className="media-grade block w-full bg-foreground"
       />
@@ -28,16 +39,23 @@ export function GuideVideo({ src, label, caption }: { src: string; label: string
 }
 
 /** Silent looping example clips, played only while visible. */
-export function GuideClips({ label, items }: { label: string; items: { name: string; src: string }[] }) {
+export function GuideClips({
+  label,
+  items,
+}: {
+  label: string;
+  items: { name: string; src: string; poster: string }[];
+}) {
   return (
     <div className="mt-6">
       <span className="mono-label text-muted-foreground">{label}</span>
       <div className="mt-3 grid gap-4 sm:grid-cols-2">
         {items.map((v) => (
           <figure key={v.name} className="overflow-hidden rounded-xl border border-border bg-card">
-            <div className="relative aspect-video bg-background">
+            <div className="relative aspect-video bg-foreground">
               <AutoVideo
                 src={v.src}
+                poster={v.poster}
                 className="media-grade absolute inset-0 h-full w-full object-cover"
               />
             </div>

@@ -24,6 +24,7 @@ export function Ecosystem() {
         "Nachi",
         "Mitsubishi",
         "Dobot",
+        "JAKA Robotics",
       ],
       extra: [] as string[],
     },
