@@ -72,13 +72,8 @@ export function Navbar({
             </Link>
           </div>
 
-          <a
-            href={`${hashBase}#demo`}
-            className="rounded-md bg-foreground px-3.5 py-2 text-sm font-medium text-background transition-all duration-200 hover:opacity-90"
-          >
-            {t.nav.demo}
-          </a>
           <LanguageSwitcher />
+
         </div>
       </div>
     </header>
