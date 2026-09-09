@@ -10,6 +10,10 @@ import ringAssembly from "@/assets/objects/ring-assembly.mp4.asset.json";
 import garmentPicking from "@/assets/objects/garment-picking.mp4.asset.json";
 import conveyorTracking from "@/assets/objects/conveyor-tracking.mp4.asset.json";
 import robotCellKuka from "@/assets/objects/robot-cell-kuka.mp4.asset.json";
+import dispensing from "@/assets/objects/dispensing.mp4.asset.json";
+import furnitureAssembly from "@/assets/objects/furniture-assembly.mp4.asset.json";
+import mushrooms from "@/assets/objects/mushrooms.mp4.asset.json";
+import humanActivity from "@/assets/objects/human-activity.mp4.asset.json";
 
 import multiObjectPickingPoster from "@/assets/objects/posters/multi-object-picking.jpg";
 import hexPartsBinPoster from "@/assets/objects/posters/hex-parts-bin.jpg";
@@ -23,6 +27,10 @@ import ringAssemblyPoster from "@/assets/objects/posters/ring-assembly.jpg";
 import garmentPickingPoster from "@/assets/objects/posters/garment-picking.jpg";
 import conveyorTrackingPoster from "@/assets/objects/posters/conveyor-tracking.jpg";
 import robotCellKukaPoster from "@/assets/objects/posters/robot-cell-kuka.jpg";
+import dispensingPoster from "@/assets/objects/posters/dispensing.jpg";
+import furnitureAssemblyPoster from "@/assets/objects/posters/furniture-assembly.jpg";
+import mushroomsPoster from "@/assets/objects/posters/mushrooms.jpg";
+import humanActivityPoster from "@/assets/objects/posters/human-activity.jpg";
 
 export type ObjectClip = {
   id: string;
@@ -122,5 +130,33 @@ export const objectClips: ObjectClip[] = [
     poster: robotCellKukaPoster,
     name: { en: "Industrial robot cell", zh: "工业机器人工作站" },
     note: { en: "Vision-guided pick and place", zh: "视觉引导的取放作业" },
+  },
+  {
+    id: "dispensing",
+    src: dispensing.url,
+    poster: dispensingPoster,
+    name: { en: "Dispensing on a curved part", zh: "曲面零件点胶" },
+    note: { en: "Precise path following, not pick and place", zh: "精确轨迹跟随，非取放作业" },
+  },
+  {
+    id: "furniture-assembly",
+    src: furnitureAssembly.url,
+    poster: furnitureAssemblyPoster,
+    name: { en: "Furniture assembly parts", zh: "家具装配件" },
+    note: { en: "Dowels and fittings located on a panel", zh: "在板材上定位木销与连接件" },
+  },
+  {
+    id: "mushrooms",
+    src: mushrooms.url,
+    poster: mushroomsPoster,
+    name: { en: "Mushrooms", zh: "蘑菇" },
+    note: { en: "Soft food products, high variability", zh: "柔软食品，形态差异大" },
+  },
+  {
+    id: "human-activity",
+    src: humanActivity.url,
+    poster: humanActivityPoster,
+    name: { en: "Human activity monitoring", zh: "人员作业监测" },
+    note: { en: "Tracking hands and parts in a shared cell", zh: "人机共享工位中跟踪手与零件" },
   },
 ];
