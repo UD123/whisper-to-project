@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { ArrowRight } from "lucide-react";
-import { LanguageProvider } from "@/i18n/LanguageProvider";
+import { LanguageProvider, useI18n } from "@/i18n/LanguageProvider";
 import { Navbar } from "@/components/site/Navbar";
 import { Footer } from "@/components/site/Footer";
 import { GuideSidebar } from "@/components/site/guide/GuideSidebar";
@@ -10,7 +10,10 @@ import { InstallDiagram, FolderTree } from "@/components/site/guide/GuideDiagram
 import { GuideVideo } from "@/components/site/guide/GuideVideo";
 import { GuideAccordion, useGuideAccordion } from "@/components/site/guide/GuideAccordion";
 import { guide } from "@/content/guide";
+import { guideZh } from "@/content/guide.zh";
 import { guideSections } from "@/content/guide-sections";
+import { guideSectionsZh } from "@/content/guide-sections.zh";
+
 import { guideVideo } from "@/content/guide-media";
 import { GuideSectionBody } from "@/components/site/guide/GuideSectionBlocks";
 import userGuidePdf from "@/assets/guide/user-guide.pdf.asset.json";
@@ -47,16 +50,27 @@ const accordionIds = [
 ];
 
 function GuidePage() {
-  const g = guide;
+  return (
+    <LanguageProvider>
+      <GuideContent />
+    </LanguageProvider>
+  );
+}
+
+function GuideContent() {
+  const { lang } = useI18n();
+  const g = lang === "zh" ? guideZh : guide;
+  const sections = lang === "zh" ? guideSectionsZh : guideSections;
   const tabs = g.installation.tabs;
   const [tab, setTab] = useState(tabs[0]!.id);
   const active = tabs.find((t) => t.id === tab) ?? tabs[0]!;
   const acc = useGuideAccordion(accordionIds, ["installation"]);
 
   return (
-    <LanguageProvider>
+    <>
       <div className="min-h-screen bg-background">
         <Navbar hashBase="/" solid section="docs" />
+
 
         <main id="top">
           {/* Page header */}
@@ -153,15 +167,16 @@ function GuidePage() {
               <section className="mt-16">
                 <div className="flex items-end justify-between gap-4">
                   <h2 className="text-2xl font-semibold tracking-[-0.02em] md:text-3xl">
-                    Instructions
+                    {g.instructions.title}
                   </h2>
                   <button
                     type="button"
                     onClick={() => (acc.allOpen ? acc.collapseAll() : acc.expandAll())}
                     className="mono-label rounded-md border border-border bg-card px-3 py-2 text-muted-foreground transition-colors hover:text-foreground"
                   >
-                    {acc.allOpen ? "Collapse all" : "Expand all"}
+                    {acc.allOpen ? g.instructions.collapse : g.instructions.expand}
                   </button>
+
                 </div>
 
                 <div className="mt-6">
@@ -307,7 +322,7 @@ function GuidePage() {
                   </GuideAccordion>
 
                   {/* Sections 02–07 */}
-                  {guideSections.map((s) => (
+                  {sections.map((s) => (
                     <GuideAccordion
                       key={s.id}
                       id={s.id}
@@ -368,6 +383,7 @@ function GuidePage() {
 
         <Footer hashBase="/" />
       </div>
-    </LanguageProvider>
+    </>
+
   );
 }

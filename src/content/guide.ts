@@ -14,7 +14,14 @@ export const guide = {
     download: "Download full manual (PDF)",
   },
 
+  instructions: {
+    title: "Instructions",
+    expand: "Expand all",
+    collapse: "Collapse all",
+  },
+
   overview: {
+
     title: "Overview",
     body: [
       "This page outlines the main steps to perform 6DOF pose estimation with Pose6D. It is the short version of the manual — every parameter here matches the full document.",
