@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import { LogoMark } from "./Logo";
 import { useT } from "@/i18n/LanguageProvider";
 
@@ -43,6 +44,12 @@ export function Footer({ hashBase = "" }: { hashBase?: string }) {
 
           <div className="flex flex-col gap-4 md:items-end">
             <nav className="flex flex-wrap gap-6 text-sm">
+              <Link
+                to="/guide"
+                className="text-muted-foreground transition-colors hover:text-foreground"
+              >
+                Documentation
+              </Link>
               {t.footer.links.map((l) => (
                 <a
                   key={l}
