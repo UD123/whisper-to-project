@@ -8,6 +8,8 @@ import { MediaSlot } from "@/components/site/MediaSlot";
 import { GuideSidebar } from "@/components/site/guide/GuideSidebar";
 import { Callout, DocCard, MenuPath, PathChip, Shot } from "@/components/site/guide/GuideBits";
 import { guide } from "@/content/guide";
+import { guideSections } from "@/content/guide-sections";
+import { GuideSectionView } from "@/components/site/guide/GuideSectionBlocks";
 import installDiagram from "@/assets/guide/install-diagram.jpg.asset.json";
 import folderStructure from "@/assets/guide/folder-structure.jpg.asset.json";
 import selectFolder from "@/assets/guide/select-folder.jpg.asset.json";
