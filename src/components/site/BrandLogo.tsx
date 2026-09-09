@@ -14,10 +14,12 @@ import tmRobots from "@/assets/logos/tm-robots.svg";
 import universalRobots from "@/assets/logos/universal-robots.svg";
 import yaskawa from "@/assets/logos/yaskawa.svg";
 import jaka from "@/assets/logos/jaka.svg";
+import balluff from "@/assets/logos/balluff.svg";
 
 const LOGOS: Record<string, string> = {
   ABB: abb,
   "Allied Vision": alliedVision,
+  Balluff: balluff,
   Basler: basler,
   Denso: denso,
   Dobot: dobot,
