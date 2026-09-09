@@ -1,12 +1,16 @@
 # Roadmap — /guide improvements + JAKA logo
 
-- [ ] Solid (non-transparent) navbar on /guide
-- [ ] Poster frames for 9 guide videos + dark placeholder
-- [ ] Strip audio from usb-quickstart.mp4, re-upload asset
-- [ ] Full-height sticky sidebar + mobile TOC chips (<1024px)
-- [ ] Compact step cards (less whitespace)
-- [ ] Rename "ROUTE" eyebrow → "11 STEPS"
-- [ ] Placeholder download buttons: usb_test.zip + POC installer
-- [ ] Verify Documents section has calibration board PDF
-- [ ] Add JAKA Robotics logo to Ecosystem (grayscale → color on hover)
-- [ ] Build + Playwright verification
+All done:
+
+- [x] Solid (non-transparent) navbar on /guide
+- [x] Poster frames for 9 guide videos + dark placeholder
+- [x] Stripped audio from usb-quickstart.mp4, re-uploaded asset
+- [x] Full-height sticky sidebar + mobile TOC chips (<1024px)
+- [x] Compact step cards (less whitespace)
+- [x] Renamed "ROUTE" eyebrow → "11 STEPS"
+- [x] Placeholder download chips: usb_test.zip + POC installer ("Link on request")
+- [x] Documents section verified — checkerboard PDF + user guide present
+- [x] JAKA Robotics logo added to Ecosystem (grayscale → color on hover)
+- [x] Build + Playwright verification (9 videos with posters, no console errors)
+
+Still needed from the user: real download links/files for usb_test.zip and the POC installer.
