@@ -9,7 +9,14 @@ export const guideZh: Guide = {
     download: "下载完整手册（PDF）",
   },
 
+  instructions: {
+    title: "操作说明",
+    expand: "展开全部",
+    collapse: "收起全部",
+  },
+
   overview: {
+
     title: "概述",
     body: [
       "本页介绍使用 Pose6D 完成 6DOF 位姿估计的主要步骤，是完整手册的精简版本，所有参数均与完整文档一致。",
