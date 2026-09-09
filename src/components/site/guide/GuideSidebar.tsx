@@ -25,9 +25,9 @@ export function GuideSidebar({ items }: { items: Item[] }) {
   }, [items]);
 
   return (
-    <nav className="lg:sticky lg:top-24">
+    <nav className="sticky top-16 z-30 -mx-6 self-start bg-background px-6 py-3 lg:top-24 lg:mx-0 lg:px-0 lg:py-0">
       <span className="mono-label text-muted-foreground">Contents</span>
-      <ul className="mt-4 flex gap-2 overflow-x-auto border-t border-border pt-4 lg:flex-col lg:gap-1 lg:overflow-visible">
+      <ul className="mt-2 flex gap-2 overflow-x-auto border-t border-border pt-3 lg:mt-4 lg:flex-col lg:gap-1 lg:overflow-visible lg:pt-4">
         {items.map((i) => (
           <li key={i.id} className="shrink-0">
             <a
