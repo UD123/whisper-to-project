@@ -10,7 +10,10 @@ import { InstallDiagram, FolderTree } from "@/components/site/guide/GuideDiagram
 import { GuideVideo } from "@/components/site/guide/GuideVideo";
 import { GuideAccordion, useGuideAccordion } from "@/components/site/guide/GuideAccordion";
 import { guide } from "@/content/guide";
+import { guideZh } from "@/content/guide.zh";
 import { guideSections } from "@/content/guide-sections";
+import { guideSectionsZh } from "@/content/guide-sections.zh";
+
 import { guideVideo } from "@/content/guide-media";
 import { GuideSectionBody } from "@/components/site/guide/GuideSectionBlocks";
 import userGuidePdf from "@/assets/guide/user-guide.pdf.asset.json";
