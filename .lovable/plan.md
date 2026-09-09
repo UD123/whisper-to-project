@@ -28,6 +28,8 @@
 5. Переименовать «ROUTE» → «11 STEPS».
 6. Placeholder-кнопки для `usb_test.zip` и POC installer (до получения файлов).
 7. Проверить раздел Documents: calibration board PDF присутствует и скачивается.
+8. Пересобрать `usb-quickstart.mp4` без звука (`-an`) и перезалить asset.
+9. **Лендинг: добавить JAKA Robotics** в секцию Hardware Ecosystem — SVG-логотип в BrandLogo.tsx, grayscale → цвет при hover, как у остальных брендов.
 8. Проверка: build + Playwright-проход /guide, скриншоты до/после.
 
 ## Не входит (нужны твои материалы)
