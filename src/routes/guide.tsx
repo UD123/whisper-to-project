@@ -4,15 +4,15 @@ import { ArrowRight } from "lucide-react";
 import { LanguageProvider } from "@/i18n/LanguageProvider";
 import { Navbar } from "@/components/site/Navbar";
 import { Footer } from "@/components/site/Footer";
-import { MediaSlot } from "@/components/site/MediaSlot";
 import { GuideSidebar } from "@/components/site/guide/GuideSidebar";
-import { Callout, DocCard, MenuPath, PathChip, Shot } from "@/components/site/guide/GuideBits";
+import { Callout, DocCard, MenuPath, PathChip } from "@/components/site/guide/GuideBits";
+import { InstallDiagram, FolderTree } from "@/components/site/guide/GuideDiagrams";
+import { GuideVideo } from "@/components/site/guide/GuideVideo";
+import { GuideAccordion, useGuideAccordion } from "@/components/site/guide/GuideAccordion";
 import { guide } from "@/content/guide";
 import { guideSections } from "@/content/guide-sections";
-import { GuideSectionView } from "@/components/site/guide/GuideSectionBlocks";
-import installDiagram from "@/assets/guide/install-diagram.jpg.asset.json";
-import folderStructure from "@/assets/guide/folder-structure.jpg.asset.json";
-import selectFolder from "@/assets/guide/select-folder.jpg.asset.json";
+import { guideVideo } from "@/content/guide-media";
+import { GuideSectionBody } from "@/components/site/guide/GuideSectionBlocks";
 import userGuidePdf from "@/assets/guide/user-guide.pdf.asset.json";
 import checkerboardPdf from "@/assets/guide/checkerboard.pdf.asset.json";
 
@@ -39,11 +39,19 @@ const pdfs: Record<string, string> = {
   checkerboard: checkerboardPdf.url,
 };
 
+const accordionIds = [
+  "video",
+  "installation",
+  ...guideSections.map((s) => s.id),
+  "downloads",
+];
+
 function GuidePage() {
   const g = guide;
   const tabs = g.installation.tabs;
   const [tab, setTab] = useState(tabs[0]!.id);
   const active = tabs.find((t) => t.id === tab) ?? tabs[0]!;
+  const acc = useGuideAccordion(accordionIds, ["installation"]);
 
   return (
     <LanguageProvider>
@@ -70,10 +78,6 @@ function GuidePage() {
                 >
                   {g.meta.download}
                 </a>
-                <span className="mono-label rounded-md border border-border bg-card px-3 py-2.5 text-muted-foreground">
-                  {g.meta.version}
-                </span>
-                <span className="mono-label text-muted-foreground">{g.meta.updated}</span>
               </div>
             </div>
           </section>
@@ -145,198 +149,202 @@ function GuidePage() {
                 </ol>
               </section>
 
-              {/* Video */}
-              <section id="video" className="mt-16 scroll-mt-24">
-                <span className="mono-label text-primary">{g.video.eyebrow}</span>
-                <h2 className="mt-3 text-2xl font-semibold tracking-[-0.02em] md:text-3xl">
-                  {g.video.title}
-                </h2>
-                <p className="mt-3 max-w-2xl text-muted-foreground">{g.video.subtitle}</p>
-                <MediaSlot
-                  tone="dark"
-                  className="mt-8"
-                  label={g.video.label}
-                  src={g.video.url}
-                  caption={g.video.title}
-                />
-              </section>
-
-              {/* Installation */}
-              <section id="installation" className="mt-20 scroll-mt-24">
-                <span className="mono-label text-primary">{g.installation.eyebrow}</span>
-                <h2 className="mt-3 text-2xl font-semibold tracking-[-0.02em] md:text-3xl">
-                  {g.installation.title}
-                </h2>
-                <p className="mt-3 max-w-2xl text-muted-foreground">{g.installation.subtitle}</p>
-
-                <h3 className="mt-10 text-lg font-semibold tracking-tight">
-                  {g.installation.requirementsTitle}
-                </h3>
-                <dl className="mt-4 grid gap-px overflow-hidden rounded-xl border border-border bg-border">
-                  {g.installation.requirements.map((r) => (
-                    <div
-                      key={r.k}
-                      className="grid gap-1 bg-card px-5 py-4 sm:grid-cols-[200px_180px_minmax(0,1fr)] sm:items-baseline sm:gap-4"
-                    >
-                      <dt className="mono-label text-muted-foreground">{r.k}</dt>
-                      <dd className="font-mono text-sm">{r.v}</dd>
-                      <dd className="text-sm text-muted-foreground">{r.note}</dd>
-                    </div>
-                  ))}
-                </dl>
-
-                <Callout label={g.installation.callout.label}>
-                  {g.installation.callout.text}
-                </Callout>
-
-                <Shot
-                  src={installDiagram.url}
-                  label={g.installation.diagramLabel}
-                  caption={g.installation.diagramCaption}
-                />
-
-                <h3 className="mt-14 text-lg font-semibold tracking-tight">
-                  {g.installation.installTitle}
-                </h3>
-                <ol className="mt-5 space-y-4">
-                  {g.installation.installSteps.map((s, i) => (
-                    <li
-                      key={s.title}
-                      className="rounded-xl border border-border bg-card p-5 sm:flex sm:gap-5"
-                    >
-                      <span className="font-mono text-sm text-primary">
-                        {String(i + 1).padStart(2, "0")}
-                      </span>
-                      <div className="mt-2 sm:mt-0">
-                        <p className="text-sm font-semibold tracking-tight">{s.title}</p>
-                        <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
-                          {s.body}
-                        </p>
-                        {s.path ? <PathChip value={s.path} /> : null}
-                      </div>
-                    </li>
-                  ))}
-                </ol>
-
-                <div className="mt-8 overflow-hidden rounded-xl border border-border bg-card">
-                  <div className="flex items-center justify-between border-b border-border px-3 py-2">
-                    <span className="mono-label text-muted-foreground">
-                      {g.installation.structureLabel}
-                    </span>
-                    <span className="mono-label text-signal">tree</span>
-                  </div>
-                  <dl className="grid gap-px bg-border sm:grid-cols-2">
-                    {g.installation.structure.map((s) => (
-                      <div key={s.k} className="bg-background px-5 py-4">
-                        <dt className="font-mono text-sm text-foreground">{s.k}</dt>
-                        <dd className="mt-1 text-sm text-muted-foreground">{s.v}</dd>
-                      </div>
-                    ))}
-                  </dl>
+              {/* Instructions — collapsible */}
+              <section className="mt-16">
+                <div className="flex items-end justify-between gap-4">
+                  <h2 className="text-2xl font-semibold tracking-[-0.02em] md:text-3xl">
+                    Instructions
+                  </h2>
+                  <button
+                    type="button"
+                    onClick={() => (acc.allOpen ? acc.collapseAll() : acc.expandAll())}
+                    className="mono-label rounded-md border border-border bg-card px-3 py-2 text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    {acc.allOpen ? "Collapse all" : "Expand all"}
+                  </button>
                 </div>
 
-                <Shot src={folderStructure.url} label="usb_test · WINDOWS EXPLORER" />
-              </section>
-
-              {/* Verification */}
-              <section id="verification" className="mt-20 scroll-mt-24">
-                <h3 className="text-2xl font-semibold tracking-[-0.02em]">
-                  {g.installation.verificationTitle}
-                </h3>
-                <p className="mt-3 max-w-2xl text-muted-foreground">
-                  {g.installation.verificationSubtitle}
-                </p>
-
-                <div className="mt-6 inline-flex rounded-lg border border-border bg-card p-1">
-                  {g.installation.tabs.map((t) => (
-                    <button
-                      key={t.id}
-                      type="button"
-                      onClick={() => setTab(t.id)}
-                      className={`rounded-md px-4 py-2 text-sm font-medium transition-colors ${
-                        tab === t.id
-                          ? "bg-foreground text-background"
-                          : "text-muted-foreground hover:text-foreground"
-                      }`}
-                    >
-                      {t.name}
-                    </button>
-                  ))}
-                </div>
-
-                <p className="mt-5 max-w-2xl text-sm leading-relaxed text-muted-foreground">
-                  {active.intro}
-                </p>
-
-                <ol className="mt-6 space-y-4">
-                  {active.steps.map((s, i) => (
-                    <li
-                      key={`${active.id}-${i}`}
-                      className="rounded-xl border border-border bg-card p-5 sm:flex sm:gap-5"
-                    >
-                      <span className="font-mono text-sm text-primary">
-                        {String(i + 1).padStart(2, "0")}
-                      </span>
-                      <div className="mt-2 min-w-0 sm:mt-0">
-                        {"menu" in s && s.menu ? <MenuPath parts={s.menu} /> : null}
-                        <p
-                          className={`text-sm leading-relaxed ${
-                            "result" in s && s.result
-                              ? "font-medium text-foreground"
-                              : "text-muted-foreground"
-                          } ${"menu" in s && s.menu ? "mt-3" : ""}`}
-                        >
-                          {s.body}
-                        </p>
-                        {"path" in s && s.path ? <PathChip value={s.path} /> : null}
-                      </div>
-                    </li>
-                  ))}
-                </ol>
-
-                <Shot
-                  src={selectFolder.url}
-                  label={g.installation.dialogLabel}
-                  caption={g.installation.dialogCaption}
-                />
-
-                <Callout label={g.setupNote.label}>{g.setupNote.text}</Callout>
-              </section>
-
-              {/* Sections 02–07 */}
-              {guideSections.map((s) => (
-                <GuideSectionView key={s.id} section={s} />
-              ))}
-
-              {/* Documents */}
-              <section id="downloads" className="mt-20 scroll-mt-24">
-                <span className="mono-label text-primary">{g.downloads.eyebrow}</span>
-                <h2 className="mt-3 text-2xl font-semibold tracking-[-0.02em] md:text-3xl">
-                  {g.downloads.title}
-                </h2>
-                <p className="mt-3 max-w-2xl text-muted-foreground">{g.downloads.subtitle}</p>
-                <div className="mt-8 space-y-4">
-                  {g.downloads.items.map((d) => (
-                    <DocCard
-                      key={d.id}
-                      name={d.name}
-                      note={d.note}
-                      url={pdfs[d.id]!}
-                      labels={{
-                        open: g.downloads.open,
-                        close: g.downloads.close,
-                        download: g.downloads.download,
-                      }}
+                <div className="mt-6">
+                  {/* Video guide */}
+                  <GuideAccordion
+                    id="video"
+                    title={g.video.title}
+                    summary={g.video.subtitle}
+                    open={acc.isOpen("video")}
+                    onToggle={acc.toggle}
+                  >
+                    <GuideVideo
+                      src={guideVideo[g.video.key]!}
+                      label={g.video.label}
+                      caption={g.video.title}
                     />
+                  </GuideAccordion>
+
+                  {/* Installation */}
+                  <GuideAccordion
+                    id="installation"
+                    n="01"
+                    title={g.installation.title}
+                    summary={g.installation.subtitle}
+                    open={acc.isOpen("installation")}
+                    onToggle={acc.toggle}
+                  >
+                    <h3 className="mt-2 text-lg font-semibold tracking-tight">
+                      {g.installation.requirementsTitle}
+                    </h3>
+                    <dl className="mt-4 grid gap-px overflow-hidden rounded-xl border border-border bg-border">
+                      {g.installation.requirements.map((r) => (
+                        <div
+                          key={r.k}
+                          className="grid gap-1 bg-card px-5 py-4 sm:grid-cols-[200px_180px_minmax(0,1fr)] sm:items-baseline sm:gap-4"
+                        >
+                          <dt className="mono-label text-muted-foreground">{r.k}</dt>
+                          <dd className="font-mono text-sm">{r.v}</dd>
+                          <dd className="text-sm text-muted-foreground">{r.note}</dd>
+                        </div>
+                      ))}
+                    </dl>
+
+                    <Callout label={g.installation.callout.label}>
+                      {g.installation.callout.text}
+                    </Callout>
+
+                    <InstallDiagram
+                      label={g.installation.diagramLabel}
+                      caption={g.installation.diagramCaption}
+                    />
+
+                    <h3 className="mt-14 text-lg font-semibold tracking-tight">
+                      {g.installation.installTitle}
+                    </h3>
+                    <ol className="mt-5 space-y-4">
+                      {g.installation.installSteps.map((s, i) => (
+                        <li
+                          key={s.title}
+                          className="rounded-xl border border-border bg-card p-5 sm:flex sm:gap-5"
+                        >
+                          <span className="font-mono text-sm text-primary">
+                            {String(i + 1).padStart(2, "0")}
+                          </span>
+                          <div className="mt-2 sm:mt-0">
+                            <p className="text-sm font-semibold tracking-tight">{s.title}</p>
+                            <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
+                              {s.body}
+                            </p>
+                            {s.path ? <PathChip value={s.path} /> : null}
+                          </div>
+                        </li>
+                      ))}
+                    </ol>
+
+                    <FolderTree
+                      label={g.installation.structureLabel}
+                      root="C:\RobotAI\Parts\usb_test"
+                      items={g.installation.structure}
+                    />
+
+                    {/* Verification */}
+                    <div id="verification" className="mt-14 scroll-mt-24">
+                      <h3 className="text-lg font-semibold tracking-tight">
+                        {g.installation.verificationTitle}
+                      </h3>
+                      <p className="mt-3 max-w-2xl text-muted-foreground">
+                        {g.installation.verificationSubtitle}
+                      </p>
+
+                      <div className="mt-6 inline-flex rounded-lg border border-border bg-card p-1">
+                        {g.installation.tabs.map((t) => (
+                          <button
+                            key={t.id}
+                            type="button"
+                            onClick={() => setTab(t.id)}
+                            className={`rounded-md px-4 py-2 text-sm font-medium transition-colors ${
+                              tab === t.id
+                                ? "bg-foreground text-background"
+                                : "text-muted-foreground hover:text-foreground"
+                            }`}
+                          >
+                            {t.name}
+                          </button>
+                        ))}
+                      </div>
+
+                      <p className="mt-5 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+                        {active.intro}
+                      </p>
+
+                      <ol className="mt-6 space-y-4">
+                        {active.steps.map((s, i) => (
+                          <li
+                            key={`${active.id}-${i}`}
+                            className="rounded-xl border border-border bg-card p-5 sm:flex sm:gap-5"
+                          >
+                            <span className="font-mono text-sm text-primary">
+                              {String(i + 1).padStart(2, "0")}
+                            </span>
+                            <div className="mt-2 min-w-0 sm:mt-0">
+                              {"menu" in s && s.menu ? <MenuPath parts={s.menu} /> : null}
+                              <p
+                                className={`text-sm leading-relaxed ${
+                                  "result" in s && s.result
+                                    ? "font-medium text-foreground"
+                                    : "text-muted-foreground"
+                                } ${"menu" in s && s.menu ? "mt-3" : ""}`}
+                              >
+                                {s.body}
+                              </p>
+                              {"path" in s && s.path ? <PathChip value={s.path} /> : null}
+                            </div>
+                          </li>
+                        ))}
+                      </ol>
+                    </div>
+                  </GuideAccordion>
+
+                  {/* Sections 02–07 */}
+                  {guideSections.map((s) => (
+                    <GuideAccordion
+                      key={s.id}
+                      id={s.id}
+                      n={s.n}
+                      title={s.title}
+                      summary={s.summary}
+                      open={acc.isOpen(s.id)}
+                      onToggle={acc.toggle}
+                    >
+                      <GuideSectionBody section={s} />
+                    </GuideAccordion>
                   ))}
+
+                  {/* Documents */}
+                  <GuideAccordion
+                    id="downloads"
+                    title={g.downloads.title}
+                    summary={g.downloads.subtitle}
+                    open={acc.isOpen("downloads")}
+                    onToggle={acc.toggle}
+                  >
+                    <div className="space-y-4">
+                      {g.downloads.items.map((d) => (
+                        <DocCard
+                          key={d.id}
+                          name={d.name}
+                          note={d.note}
+                          url={pdfs[d.id]!}
+                          labels={{
+                            open: g.downloads.open,
+                            close: g.downloads.close,
+                            download: g.downloads.download,
+                          }}
+                        />
+                      ))}
+                    </div>
+                  </GuideAccordion>
                 </div>
               </section>
 
-              <section className="mt-20">
-
-
-
-                <div className="mt-10 flex flex-wrap items-center justify-between gap-4 rounded-xl border border-border bg-card p-6">
+              <section className="mt-16">
+                <div className="flex flex-wrap items-center justify-between gap-4 rounded-xl border border-border bg-card p-6">
                   <div>
                     <p className="text-base font-semibold tracking-tight">{g.help.title}</p>
                     <p className="mt-1.5 text-sm text-muted-foreground">{g.help.body}</p>
