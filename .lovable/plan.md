@@ -30,9 +30,9 @@
 По запросу пользователя Billing пока не делаем. Переключатель разделов будет **Product · Docs**, Billing добавим позже, когда появятся требования.
 
 ## 4. Технические детали
-- Файлы: `src/components/site/Navbar.tsx` (переключатель, активное состояние, переименование кнопки), `src/routes/guide.tsx` и `src/routes/index.tsx` (prop section), `src/i18n/dictionaries.ts` (Docs → en/zh), новый `src/routes/billing.tsx`.
+- Файлы: `src/components/site/Navbar.tsx` (переключатель Product · Docs, активное состояние, переименование кнопки), `src/routes/guide.tsx` и `src/routes/index.tsx` (prop section), `src/i18n/dictionaries.ts` (Docs → en/zh).
 - Активное состояние через TanStack Router (`Link` + `activeProps`), а не ручное сравнение путей.
-- Китайская локализация: Docs → 文档, Billing → 账单.
+- Китайская локализация: Docs → 文档.
 
 ## 5. Проверка
 - `bun run build`, затем Playwright: /, /guide, /billing — активный раздел подсвечен, переходы работают, нет ошибок консоли.
