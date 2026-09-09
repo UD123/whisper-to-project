@@ -1,1 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 48"><text x="110" y="33" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="700" letter-spacing="0.5" fill="#0068B5">RealSense</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 48">
+  <defs>
+    <g id="blade">
+      <path d="M24 8 C30 14, 32 22, 30 30 L24 24 Z" />
+    </g>
+  </defs>
+  <g transform="translate(0, 10) scale(0.78)">
+    <use href="#blade" fill="#FF6B00" transform="rotate(0 24 24)"/>
+    <use href="#blade" fill="#E6007E" transform="rotate(60 24 24)"/>
+    <use href="#blade" fill="#6E2C91" transform="rotate(120 24 24)"/>
+    <use href="#blade" fill="#0082C6" transform="rotate(180 24 24)"/>
+    <use href="#blade" fill="#00B3A1" transform="rotate(240 24 24)"/>
+    <use href="#blade" fill="#7AB800" transform="rotate(300 24 24)"/>
+    <circle cx="24" cy="24" r="5" fill="#111111"/>
+  </g>
+  <text x="52" y="31" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="19" font-weight="600" letter-spacing="-0.01em" fill="#111111">RealSense</text>
+</svg>
