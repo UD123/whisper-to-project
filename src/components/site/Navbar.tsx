@@ -4,7 +4,15 @@ import { LanguageSwitcher } from "./LanguageSwitcher";
 import { useT } from "@/i18n/LanguageProvider";
 
 /** `hashBase` is "/" on sub-pages so in-page anchors point back to the landing page. */
-export function Navbar({ hashBase = "", solid = false }: { hashBase?: string; solid?: boolean }) {
+export function Navbar({
+  hashBase = "",
+  solid = false,
+  section = "product",
+}: {
+  hashBase?: string;
+  solid?: boolean;
+  section?: "product" | "docs";
+}) {
   const t = useT();
 
   return (
@@ -41,12 +49,29 @@ export function Navbar({ hashBase = "", solid = false }: { hashBase?: string; so
         </nav>
 
         <div className="flex items-center gap-2">
-          <Link
-            to="/guide"
-            className="inline-flex rounded-md border border-border bg-card px-3 py-2 text-sm font-medium transition-all duration-200 hover:border-foreground/25 hover:shadow-sm sm:px-3.5"
-          >
-            {t.nav.docs}
-          </Link>
+          <div className="flex items-center rounded-lg border border-border bg-card p-1">
+            <Link
+              to="/"
+              className={`rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
+                section === "product"
+                  ? "bg-foreground text-background"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              {t.nav.product}
+            </Link>
+            <Link
+              to="/guide"
+              className={`rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
+                section === "docs"
+                  ? "bg-foreground text-background"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              {t.nav.docs}
+            </Link>
+          </div>
+
           <a
             href={`${hashBase}#demo`}
             className="rounded-md bg-foreground px-3.5 py-2 text-sm font-medium text-background transition-all duration-200 hover:opacity-90"
