@@ -11,8 +11,6 @@ export const guide = {
     eyebrow: "Documentation",
     title: "Pose6D — Getting Started",
     subtitle: "Main steps for 3D pose estimation, from installation to a working robot.",
-    updated: "Last updated 12 June 2022",
-    version: "POC · CPU build · Windows 10",
     download: "Download full manual (PDF)",
   },
 
@@ -94,7 +92,7 @@ export const guide = {
         href: "#communication",
       },
     ] as GuideStep[],
-    soon: "coming soon",
+    soon: "RobotAI side",
   },
 
   video: {
@@ -102,7 +100,7 @@ export const guide = {
     title: "How to start and test Pose6D with the USB object",
     subtitle: "A full walkthrough of the installation and the first detection run.",
     label: "POSE6D · USB QUICK START",
-    url: "https://youtu.be/3E0Yc9b9TTM",
+    key: "usb-quickstart",
   },
 
   installation: {
@@ -204,11 +202,6 @@ export const guide = {
     dialogCaption: "Selecting the usb_test project directory.",
   },
 
-  setupNote: {
-    label: "Next section preview",
-    text: "For your own part, the object must cover at least 200 × 200 pixels in a 1280 × 720 image — about one third to one quarter of the field of view. Camera, optics and working distance follow from that, and are covered in the next section.",
-  },
-
   downloads: {
     eyebrow: "Files",
     title: "Documents",
@@ -220,18 +213,6 @@ export const guide = {
     open: "Open",
     close: "Close",
     download: "Download",
-  },
-
-  upcoming: {
-    title: "Coming next",
-    items: [
-      "02 — Setup: camera, working distance, object size",
-      "03 — Image data collection",
-      "04 — Camera calibration procedure",
-      "05 — Object dimension measurements",
-      "06 — Detection testing",
-      "07 — Hand-eye calibration & robot communication",
-    ],
   },
 
   nav: [

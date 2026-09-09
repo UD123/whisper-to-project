@@ -4,7 +4,7 @@ export type Block =
   | { t: "steps"; items: { menu?: string[]; body: string; path?: string }[] }
   | { t: "note"; label: string; text: string }
   | { t: "table"; head: string[]; rows: string[][] }
-  | { t: "videos"; label: string; items: { name: string; url: string }[] }
+  | { t: "videos"; label: string; items: { name: string; key: string }[] }
   | { t: "code"; label: string; lines: string[] }
   | { t: "h"; text: string };
 
@@ -12,7 +12,6 @@ export type GuideSection = {
   id: string;
   n: string;
   title: string;
-  updated: string;
   summary: string;
   blocks: Block[];
 };
@@ -23,7 +22,6 @@ export const guideSections: GuideSection[] = [
     id: "optics",
     n: "02",
     title: "Camera & optics setup",
-    updated: "Last updated 12 February 2023",
     summary: "Choose the camera, optics and working distance so the part is large enough in the image.",
     blocks: [
       {
@@ -87,7 +85,6 @@ export const guideSections: GuideSection[] = [
     id: "scanning",
     n: "03",
     title: "Object scanning & data acquisition",
-    updated: "Last updated 14 October 2023",
     summary: "Record video of the part from many positions — this is the raw data for the 3D model.",
     blocks: [
       {
@@ -111,10 +108,10 @@ export const guideSections: GuideSection[] = [
         t: "videos",
         label: "Scanning examples",
         items: [
-          { name: "Moving object — example 1", url: "https://youtu.be/1XE4QOmUnX4" },
-          { name: "Moving object — example 2", url: "https://youtu.be/XljXi0lNADE" },
-          { name: "Moving object — example 3", url: "https://youtu.be/Ozfi6f7au_A" },
-          { name: "Moving camera", url: "https://youtu.be/KSzGLQCJPtw" },
+          { name: "Moving object — example 1", key: "scan-moving-object-1" },
+          { name: "Moving object — example 2", key: "scan-moving-object-2" },
+          { name: "Moving object — example 3", key: "scan-moving-object-3" },
+          { name: "Moving camera", key: "scan-moving-camera" },
         ],
       },
       { t: "h", text: "Multiple objects — bin picking / palletizing" },
@@ -122,9 +119,9 @@ export const guideSections: GuideSection[] = [
         t: "videos",
         label: "Multi-object examples",
         items: [
-          { name: "Preparing data for palletizing", url: "https://youtu.be/BQQqf_sBn7A" },
-          { name: "Bin picking — example 1", url: "https://youtu.be/RPKIqd6QyDs" },
-          { name: "Bin picking — example 2", url: "https://youtu.be/7RlR_dRNiwQ" },
+          { name: "Preparing data for palletizing", key: "scan-palletizing" },
+          { name: "Bin picking — example 1", key: "scan-bin-picking-1" },
+          { name: "Bin picking — example 2", key: "scan-bin-picking-2" },
         ],
       },
     ],
@@ -133,7 +130,6 @@ export const guideSections: GuideSection[] = [
     id: "calibration",
     n: "04",
     title: "Camera calibration",
-    updated: "Last updated 21 June 2022",
     summary: "Calibrate the camera with the checkerboard pattern, held at the working distance.",
     blocks: [
       {
@@ -162,7 +158,7 @@ export const guideSections: GuideSection[] = [
       {
         t: "videos",
         label: "Calibration example",
-        items: [{ name: "Pattern on a smartphone", url: "https://youtu.be/is7k9mRkX7o" }],
+        items: [{ name: "Pattern on a smartphone", key: "calib-smartphone" }],
       },
     ],
   },
@@ -170,7 +166,6 @@ export const guideSections: GuideSection[] = [
     id: "measurements",
     n: "05",
     title: "Object measurements",
-    updated: "Last updated 4 December 2020",
     summary: "Supply the real dimensions of the part so the model is scaled correctly.",
     blocks: [
       {
@@ -194,7 +189,6 @@ export const guideSections: GuideSection[] = [
     id: "robot-calibration",
     n: "06",
     title: "Camera–robot calibration",
-    updated: "Last updated 11 November 2023",
     summary: "Hand-eye calibration: convert detections into your robot's coordinate frame.",
     blocks: [
       {
@@ -274,7 +268,6 @@ export const guideSections: GuideSection[] = [
     id: "communication",
     n: "07",
     title: "Robot communication",
-    updated: "Last updated 6 May 2024",
     summary: "Pose6D acts as a TCP server; the robot asks for a pose and receives six numbers back.",
     blocks: [
       {
