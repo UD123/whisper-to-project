@@ -48,7 +48,7 @@ jobs:
           files = list(root.rglob("*.html")) + list(root.rglob("*.js"))
           pattern = re.compile(
             r'(?:https://whisper-to-project\.lovable\.app)?'
-            r'(/__l5e/assets-v1/[^"\'`\\)]+?\.(?:mp4|webm|mov|png|jpe?g|webp))'
+            r'(/__l5e/assets-v1/[^"\'`\\)]+?\.(?:mp4|webm|mov|png|jpe?g|webp|pdf))'
           )
           replacements = {}
 

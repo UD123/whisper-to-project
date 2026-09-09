@@ -1,7 +1,8 @@
+import { Link } from "@tanstack/react-router";
 import { LogoMark } from "./Logo";
 import { useT } from "@/i18n/LanguageProvider";
 
-export function Footer() {
+export function Footer({ hashBase = "" }: { hashBase?: string }) {
   const t = useT();
 
   return (
@@ -13,7 +14,7 @@ export function Footer() {
           </h2>
           <div className="flex flex-wrap gap-3">
             <a
-              href="#demo"
+              href={`${hashBase}#demo`}
               className="rounded-md bg-foreground px-5 py-3 text-sm font-medium text-background transition-all duration-200 hover:opacity-90 hover:shadow-[0_10px_28px_-12px_var(--foreground)]"
             >
               {t.footer.ctaPrimary}
@@ -43,6 +44,12 @@ export function Footer() {
 
           <div className="flex flex-col gap-4 md:items-end">
             <nav className="flex flex-wrap gap-6 text-sm">
+              <Link
+                to="/guide"
+                className="text-muted-foreground transition-colors hover:text-foreground"
+              >
+                Documentation
+              </Link>
               {t.footer.links.map((l) => (
                 <a
                   key={l}
