@@ -47,16 +47,27 @@ const accordionIds = [
 ];
 
 function GuidePage() {
-  const g = guide;
+  return (
+    <LanguageProvider>
+      <GuideContent />
+    </LanguageProvider>
+  );
+}
+
+function GuideContent() {
+  const { lang } = useI18n();
+  const g = lang === "zh" ? guideZh : guide;
+  const sections = lang === "zh" ? guideSectionsZh : guideSections;
   const tabs = g.installation.tabs;
   const [tab, setTab] = useState(tabs[0]!.id);
   const active = tabs.find((t) => t.id === tab) ?? tabs[0]!;
   const acc = useGuideAccordion(accordionIds, ["installation"]);
 
   return (
-    <LanguageProvider>
+    <>
       <div className="min-h-screen bg-background">
         <Navbar hashBase="/" solid section="docs" />
+
 
         <main id="top">
           {/* Page header */}
