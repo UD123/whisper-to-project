@@ -39,7 +39,7 @@ export function Navbar({ hashBase = "" }: { hashBase?: string }) {
         <div className="flex items-center gap-2">
           <Link
             to="/guide"
-            className="hidden rounded-md border border-border bg-card px-3.5 py-2 text-sm font-medium transition-all duration-200 hover:border-foreground/25 hover:shadow-sm xl:inline-flex"
+            className="inline-flex rounded-md border border-border bg-card px-3 py-2 text-sm font-medium transition-all duration-200 hover:border-foreground/25 hover:shadow-sm sm:px-3.5"
           >
             {t.nav.docs}
           </Link>
