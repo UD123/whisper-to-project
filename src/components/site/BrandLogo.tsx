@@ -13,6 +13,7 @@ import realsense from "@/assets/logos/realsense.svg";
 import tmRobots from "@/assets/logos/tm-robots.svg";
 import universalRobots from "@/assets/logos/universal-robots.svg";
 import yaskawa from "@/assets/logos/yaskawa.svg";
+import jaka from "@/assets/logos/jaka.svg";
 
 const LOGOS: Record<string, string> = {
   ABB: abb,
@@ -30,6 +31,7 @@ const LOGOS: Record<string, string> = {
   "TM Robots": tmRobots,
   "Universal Robots": universalRobots,
   Yaskawa: yaskawa,
+  "JAKA Robotics": jaka,
 };
 
 export function hasBrandLogo(name: string): boolean {
