@@ -335,6 +335,7 @@ function GuidePage() {
               <section className="mt-20">
 
 
+
                 <div className="mt-10 flex flex-wrap items-center justify-between gap-4 rounded-xl border border-border bg-card p-6">
                   <div>
                     <p className="text-base font-semibold tracking-tight">{g.help.title}</p>
