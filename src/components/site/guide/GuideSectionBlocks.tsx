@@ -87,25 +87,25 @@ function BlockView({ b }: { b: Block }) {
         </div>
       );
     case "videos":
-      return <VideoLinks label={b.label} items={b.items} />;
+      return (
+        <GuideClips
+          label={b.label}
+          items={b.items
+            .filter((v) => guideVideo[v.key])
+            .map((v) => ({ name: v.name, src: guideVideo[v.key]! }))}
+        />
+      );
     default:
       return null;
   }
 }
 
-export function GuideSectionView({ section }: { section: GuideSection }) {
+export function GuideSectionBody({ section }: { section: GuideSection }) {
   return (
-    <section id={section.id} className="mt-20 scroll-mt-24">
-      <span className="mono-label text-primary">
-        Step {section.n} · {section.updated}
-      </span>
-      <h2 className="mt-3 text-2xl font-semibold tracking-[-0.02em] md:text-3xl">
-        {section.title}
-      </h2>
-      <p className="mt-3 max-w-2xl text-muted-foreground">{section.summary}</p>
+    <>
       {section.blocks.map((b, i) => (
         <BlockView key={i} b={b} />
       ))}
-    </section>
+    </>
   );
 }
