@@ -509,6 +509,9 @@ export const zh: Dict = {
     eyebrow: "06 — 物体目录",
     title: "已训练物体能力目录",
     subtitle: "在多样几何形状与表面物理特性上验证过的 3D 位姿检测能力。",
+    galleryTitle: "检测物体示例",
+    galleryNote: "点击卡片播放短视频",
+    galleryClose: "关闭",
     categories: [
       {
         label: "零部件与金属件",
