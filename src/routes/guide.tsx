@@ -16,8 +16,8 @@ import { guideSectionsZh } from "@/content/guide-sections.zh";
 
 import { guideVideo } from "@/content/guide-media";
 import { GuideSectionBody } from "@/components/site/guide/GuideSectionBlocks";
-import userGuidePdf from "@/assets/guide/user-guide.pdf.asset.json";
-import checkerboardPdf from "@/assets/guide/checkerboard.pdf.asset.json";
+// PDFs are bundled locally in public/media so static hosting (GitHub Pages)
+// and prerendering never depend on the CDN.
 
 const title = "Pose6D Documentation — Installation & Getting Started | RobotAI";
 const description =
@@ -38,8 +38,8 @@ export const Route = createFileRoute("/guide")({
 });
 
 const pdfs: Record<string, string> = {
-  manual: userGuidePdf.url,
-  checkerboard: checkerboardPdf.url,
+  manual: "/media/Pose6D-User-Guide.pdf",
+  checkerboard: "/media/Pose6D-Checkerboard.pdf",
 };
 
 const accordionIds = [
@@ -87,7 +87,7 @@ function GuideContent() {
               </p>
               <div className="mt-7 flex flex-wrap items-center gap-3">
                 <a
-                  href={userGuidePdf.url}
+                  href={pdfs["manual"]}
                   download
                   className="rounded-md bg-foreground px-5 py-3 text-sm font-medium text-background transition-opacity hover:opacity-90"
                 >
