@@ -174,7 +174,7 @@ function GuidePage() {
                     onToggle={acc.toggle}
                   >
                     <GuideVideo
-                      src={guideVideo[g.video.key]!}
+                      video={guideVideo[g.video.key]!}
                       label={g.video.label}
                       caption={g.video.title}
                     />

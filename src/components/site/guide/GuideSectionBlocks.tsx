@@ -92,7 +92,7 @@ function BlockView({ b }: { b: Block }) {
           label={b.label}
           items={b.items
             .filter((v) => guideVideo[v.key])
-            .map((v) => ({ name: v.name, src: guideVideo[v.key]! }))}
+            .map((v) => ({ name: v.name, ...guideVideo[v.key]! }))}
         />
       );
     default:
