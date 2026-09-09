@@ -201,7 +201,7 @@ export const guide = {
 
   setupNote: {
     label: "Next section preview",
-    text: "For your own part, keep the object at 200 × 200 pixels or more inside a 1280 × 720 image — roughly one third to one quarter of the field of view. Camera and optics follow from the working distance.",
+    text: "For your own part, keep the object at 250 × 250 pixels or more in the image. Camera, optics and working distance follow from that requirement — this is covered in the next section.",
   },
 
   downloads: {
