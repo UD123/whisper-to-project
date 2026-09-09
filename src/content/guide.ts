@@ -165,6 +165,7 @@ export const guide = {
       { k: "videos", v: "Data collected for training" },
     ],
 
+    verificationEyebrow: "Section 01 · Part 2 of 2",
     verificationTitle: "Software verification",
     verificationSubtitle:
       "Two checks: first on the recorded data we ship, then on your own camera.",
@@ -230,7 +231,7 @@ export const guide = {
     { id: "main-steps", label: "Main steps" },
     { id: "video", label: "Video guide" },
     { id: "installation", label: "01 — Installation" },
-    { id: "verification", label: "Verification" },
+    { id: "verification", label: "Verification", sub: true },
     { id: "optics", label: "02 — Camera & optics" },
     { id: "scanning", label: "03 — Object scanning" },
     { id: "calibration", label: "04 — Camera calibration" },

@@ -162,6 +162,7 @@ export const guideZh: Guide = {
       { k: "videos", v: "训练用采集数据" },
     ],
 
+    verificationEyebrow: "第 01 节 · 第 2 部分（共 2 部分）",
     verificationTitle: "软件验证",
     verificationSubtitle: "两项检查：先使用随附的录制数据，再使用您自己的相机。",
     tabs: [
@@ -250,7 +251,7 @@ export const guideZh: Guide = {
     { id: "main-steps", label: "主要步骤" },
     { id: "video", label: "视频指南" },
     { id: "installation", label: "01 — 安装" },
-    { id: "verification", label: "验证" },
+    { id: "verification", label: "验证", sub: true },
     { id: "optics", label: "02 — 相机与光学" },
     { id: "scanning", label: "03 — 工件扫描" },
     { id: "calibration", label: "04 — 相机标定" },

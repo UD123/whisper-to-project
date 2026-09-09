@@ -264,8 +264,11 @@ function GuideContent() {
                     />
 
                     {/* Verification */}
-                    <div id="verification" className="mt-14 scroll-mt-24">
-                      <h3 className="text-lg font-semibold tracking-tight">
+                    <div id="verification" className="mt-14 scroll-mt-24 border-t border-border pt-10">
+                      <p className="mono-label text-muted-foreground">
+                        {g.installation.verificationEyebrow}
+                      </p>
+                      <h3 className="mt-2 text-lg font-semibold tracking-tight">
                         {g.installation.verificationTitle}
                       </h3>
                       <p className="mt-3 max-w-2xl text-muted-foreground">

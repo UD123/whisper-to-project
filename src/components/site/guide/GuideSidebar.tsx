@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-type Item = { id: string; label: string };
+type Item = { id: string; label: string; sub?: boolean };
 
 export function GuideSidebar({ items }: { items: Item[] }) {
   const [active, setActive] = useState(items[0]?.id ?? "");
@@ -33,6 +33,8 @@ export function GuideSidebar({ items }: { items: Item[] }) {
             <a
               href={`#${i.id}`}
               className={`block rounded-md px-3 py-2 text-sm whitespace-nowrap transition-colors ${
+                i.sub ? "lg:ml-4 lg:border-l lg:border-border lg:pl-3 lg:rounded-l-none" : ""
+              } ${
                 active === i.id
                   ? "bg-card font-medium text-foreground shadow-sm"
                   : "text-muted-foreground hover:text-foreground"
