@@ -3,6 +3,7 @@ import { LanguageProvider } from "@/i18n/LanguageProvider";
 import { Navbar } from "@/components/site/Navbar";
 import { Hero } from "@/components/site/Hero";
 import { TrustMetrics } from "@/components/site/TrustMetrics";
+import { Clients } from "@/components/site/Clients";
 import { RgbAdvantage } from "@/components/site/RgbAdvantage";
 import { Applications } from "@/components/site/Applications";
 import { Workflow } from "@/components/site/Workflow";
@@ -42,6 +43,8 @@ function Index() {
         <main>
           <Hero />
           <TrustMetrics />
+          <Clients />
+
           <RgbAdvantage />
           <Applications />
           <Workflow />
