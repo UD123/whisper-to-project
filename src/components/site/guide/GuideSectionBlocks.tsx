@@ -1,32 +1,7 @@
-import { Play } from "lucide-react";
 import type { Block, GuideSection } from "@/content/guide-sections";
+import { guideVideo } from "@/content/guide-media";
 import { Callout, MenuPath, PathChip } from "./GuideBits";
-
-function VideoLinks({ label, items }: { label: string; items: { name: string; url: string }[] }) {
-  return (
-    <div className="mt-6 overflow-hidden rounded-xl border border-border bg-card">
-      <div className="flex items-center justify-between border-b border-border px-3 py-2">
-        <span className="mono-label text-muted-foreground">{label}</span>
-        <span className="mono-label text-signal">video</span>
-      </div>
-      <ul className="grid gap-px bg-border sm:grid-cols-2">
-        {items.map((v) => (
-          <li key={v.url}>
-            <a
-              href={v.url}
-              target="_blank"
-              rel="noreferrer"
-              className="flex items-center gap-3 bg-background px-5 py-4 text-sm transition-colors hover:bg-card"
-            >
-              <Play className="h-3.5 w-3.5 shrink-0 text-primary" strokeWidth={2} />
-              {v.name}
-            </a>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
+import { GuideClips } from "./GuideVideo";
 
 function BlockView({ b }: { b: Block }) {
   switch (b.t) {
