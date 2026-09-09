@@ -1,10 +1,20 @@
-# План: структура сайта (Product / Docs / Billing) + настоящий логотип JAKA
+# План: настоящие логотипы + структура сайта (Product / Docs / Billing)
 
-## 1. Логотипы JAKA и Dobot (Ecosystem)
-- **JAKA**: официальный логотип с профиля JAKA (b2bindustry.net) — красный wordmark JAKA®, 1000×1000 JPG. Обрезать белые поля, векторизовать в чистый SVG (potrace) → заменить самодельный `src/assets/logos/jaka.svg`.
-- **Dobot**: официальный SVG с Wikimedia Commons (горизонтальный wordmark, синий #0047BA, viewBox 292×108) — уже скачан. Обрезать лишнее, положить в `src/assets/logos/dobot.svg` вместо текущего.
-- Оба уже подключены в `BrandLogo.tsx` — grayscale → цвет при hover сохранится автоматически.
-- Проверить рендер в секции 04 Ecosystem.
+## 1. Все логотипы в Ecosystem — на настоящие
+
+Проверка 16 файлов в `src/assets/logos/` показала, что часть из них — не фирменные логотипы, а просто текст шрифтом:
+
+| Настоящие (оставляем) | Подделки — заменить |
+|---|---|
+| ABB, Basler, Denso, Fanuc, Hanwha, IDS, Kuka, Universal Robots, Yaskawa | Allied Vision, Dobot, Nachi, RealSense, TM Robots, Mitsubishi, JAKA |
+
+Что делаем:
+- **Dobot** — официальный SVG с Wikimedia Commons (синий #0047BA, 292×108), уже скачан.
+- **JAKA** — официальный красный wordmark JAKA® с профиля b2bindustry (1000×1000 JPG): обрезать поля, векторизовать в чистый SVG.
+- **Allied Vision, Nachi, RealSense (Intel), TM Robots (Techman), Mitsubishi Electric** — найти официальные векторные логотипы (Wikimedia Commons / пресс-киты производителей), привести к одной высоте и положить в `src/assets/logos/`.
+- Если для какого-то бренда не найдётся достоверного векторного файла — оставляем текстовый бейдж вместо неточного логотипа и говорим об этом отдельно.
+- Все уже подключены в `BrandLogo.tsx`, поведение grayscale → цвет при наведении сохраняется.
+- Проверить единый визуальный вес: одинаковая оптическая высота, отсутствие лишних полей, читаемость в серой заливке.
 
 ## 2. Переключатель разделов в шапке
 Сейчас: кнопка «Developer Docs» выглядит одинаково на всех страницах, а название не совпадает с разделом («Documentation»).
