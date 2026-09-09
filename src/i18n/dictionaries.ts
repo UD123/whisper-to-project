@@ -219,6 +219,9 @@ export const en = {
     eyebrow: "06 — Catalog",
     title: "Trained Object Capability Catalog",
     subtitle: "Proven 3D pose detection across diverse geometry and surface physics.",
+    galleryTitle: "Detected objects — examples",
+    galleryNote: "Click a card to play a short clip",
+    galleryClose: "Close",
     categories: [
       {
         label: "Components & metal",
