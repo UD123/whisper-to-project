@@ -16,11 +16,11 @@ export type GuideSection = {
   blocks: Block[];
 };
 
-/** Sections 02–07, transferred from the RobotAI How-To documents. */
+/** Sections 03–11, transferred from the RobotAI How-To documents. */
 export const guideSections: GuideSection[] = [
   {
     id: "optics",
-    n: "02",
+    n: "03",
     title: "Camera & optics setup",
     summary: "Choose the camera, optics and working distance so the part is large enough in the image.",
     blocks: [
@@ -83,7 +83,7 @@ export const guideSections: GuideSection[] = [
   },
   {
     id: "scanning",
-    n: "03",
+    n: "04",
     title: "Object scanning & data acquisition",
     summary: "Record video of the part from many positions — this is the raw data for the 3D model.",
     blocks: [
@@ -128,7 +128,7 @@ export const guideSections: GuideSection[] = [
   },
   {
     id: "calibration",
-    n: "04",
+    n: "05",
     title: "Camera calibration",
     summary: "Calibrate the camera with the checkerboard pattern, held at the working distance.",
     blocks: [
@@ -164,7 +164,7 @@ export const guideSections: GuideSection[] = [
   },
   {
     id: "measurements",
-    n: "05",
+    n: "06",
     title: "Object measurements",
     summary: "Supply the real dimensions of the part so the model is scaled correctly.",
     blocks: [
@@ -186,8 +186,78 @@ export const guideSections: GuideSection[] = [
     ],
   },
   {
+    id: "upload-data",
+    n: "07",
+    title: "Upload the object data",
+    summary: "Send images, camera calibration and object size to RobotAI in one package.",
+    blocks: [
+      {
+        t: "p",
+        text: "Once scanning, camera calibration and measurements are done, pack the complete object data and send it to RobotAI.",
+      },
+      {
+        t: "bullets",
+        items: [
+          "Images of the object recorded from different positions (section 04)",
+          "Camera calibration data from the checkerboard procedure (section 05)",
+          "Object size information — a drawing or measured dimensions (section 06)",
+        ],
+      },
+      {
+        t: "note",
+        label: "No special format",
+        text: "A shared folder link or a zip archive is fine. We check completeness and confirm before the model build starts.",
+      },
+    ],
+  },
+  {
+    id: "model",
+    n: "08",
+    title: "RobotAI builds your model",
+    summary: "We train the detection model for your part and share it back — nothing to install on your side.",
+    blocks: [
+      {
+        t: "p",
+        text: "This step happens at RobotAI. We create the model for your object from the data you uploaded and share the finished model with you.",
+      },
+      {
+        t: "note",
+        label: "Stay in touch",
+        text: "If anything in the data is missing or inconsistent, we contact you before starting. You can reach the team at any point via the demo form below.",
+      },
+    ],
+  },
+  {
+    id: "test-detection",
+    n: "09",
+    title: "Test the detection",
+    summary: "Verify the model exactly the way you verified the USB test data.",
+    blocks: [
+      {
+        t: "p",
+        text: "Testing your own model follows the same procedure as the software verification in section 02 — load the project directory, run the detection on a recorded video or your live camera, and check the reported pose.",
+      },
+      {
+        t: "steps",
+        items: [
+          {
+            menu: ["Project", "Select Object Directory"],
+            body: "Choose the folder with your object and the model RobotAI shared with you.",
+          },
+          {
+            menu: ["Detect", "Run Video from File"],
+            body: "Or run on your live camera. The detected pose is shown over the object.",
+          },
+          {
+            body: "Press q to stop. If the pose tracks the object correctly, detection is working.",
+          },
+        ],
+      },
+    ],
+  },
+  {
     id: "robot-calibration",
-    n: "06",
+    n: "10",
     title: "Camera–robot calibration",
     summary: "Hand-eye calibration: convert detections into your robot's coordinate frame.",
     blocks: [
@@ -266,7 +336,7 @@ export const guideSections: GuideSection[] = [
   },
   {
     id: "communication",
-    n: "07",
+    n: "11",
     title: "Robot communication",
     summary: "Pose6D acts as a TCP server; the robot asks for a pose and receives six numbers back.",
     blocks: [

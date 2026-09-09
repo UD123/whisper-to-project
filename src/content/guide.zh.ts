@@ -33,7 +33,7 @@ export const guideZh: Guide = {
         n: "01",
         title: "获取软件",
         detail: "下载免费的 POC 版本（仅 CPU）及其配套文档。",
-        href: "#installation",
+        href: "#get-software",
       },
       {
         n: "02",
@@ -69,17 +69,19 @@ export const guideZh: Guide = {
         n: "07",
         title: "上传工件数据",
         detail: "将图像、标定数据与尺寸数据发送给 RobotAI。",
+        href: "#upload-data",
       },
       {
         n: "08",
         title: "RobotAI 生成模型",
         detail: "我们为您的工件训练模型，并将结果返回给您。",
+        href: "#model",
       },
       {
         n: "09",
         title: "测试检测效果",
         detail: "按照 USB 示例模型相同的步骤验证检测结果。",
-        href: "#verification",
+        href: "#test-detection",
       },
       {
         n: "10",
@@ -105,8 +107,21 @@ export const guideZh: Guide = {
     key: "usb-quickstart",
   },
 
+  getSoftware: {
+    eyebrow: "01 — 获取软件",
+    title: "下载免费 POC 版本",
+    subtitle: "概念验证版本免费提供，仅支持 CPU 运行 —— 无需 GPU。",
+    bullets: [
+      "Pose6D POC 版本（仅 CPU），适用于 Windows 10",
+      "配套文档 —— 本页面即为简明版",
+      "用于验证安装的 usb_test 示例数据（见第 02 节）",
+    ],
+    hint: "下载链接与 usb_test 压缩包由 RobotAI 按需提供给用户。",
+    cta: "索取下载链接",
+  },
+
   installation: {
-    eyebrow: "01 — 硬件与软件安装",
+    eyebrow: "02 — 硬件与软件安装",
     title: "约 15 分钟完成 Pose6D 安装与验证",
     subtitle: "本节内容均针对运行于 Windows 10 的免费 POC 版本（仅 CPU）。",
     requirementsTitle: "运行要求",
@@ -162,7 +177,7 @@ export const guideZh: Guide = {
       { k: "videos", v: "训练用采集数据" },
     ],
 
-    verificationEyebrow: "第 01 节 · 第 2 部分（共 2 部分）",
+    verificationEyebrow: "第 02 节 · 第 2 部分（共 2 部分）",
     verificationTitle: "软件验证",
     verificationSubtitle: "两项检查：先使用随附的录制数据，再使用您自己的相机。",
     tabs: [
