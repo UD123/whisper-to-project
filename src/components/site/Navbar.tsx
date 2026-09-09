@@ -1,14 +1,16 @@
+import { Link } from "@tanstack/react-router";
 import { LogoMark } from "./Logo";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { useT } from "@/i18n/LanguageProvider";
 
-export function Navbar() {
+/** `hashBase` is "/" on sub-pages so in-page anchors point back to the landing page. */
+export function Navbar({ hashBase = "" }: { hashBase?: string }) {
   const t = useT();
 
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
-        <a href="#top" className="flex items-center gap-3">
+        <a href={`${hashBase}#top`} className="flex items-center gap-3">
           <span className="flex items-center gap-2 text-[17px] font-semibold tracking-tight">
             <LogoMark className="h-5 w-5 text-primary" />
             RobotAI
@@ -26,7 +28,7 @@ export function Navbar() {
           {t.nav.links.map((l) => (
             <a
               key={l.href}
-              href={l.href}
+              href={`${hashBase}${l.href}`}
               className="text-sm text-muted-foreground transition-colors duration-200 hover:text-foreground"
             >
               {l.label}
@@ -35,14 +37,14 @@ export function Navbar() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <a
-            href="#specs"
+          <Link
+            to="/guide"
             className="hidden rounded-md border border-border bg-card px-3.5 py-2 text-sm font-medium transition-all duration-200 hover:border-foreground/25 hover:shadow-sm xl:inline-flex"
           >
             {t.nav.docs}
-          </a>
+          </Link>
           <a
-            href="#demo"
+            href={`${hashBase}#demo`}
             className="rounded-md bg-foreground px-3.5 py-2 text-sm font-medium text-background transition-all duration-200 hover:opacity-90"
           >
             {t.nav.demo}
