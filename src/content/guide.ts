@@ -165,6 +165,7 @@ export const guide = {
       { k: "videos", v: "Data collected for training" },
     ],
 
+    verificationEyebrow: "Section 01 · Part 2 of 2",
     verificationTitle: "Software verification",
     verificationSubtitle:
       "Two checks: first on the recorded data we ship, then on your own camera.",
