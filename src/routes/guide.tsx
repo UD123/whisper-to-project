@@ -379,6 +379,7 @@ function GuideContent() {
 
         <Footer hashBase="/" />
       </div>
-    </LanguageProvider>
+    </>
+
   );
 }
