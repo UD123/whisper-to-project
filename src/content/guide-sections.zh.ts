@@ -1,0 +1,356 @@
+import type { GuideSection } from "./guide-sections";
+
+/** Simplified Chinese version of sections 02–07. */
+export const guideSectionsZh: GuideSection[] = [
+  {
+    id: "optics",
+    n: "02",
+    title: "相机与光学配置",
+    summary: "选择相机、镜头与工作距离，确保工件在图像中足够大。",
+    blocks: [
+      {
+        t: "note",
+        label: "最关键的一条规则",
+        text: "在约 1280 × 720 的图像中，工件至少应覆盖 200 × 200 像素，大致相当于视场的三分之一到四分之一。相机、镜头与工作距离均由此确定。",
+      },
+      { t: "p", text: "将相机连接到视觉工控机。Pose6D 支持以下类型的相机。" },
+      {
+        t: "table",
+        head: ["序号", "相机", "支持情况"],
+        rows: [
+          [
+            "1",
+            "WebCam 0（笔记本内置）、WebCam 1 / WebCam 2（USB）",
+            "支持基础 USB 相机功能。WebCam 2 用于 RealSense 的 RGB 数据流。",
+          ],
+          ["2", "IDS — uEye", "支持。已在 IDS US1007 与 IDS 3270 上测试。"],
+          ["3", "Basler — GigE", "支持。"],
+          ["4", "以太网 / 流式传输", "支持。"],
+          ["5", "RealSense — RGB", "支持。"],
+          ["6", "网络相机（IP）", "支持，图像通过网络传输。"],
+          ["7", "Allied Vision", "支持。"],
+          ["8", "其他标准", "可按需求定制。"],
+        ],
+      },
+      { t: "note", label: "重要提示", text: "必须关闭相机的自动对焦与自动变焦功能。" },
+      { t: "h", text: "连接 USB 网络摄像头" },
+      {
+        t: "steps",
+        items: [
+          {
+            menu: ["Camera", "Select from List"],
+            body: "双击 Webcam 0 或 Webcam 1 进行选择。可点击红色 X 或双击所选项关闭窗口。",
+          },
+          { menu: ["Camera", "Connect"], body: "连接到所选相机。" },
+          {
+            menu: ["Camera", "Configure", "Configure Resolution"],
+            body: "从列表中选择分辨率，或自行输入，例如 320 列（X）与 240 行（Y）。",
+          },
+          {
+            menu: ["Camera", "Configure", "Resolution", "Custom"],
+            body: "应用自定义分辨率。控制台会提示：CM: Set Resolution done : 320 x 240。",
+          },
+          {
+            menu: ["Camera", "Show Real Time"],
+            body: "实时窗口打开即表示相机连接成功。按 q 键关闭。",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: "scanning",
+    n: "03",
+    title: "工件扫描与数据采集",
+    summary: "从多个位置录制工件视频，作为 3D 模型的原始数据。",
+    blocks: [
+      {
+        t: "steps",
+        items: [
+          { menu: ["Camera", "Select From List"], body: "选择相应的相机。" },
+          { menu: ["Camera", "Connect"], body: "连接到相机。" },
+          { menu: ["Camera", "Show Real Time"], body: "确认相机工作正常，按 q 键退出。" },
+          {
+            menu: ["Training", "Record Training Video"],
+            body: "使用 a、t、f 三个按键进行录制。MP4 文件会写入 videos 文件夹。",
+          },
+        ],
+      },
+      { t: "h", text: "单一工件" },
+      {
+        t: "p",
+        text: "固定相机——工件在静止相机前移动；移动相机——相机围绕静止工件移动。两种方式均可，按您的工作单元实际情况选择。",
+      },
+      {
+        t: "videos",
+        label: "扫描示例",
+        items: [
+          { name: "移动工件 — 示例 1", key: "scan-moving-object-1" },
+          { name: "移动工件 — 示例 2", key: "scan-moving-object-2" },
+          { name: "移动工件 — 示例 3", key: "scan-moving-object-3" },
+          { name: "移动相机", key: "scan-moving-camera" },
+        ],
+      },
+      { t: "h", text: "多工件 — 无序抓取 / 码垛" },
+      {
+        t: "videos",
+        label: "多工件示例",
+        items: [
+          { name: "码垛数据准备", key: "scan-palletizing" },
+          { name: "无序抓取 — 示例 1", key: "scan-bin-picking-1" },
+          { name: "无序抓取 — 示例 2", key: "scan-bin-picking-2" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "calibration",
+    n: "04",
+    title: "相机标定",
+    summary: "在工作距离处使用棋盘格标定板完成相机标定。",
+    blocks: [
+      {
+        t: "note",
+        label: "最重要的一点",
+        text: "标定板须保持在工作距离处移动，并且应占据画面的一半以上（50–90%）。",
+      },
+      { t: "p", text: "在已创建工件文件夹的前提下，在 Pose6D 中执行以下操作。" },
+      {
+        t: "steps",
+        items: [
+          { menu: ["Camera", "Select From List"], body: "选择相应的相机。" },
+          { menu: ["Camera", "Connect"], body: "连接到相机。" },
+          { menu: ["Camera", "Show Real Time"], body: "检查实时图像，按 q 键退出。" },
+          { menu: ["Camera", "Square Size"], body: "输入所打印标定板单个方格的实际尺寸。" },
+          {
+            menu: ["Camera", "Record Video for Calibration"],
+            body: "使用 a、t 或 f 在不同位置采集 30–40 张图像，单张拍摄建议使用 a 或 t。文件会写入 cameras 文件夹。",
+          },
+        ],
+      },
+      {
+        t: "p",
+        text: "标定板有两种呈现方式：显示在手机屏幕上，或打印后粘贴到刚性平面上。可打印的图案见下方文档下载部分。",
+      },
+      {
+        t: "videos",
+        label: "标定示例",
+        items: [{ name: "使用手机显示标定板", key: "calib-smartphone" }],
+      },
+    ],
+  },
+  {
+    id: "measurements",
+    n: "05",
+    title: "工件测量",
+    summary: "提供工件真实尺寸，确保模型比例正确。",
+    blocks: [
+      { t: "p", text: "RobotAI 需要工件的真实尺寸，可通过以下两种方式之一提供。" },
+      {
+        t: "bullets",
+        items: [
+          "方式一 —— 提供工件的机械图纸。",
+          "方式二 —— 使用卡尺或直尺手工测量，并附上标明测量位置的照片。",
+        ],
+      },
+      {
+        t: "p",
+        text: "请将尺寸数据与图像、标定数据一并发送，RobotAI 随后生成模型并返回给您。",
+      },
+    ],
+  },
+  {
+    id: "robot-calibration",
+    n: "06",
+    title: "相机–机器人标定",
+    summary: "手眼标定：将检测结果转换到机器人坐标系。",
+    blocks: [
+      {
+        t: "p",
+        text: "将棋盘格标定板固定在机器人工作空间内，采集 10–20 张相机图像及其对应的机器人位姿。",
+      },
+      {
+        t: "steps",
+        items: [
+          { menu: ["Camera", "Connect"], body: "连接相机。" },
+          {
+            menu: ["Robot", "Camera Robot Parameters"],
+            body: "在编辑器中打开 camera_robot_calibration.json，将 ChessBoardPose 设为当前机器人 TCP 位姿，将 ChessBoardSquareSize 设为方格实际尺寸。",
+          },
+          {
+            body: "将机械臂移动到不同位置，记录图像以及六个机器人位姿数值 [Tx, Ty, Tz, Rx, Ry, Rz]——平移单位为毫米，旋转单位视机器人而定为度或弧度。",
+          },
+          {
+            menu: ["Robot", "Record Image for Calibration"],
+            body: "也可按 a 键。图像会自动编号，机器人位姿写入 camera_robot_calibration.json。若标定板显示不清晰，请手动删除该图像。",
+          },
+          { menu: ["Robot", "Select Robot Model"], body: "选择您使用的机器人型号。" },
+          {
+            menu: ["Robot", "Moving Camera Calibration"],
+            body: "执行标定，结果写入 robotai_cfg.yaml。",
+          },
+        ],
+      },
+      {
+        t: "note",
+        label: "旋转幅度要小",
+        text: "绕 TCP 的 X、Y、Z 轴旋转不超过 ±30°。先改变 Z，再调整 X 与 Y，确保标定板始终位于图像内。",
+      },
+      {
+        t: "p",
+        text: "每个视角都会得到一个标定板位置。由于标定板在机器人坐标系中并未移动，六个数值应当重复一致，控制台打印的标准差必须很小——以毫米和度为单位时应小于 1。随后确认 robotai_cfg.yaml 中的 cam_gripper_transform 与 cam_robot_transform 已更新。",
+      },
+      { t: "h", text: "可选验证" },
+      {
+        t: "steps",
+        items: [
+          { body: "在机器人基坐标系中确定棋盘格的四个角点 A、B、C、D。" },
+          { body: "用机器人 TCP 逐点触碰并读取坐标。" },
+          {
+            body: "按顺序将 A、B、C、D 高精度写入 camera_robot_calibration.json 的 chessBoardCorners 字段。",
+          },
+        ],
+      },
+      { t: "h", text: "快速移动标定（1761 及以上版本）" },
+      {
+        t: "steps",
+        items: [
+          { body: "在 robotai_cfg.yaml 中设置 model_name: chess 以显示十字线。" },
+          {
+            body: "重复上述流程，但需从不同角度将中心十字对准标定板上的同一点。通常四张不同角度的图像即可。",
+          },
+          { menu: ["Robot", "Moving Camera Calibration"], body: "执行标定并查看控制台输出。" },
+        ],
+      },
+      { t: "h", text: "高精度标定" },
+      {
+        t: "p",
+        text: "如需更高精度，可在设定位置拍摄标定板，记录 Pose6D 显示的位姿，然后手动将机器人移动到目标点，从示教器读取坐标。以不同标定板姿态重复 4–6 次，并将这些数据对写入 camera_robot_calibration.json 的 errorInfo 字段。",
+      },
+      {
+        t: "steps",
+        items: [
+          {
+            menu: ["Robot", "Precise Camera Gripper Calibration"],
+            body: "执行后检查 robotai_cfg.yaml 中的 cam_gripper_precise 已填入数值且不全为零。",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: "communication",
+    n: "07",
+    title: "机器人通信",
+    summary: "Pose6D 作为 TCP 服务器：机器人请求位姿，返回六个数值。",
+    blocks: [
+      {
+        t: "bullets",
+        items: [
+          "Pose6D 安装于 Windows 10。",
+          "与机器人控制器之间为以太网连接。",
+          "在 Windows 防火墙中放行端口 8480（或 5555，或自定义端口）。",
+        ],
+      },
+      { t: "h", text: "本地测试连接" },
+      {
+        t: "steps",
+        items: [
+          { body: "运行 Pose6D-XXXX.exe 并选择一个工件。" },
+          { menu: ["Camera", "Select from List"], body: "选择您的相机。" },
+          { menu: ["Camera", "Connect"], body: "连接到相机。" },
+          { menu: ["Robot", "Select Robot Model"], body: "选择机器人型号。" },
+          {
+            menu: ["Robot", "Configure Connection"],
+            body: "先在命令行中输入 127.0.0.1:8480，然后执行该命令。",
+          },
+          {
+            menu: ["Robot", "Select Comm Protocol"],
+            body: "在列表中双击 <,mId,Name,Pose,Q,>。",
+          },
+          {
+            menu: ["Detect", "Run TCP Server with Camera"],
+            body: "启动 TCP 服务器并显示相机画面。如需启用棋盘格检测，请在该工件的 robotai_cfg.yaml 中设置 net_level: 1254。",
+          },
+          {
+            body: "启动 Hercules TCP 客户端，连接 127.0.0.1 的 8480 端口，发送请求报文并查看响应。若未检测到目标，返回的位姿全为零。",
+          },
+        ],
+      },
+      {
+        t: "note",
+        label: "Hercules 的特殊之处",
+        text: "Hercules 客户端要求首个同步字符输入两次——需发送 <<,1,1,0,0,0,0,0,0,1,>，尽管协议本身只需要一个 <。",
+      },
+      { t: "h", text: "报文格式 <,mId,Name,Pose,Q,>" },
+      {
+        t: "table",
+        head: ["数值", "类型", "说明"],
+        rows: [
+          ["<", "Sync", "报文起始"],
+          ["1", "Int", "报文编号"],
+          ["1", "String", "请求的工件 ID / 名称"],
+          ["Pose", "Array", "机器人位姿，6 个浮点数 Tx, Ty, Tz [mm], Rx, Ry, Rz [deg]，或全零"],
+          ["Qual", "Float", "请求报文中为占位值"],
+          [">", "Sync", "报文结束"],
+        ],
+      },
+      { t: "code", label: "请求", lines: ["<,1,1,0,0,0,0,0,0,1,>"] },
+      {
+        t: "table",
+        head: ["数值", "类型", "说明"],
+        rows: [
+          ["<", "Sync", "报文起始"],
+          ["2", "Int", "报文编号"],
+          ["1", "String", "工件 ID / 名称"],
+          ["Pose", "Array", "6 个浮点数：Tx, Ty, Tz [mm], Rx, Ry, Rz [deg]"],
+          ["Qual", "Float", "检测质量，0–1"],
+          [">", "Sync", "报文结束"],
+        ],
+      },
+      {
+        t: "code",
+        label: "响应",
+        lines: ["<,2,1,79.743313,28.696728,-85.868947,-175.437383,-67.447617,32.168495,0.8,>"],
+      },
+      { t: "h", text: "报文头格式 ]N>" },
+      {
+        t: "table",
+        head: ["数值", "类型", "说明"],
+        rows: [
+          ["]", "Sync", "报文头起始"],
+          ["N", "Int", "报文字符数，不含报文头"],
+          [">", "Sync", "报文头结束"],
+          ["2", "Int", "报文编号"],
+          ["Id", "Int", "工件 ID"],
+          ["Pose", "Array", "6 个浮点数：Tx, Ty, Tz [mm], Rx, Ry, Rz [deg]"],
+          ["Qual", "Float", "检测质量，0–1"],
+        ],
+      },
+      {
+        t: "code",
+        label: "带报文头的响应",
+        lines: ["]76>2,0,79.743313,28.696728,-85.868947,-175.437383,-67.447617,32.168495,0.000000"],
+      },
+      { t: "h", text: "修改 IP 地址与端口" },
+      {
+        t: "p",
+        text: "打开与 Pose6D_XXXX.exe 同目录下的 pose6d_session.yaml，修改默认值：",
+      },
+      {
+        t: "code",
+        label: "pose6d_session.yaml",
+        lines: [
+          "robot_client_host: 192.168.1.100   # 机器人 / 客户端 IP",
+          "robot_server_host: 192.168.1.10    # 运行 Pose6D 的工控机 IP",
+          "robot_server_port: 8480",
+        ],
+      },
+      {
+        t: "note",
+        label: "重要提示",
+        text: "请确认 Windows 防火墙允许该配置——将 Pose6D_XXXX.exe 加入允许的应用程序列表。",
+      },
+    ],
+  },
+];
