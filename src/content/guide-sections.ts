@@ -1,0 +1,389 @@
+export type Block =
+  | { t: "p"; text: string }
+  | { t: "bullets"; items: string[] }
+  | { t: "steps"; items: { menu?: string[]; body: string; path?: string }[] }
+  | { t: "note"; label: string; text: string }
+  | { t: "table"; head: string[]; rows: string[][] }
+  | { t: "videos"; label: string; items: { name: string; url: string }[] }
+  | { t: "code"; label: string; lines: string[] }
+  | { t: "h"; text: string };
+
+export type GuideSection = {
+  id: string;
+  n: string;
+  title: string;
+  updated: string;
+  summary: string;
+  blocks: Block[];
+};
+
+/** Sections 02–07, transferred from the RobotAI How-To documents. */
+export const guideSections: GuideSection[] = [
+  {
+    id: "optics",
+    n: "02",
+    title: "Camera & optics setup",
+    updated: "Last updated 12 February 2023",
+    summary: "Choose the camera, optics and working distance so the part is large enough in the image.",
+    blocks: [
+      {
+        t: "note",
+        label: "The one rule that matters",
+        text: "The object must cover at least 200 × 200 pixels in an image of about 1280 × 720 — roughly one third to one quarter of the field of view. Camera, optics and working distance all follow from this.",
+      },
+      {
+        t: "p",
+        text: "Connect the camera to the vision computer. Pose6D supports the following camera types.",
+      },
+      {
+        t: "table",
+        head: ["#", "Camera", "Support"],
+        rows: [
+          [
+            "1",
+            "WebCam 0 (laptop built-in), WebCam 1 / WebCam 2 (USB)",
+            "Basic USB camera functionality. WebCam 2 is used for the RealSense RGB stream.",
+          ],
+          ["2", "IDS — uEye", "Supported. Tested with IDS US1007 and IDS 3270."],
+          ["3", "Basler — GigE", "Supported."],
+          ["4", "Ethernet / streaming", "Supported."],
+          ["5", "RealSense — RGB", "Supported."],
+          ["6", "Camera over IP", "Supported — images sent over the network."],
+          ["7", "Allied Vision", "Supported."],
+          ["8", "Additional standards", "On request."],
+        ],
+      },
+      {
+        t: "note",
+        label: "Important",
+        text: "Auto-focus and auto-zoom must be switched off on the camera.",
+      },
+      { t: "h", text: "Connecting a USB webcam" },
+      {
+        t: "steps",
+        items: [
+          {
+            menu: ["Camera", "Select from List"],
+            body: "Double-click Webcam 0 or 1 to select it. Close the window with the red X or by double-clicking your choice.",
+          },
+          { menu: ["Camera", "Connect"], body: "Connect to the selected camera." },
+          {
+            menu: ["Camera", "Configure", "Configure Resolution"],
+            body: "Pick a resolution from the list, or type your own — for example 320 columns (X) and 240 rows (Y).",
+          },
+          {
+            menu: ["Camera", "Configure", "Resolution", "Custom"],
+            body: "Apply the custom resolution. The console confirms: CM: Set Resolution done : 320 x 240.",
+          },
+          {
+            menu: ["Camera", "Show Real Time"],
+            body: "A live window opens — the camera is connected. Press q to close it.",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: "scanning",
+    n: "03",
+    title: "Object scanning & data acquisition",
+    updated: "Last updated 14 October 2023",
+    summary: "Record video of the part from many positions — this is the raw data for the 3D model.",
+    blocks: [
+      {
+        t: "steps",
+        items: [
+          { menu: ["Camera", "Select From List"], body: "Select the relevant camera." },
+          { menu: ["Camera", "Connect"], body: "Connect to it." },
+          { menu: ["Camera", "Show Real Time"], body: "Check that the camera works. Press q to quit." },
+          {
+            menu: ["Training", "Record Training Video"],
+            body: "Record with the keys a, t and f. The MP4 files are written to the videos folder.",
+          },
+        ],
+      },
+      { t: "h", text: "Single object" },
+      {
+        t: "p",
+        text: "Fixed camera — the part moves in front of a stationary camera. Moving camera — the camera travels around a stationary part. Both work; pick whichever matches your cell.",
+      },
+      {
+        t: "videos",
+        label: "Scanning examples",
+        items: [
+          { name: "Moving object — example 1", url: "https://youtu.be/1XE4QOmUnX4" },
+          { name: "Moving object — example 2", url: "https://youtu.be/XljXi0lNADE" },
+          { name: "Moving object — example 3", url: "https://youtu.be/Ozfi6f7au_A" },
+          { name: "Moving camera", url: "https://youtu.be/KSzGLQCJPtw" },
+        ],
+      },
+      { t: "h", text: "Multiple objects — bin picking / palletizing" },
+      {
+        t: "videos",
+        label: "Multi-object examples",
+        items: [
+          { name: "Preparing data for palletizing", url: "https://youtu.be/BQQqf_sBn7A" },
+          { name: "Bin picking — example 1", url: "https://youtu.be/RPKIqd6QyDs" },
+          { name: "Bin picking — example 2", url: "https://youtu.be/7RlR_dRNiwQ" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "calibration",
+    n: "04",
+    title: "Camera calibration",
+    updated: "Last updated 21 June 2022",
+    summary: "Calibrate the camera with the checkerboard pattern, held at the working distance.",
+    blocks: [
+      {
+        t: "note",
+        label: "Most important",
+        text: "Hold and move the pattern at the working distance. The pattern should fill at least half of the scene (50–90%).",
+      },
+      { t: "p", text: "With the object folder already created, run the following in Pose6D." },
+      {
+        t: "steps",
+        items: [
+          { menu: ["Camera", "Select From List"], body: "Select the relevant camera." },
+          { menu: ["Camera", "Connect"], body: "Connect to it." },
+          { menu: ["Camera", "Show Real Time"], body: "Check the live image. Press q to quit." },
+          { menu: ["Camera", "Square Size"], body: "Enter the size of one square of your printed pattern." },
+          {
+            menu: ["Camera", "Record Video for Calibration"],
+            body: "Capture 30–40 images in different positions using a, t or f — prefer a or t for single shots. Files are written to the cameras folder.",
+          },
+        ],
+      },
+      {
+        t: "p",
+        text: "Two ways to present the pattern: display it on a smartphone screen, or print it and stick it on a rigid flat surface. The printable pattern is in the Documents section below.",
+      },
+      {
+        t: "videos",
+        label: "Calibration example",
+        items: [{ name: "Pattern on a smartphone", url: "https://youtu.be/is7k9mRkX7o" }],
+      },
+    ],
+  },
+  {
+    id: "measurements",
+    n: "05",
+    title: "Object measurements",
+    updated: "Last updated 4 December 2020",
+    summary: "Supply the real dimensions of the part so the model is scaled correctly.",
+    blocks: [
+      {
+        t: "p",
+        text: "RobotAI needs the true size of your part. Provide it in one of two ways.",
+      },
+      {
+        t: "bullets",
+        items: [
+          "Option 1 — send a mechanical drawing of the part.",
+          "Option 2 — measure the part by hand (caliper or ruler) and send the dimensions with a photo showing where each was taken.",
+        ],
+      },
+      {
+        t: "p",
+        text: "Send the measurements together with the images and calibration data — RobotAI then builds the model and returns it to you.",
+      },
+    ],
+  },
+  {
+    id: "robot-calibration",
+    n: "06",
+    title: "Camera–robot calibration",
+    updated: "Last updated 11 November 2023",
+    summary: "Hand-eye calibration: convert detections into your robot's coordinate frame.",
+    blocks: [
+      {
+        t: "p",
+        text: "Fix the chessboard pattern in the robot workspace and record 10–20 camera images together with the matching robot poses.",
+      },
+      {
+        t: "steps",
+        items: [
+          { menu: ["Camera", "Connect"], body: "Connect to the camera." },
+          {
+            menu: ["Robot", "Camera Robot Parameters"],
+            body: "Open camera_robot_calibration.json in the editor. Set ChessBoardPose to the current robot TCP pose and ChessBoardSquareSize to the real square size.",
+          },
+          {
+            body: "Move the arm to different positions and record an image plus the six robot pose numbers [Tx, Ty, Tz, Rx, Ry, Rz] — translations in mm, rotations in degrees or radians depending on the robot.",
+          },
+          {
+            menu: ["Robot", "Record Image for Calibration"],
+            body: "Or press a. Images are numbered automatically and the robot pose is written to camera_robot_calibration.json. Delete an image manually if the pattern is not clearly visible.",
+          },
+          { menu: ["Robot", "Select Robot Model"], body: "Select the robot you are working with." },
+          {
+            menu: ["Robot", "Moving Camera Calibration"],
+            body: "Run the calibration. The result is written into robotai_cfg.yaml.",
+          },
+        ],
+      },
+      {
+        t: "note",
+        label: "Keep rotations small",
+        text: "Rotate around the X, Y and Z axes of the TCP by no more than ±30°. Change Z, then change X and Y so the pattern stays inside the image.",
+      },
+      {
+        t: "p",
+        text: "Each view yields a pattern position. Since the pattern does not move in robot coordinates, all six numbers should repeat, and the standard deviation printed in the console must be small — below 1 for millimetres and degrees. Then check that cam_gripper_transform and cam_robot_transform in robotai_cfg.yaml have been updated.",
+      },
+      { t: "h", text: "Optional verification" },
+      {
+        t: "steps",
+        items: [
+          { body: "Determine the four chessboard corners A, B, C, D in the robot base coordinate system." },
+          { body: "Touch each point with the robot TCP and read the coordinates." },
+          {
+            body: "Write A, B, C, D with high precision into the chessBoardCorners field of camera_robot_calibration.json, in that order.",
+          },
+        ],
+      },
+      { t: "h", text: "Fast moving calibration (version 1761 and up)" },
+      {
+        t: "steps",
+        items: [
+          { body: "In robotai_cfg.yaml set model_name: chess to show the cross lines." },
+          {
+            body: "Repeat the procedure above, but aim the centre cross at the same spot on the board from different angles. Four images at different angles are often enough.",
+          },
+          { menu: ["Robot", "Moving Camera Calibration"], body: "Run the calibration and check the console output." },
+        ],
+      },
+      { t: "h", text: "High-precision calibration" },
+      {
+        t: "p",
+        text: "For fine precision, photograph the pattern at a defined position, record the pose shown by Pose6D, then move the robot manually to the target point and record the coordinates from the teach panel. Repeat 4–6 times with different pattern orientations and write the pairs into the errorInfo field of camera_robot_calibration.json.",
+      },
+      {
+        t: "steps",
+        items: [
+          {
+            menu: ["Robot", "Precise Camera Gripper Calibration"],
+            body: "Run it, then check that cam_gripper_precise in robotai_cfg.yaml is filled in and does not contain zeros.",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: "communication",
+    n: "07",
+    title: "Robot communication",
+    updated: "Last updated 6 May 2024",
+    summary: "Pose6D acts as a TCP server; the robot asks for a pose and receives six numbers back.",
+    blocks: [
+      {
+        t: "bullets",
+        items: [
+          "Pose6D installed on Windows 10.",
+          "Ethernet connection to the robot controller.",
+          "Port 8480 (or 5555, or your own) allowed through the Windows firewall.",
+        ],
+      },
+      { t: "h", text: "Test the connection locally" },
+      {
+        t: "steps",
+        items: [
+          { body: "Run Pose6D-XXXX.exe and select an object." },
+          { menu: ["Camera", "Select from List"], body: "Select your camera." },
+          { menu: ["Camera", "Connect"], body: "Connect to it." },
+          { menu: ["Robot", "Select Robot Model"], body: "Select your robot type." },
+          {
+            menu: ["Robot", "Configure Connection"],
+            body: "Type 127.0.0.1:8480 into the command line first, then run this command.",
+          },
+          {
+            menu: ["Robot", "Select Comm Protocol"],
+            body: "Double-click <,mId,Name,Pose,Q,> in the list.",
+          },
+          {
+            menu: ["Detect", "Run TCP Server with Camera"],
+            body: "Starts the TCP server and shows the camera output. To enable chess-pattern detection set net_level: 1254 in the object's robotai_cfg.yaml.",
+          },
+          {
+            body: "Start the Hercules TCP client, connect to 127.0.0.1 port 8480, send the request message and watch the response. If nothing is detected, the returned pose is all zeros.",
+          },
+        ],
+      },
+      {
+        t: "note",
+        label: "Hercules quirk",
+        text: "The Hercules client requires the first sync character twice — send <<,1,1,0,0,0,0,0,0,1,> although the protocol itself needs only a single <.",
+      },
+      { t: "h", text: "Message format <,mId,Name,Pose,Q,>" },
+      {
+        t: "table",
+        head: ["Value", "Type", "Description"],
+        rows: [
+          ["<", "Sync", "Message start"],
+          ["1", "Int", "Message id"],
+          ["1", "String", "Object id / name requested"],
+          ["Pose", "Array", "Robot pose, 6 floats Tx, Ty, Tz [mm], Rx, Ry, Rz [deg] — or zeros"],
+          ["Qual", "Float", "Dummy value in a request"],
+          [">", "Sync", "Message stop"],
+        ],
+      },
+      { t: "code", label: "Request", lines: ["<,1,1,0,0,0,0,0,0,1,>"] },
+      {
+        t: "table",
+        head: ["Value", "Type", "Description"],
+        rows: [
+          ["<", "Sync", "Message start"],
+          ["2", "Int", "Message id"],
+          ["1", "String", "Object id / name"],
+          ["Pose", "Array", "6 floats: Tx, Ty, Tz [mm], Rx, Ry, Rz [deg]"],
+          ["Qual", "Float", "Detection quality, 0–1"],
+          [">", "Sync", "Message stop"],
+        ],
+      },
+      {
+        t: "code",
+        label: "Response",
+        lines: ["<,2,1,79.743313,28.696728,-85.868947,-175.437383,-67.447617,32.168495,0.8,>"],
+      },
+      { t: "h", text: "Header format ]N>" },
+      {
+        t: "table",
+        head: ["Value", "Type", "Description"],
+        rows: [
+          ["]", "Sync", "Header start"],
+          ["N", "Int", "Number of characters in the message, header excluded"],
+          [">", "Sync", "Header stop"],
+          ["2", "Int", "Message id"],
+          ["Id", "Int", "Object id"],
+          ["Pose", "Array", "6 floats: Tx, Ty, Tz [mm], Rx, Ry, Rz [deg]"],
+          ["Qual", "Float", "Detection quality, 0–1"],
+        ],
+      },
+      {
+        t: "code",
+        label: "Response with header",
+        lines: ["]76>2,0,79.743313,28.696728,-85.868947,-175.437383,-67.447617,32.168495,0.000000"],
+      },
+      { t: "h", text: "Changing the IP address and port" },
+      {
+        t: "p",
+        text: "Open pose6d_session.yaml, stored next to Pose6D_XXXX.exe, and change the defaults:",
+      },
+      {
+        t: "code",
+        label: "pose6d_session.yaml",
+        lines: [
+          "robot_client_host: 192.168.1.100   # IP of your robot / client",
+          "robot_server_host: 192.168.1.10    # IP of the PC running Pose6D",
+          "robot_server_port: 8480",
+        ],
+      },
+      {
+        t: "note",
+        label: "Important",
+        text: "Make sure the Windows firewall allows this configuration — add Pose6D_XXXX.exe to the allowed applications list.",
+      },
+    ],
+  },
+];
