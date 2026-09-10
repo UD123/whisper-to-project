@@ -515,4 +515,38 @@ export const guideSectionsZh: GuideSection[] = [
       },
     ],
   },
+  {
+    id: "activation",
+    n: "A",
+    title: "许可证激活与类型",
+    summary: "激活流程以及许可证解锁的功能。",
+    blocks: [
+      {
+        t: "p",
+        text: "Pose6D 启动时，主窗口可能显示 “Requires Activation”。没有许可证软件仍可运行，但检测到的工件上仅显示 3D 坐标轴——位姿数值保持隐藏。",
+      },
+      { t: "shot", key: "ui-requires-activation", label: "POSE6D · 需要激活", caption: "启动后、激活前的主窗口。" },
+      {
+        t: "steps",
+        items: [
+          {
+            body: "从 C:\\RobotAI\\SW 运行一次 Pose6D，同一目录下会生成许可证请求文件 pose6d_license.chk。",
+            path: "C:\\RobotAI\\SW\\pose6d_license.chk",
+          },
+          {
+            body: "将 pose6d_license.chk 连同您的公司名称发送给 RobotAI。",
+          },
+          {
+            body: "RobotAI 会返回许可证文件，为特定机器、期限与功能组合启用软件。",
+          },
+        ],
+      },
+      {
+        t: "note",
+        label: "许可证的作用",
+        text: "许可证类型影响机器人连接以及显示的数据内容。激活后，实时检测窗口会显示完整位姿——Tx、Ty、Tz（毫米）与 Rx、Ry、Rz（度）。",
+      },
+      { t: "shot", key: "ui-detect-values", label: "实时检测 · 已激活", caption: "USB 测试工件上显示的位姿数值。" },
+    ],
+  },
 ];
