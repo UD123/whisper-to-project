@@ -189,23 +189,28 @@ export const guideZh: Guide = {
           {
             body: "双击可执行文件运行软件。在 CPU 模式下加载需要一定时间。",
             path: "C:\\RobotAI\\SW\\Pose6D-XXXX-cpu.exe",
+            shot: "ui-main-window",
           },
           {
             body: "选择工作项目目录，并选中 usb_test。",
             menu: ["Project", "Select Object Directory"],
+            shot: "ui-select-folder",
           },
           {
             body: "窗口保持白色并提示 “Config is OK”。",
             menu: ["Project", "Check Config File"],
+            shot: "ui-config-ok",
           },
           {
             body: "选择 usb_test 视频目录中的 mp4 文件，将打开显示 USB 工件影像的窗口。",
             menu: ["Detect", "Run Video from File"],
             path: "C:\\RobotAI\\Parts\\usb_test\\videos",
+            shot: "ui-video-file-dialog",
           },
           {
             body: "按 q 键停止。如果视频播放流畅快速，说明安装成功。",
             result: true,
+            shot: "ui-live-usb",
           },
         ],
       },
@@ -230,15 +235,18 @@ export const guideZh: Guide = {
           {
             body: "根据您的计算机选择 Webcam 0 或 Webcam 1。",
             menu: ["Camera", "Select from List"],
+            shot: "ui-camera-list",
           },
           { body: "相机随即被激活。", menu: ["Camera", "Connect"] },
           {
             body: "选择 320×240。若相机不支持该分辨率，可另选一个，或在 “Custom” 中手动输入。使用 320×240 以外的分辨率会降低检测可靠性。",
             menu: ["Camera", "Configure", "Resolution"],
+            shot: "ui-resolution-list",
           },
           {
             body: "将出现一个实时小窗口。请保持工件后方的白纸。",
             menu: ["Detect", "Run Video from Camera"],
+            shot: "ui-live-camera",
           },
           { body: "按 q 键停止。", result: true },
         ],
@@ -277,6 +285,7 @@ export const guideZh: Guide = {
     { id: "test-detection", label: "09 — 检测测试" },
     { id: "robot-calibration", label: "10 — 相机–机器人标定" },
     { id: "communication", label: "11 — 机器人通信" },
+    { id: "activation", label: "许可证激活" },
     { id: "downloads", label: "文档下载" },
   ],
 

@@ -5,7 +5,8 @@ import { LanguageProvider, useI18n } from "@/i18n/LanguageProvider";
 import { Navbar } from "@/components/site/Navbar";
 import { Footer } from "@/components/site/Footer";
 import { GuideSidebar } from "@/components/site/guide/GuideSidebar";
-import { Callout, DocCard, MenuPath, PathChip } from "@/components/site/guide/GuideBits";
+import { Callout, DocCard, MenuPath, PathChip, Shot } from "@/components/site/guide/GuideBits";
+import { guideShots } from "@/content/guide-shots";
 import { InstallDiagram, FolderTree } from "@/components/site/guide/GuideDiagrams";
 import { GuideVideo } from "@/components/site/guide/GuideVideo";
 import { GuideAccordion, useGuideAccordion } from "@/components/site/guide/GuideAccordion";
@@ -349,6 +350,9 @@ function GuideContent() {
                                 {s.body}
                               </p>
                               {"path" in s && s.path ? <PathChip value={s.path} /> : null}
+                              {"shot" in s && s.shot ? (
+                                <Shot src={guideShots[s.shot as keyof typeof guideShots]} label={s.shot} />
+                              ) : null}
                             </div>
                           </li>
                         ))}

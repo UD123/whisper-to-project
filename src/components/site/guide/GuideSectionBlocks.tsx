@@ -1,6 +1,7 @@
 import type { Block, GuideSection } from "@/content/guide-sections";
 import { guideVideo } from "@/content/guide-media";
-import { Callout, MenuPath, PathChip } from "./GuideBits";
+import { Callout, MenuPath, PathChip, Shot } from "./GuideBits";
+import { guideShots } from "@/content/guide-shots";
 import { GuideClips } from "./GuideVideo";
 
 function BlockView({ b }: { b: Block }) {
@@ -41,6 +42,9 @@ function BlockView({ b }: { b: Block }) {
                   {s.body}
                 </p>
                 {s.path ? <PathChip value={s.path} /> : null}
+                {s.shot && guideShots[s.shot] ? (
+                  <Shot src={guideShots[s.shot]} label={s.shot} />
+                ) : null}
               </div>
             </li>
           ))}
@@ -87,6 +91,16 @@ function BlockView({ b }: { b: Block }) {
           <pre className="overflow-x-auto px-5 py-4 font-mono text-xs leading-relaxed text-background/90">
             {b.lines.join("\n")}
           </pre>
+        </div>
+      );
+    case "shot":
+      return <Shot src={guideShots[b.key]} label={b.label} caption={b.caption} />;
+    case "shots":
+      return (
+        <div className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          {b.items.map((s) => (
+            <Shot key={s.key} src={guideShots[s.key]} label={s.label} caption={s.caption} />
+          ))}
         </div>
       );
     case "videos":

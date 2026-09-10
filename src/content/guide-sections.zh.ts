@@ -11,7 +11,13 @@ export const guideSectionsZh: GuideSection[] = [
       {
         t: "note",
         label: "最关键的一条规则",
-        text: "在约 1280 × 720 的图像中，工件至少应覆盖 200 × 200 像素，大致相当于视场的三分之一到四分之一。相机、镜头与工作距离均由此确定。",
+        text: "手册中给出两个数值：通用规则——工件在图像中至少覆盖 250 × 250 像素（见第 02 节）；POC 指导值——在约 1280 × 720 的图像中至少 200 × 200 像素，大致相当于视场的三分之一到四分之一。相机、镜头与工作距离均由此确定。",
+      },
+      {
+        t: "shot",
+        key: "setup-fov-diagram",
+        label: "配置 · 工作距离与视场",
+        caption: "工作距离、焦距与工件像素尺寸共同决定视场范围。",
       },
       { t: "p", text: "将相机连接到视觉工控机。Pose6D 支持以下类型的相机。" },
       {
@@ -64,6 +70,37 @@ export const guideSectionsZh: GuideSection[] = [
     title: "工件扫描与数据采集",
     summary: "从多个位置录制工件视频，作为 3D 模型的原始数据。",
     blocks: [
+      { t: "h", text: "首先创建新工件" },
+      {
+        t: "steps",
+        items: [
+          {
+            menu: ["Project", "Set Work Directory"],
+            body: "将 Pose6D 指向您的工件目录。",
+            path: "C:\\RobotAI\\Parts",
+            shot: "ui-set-work-dir",
+          },
+          {
+            body: "在参数框中输入要处理的工件名称——手册示例中为 “Tube24”。",
+            shot: "ui-object-name",
+          },
+          {
+            menu: ["Projects", "Create New Object"],
+            body: "系统将创建以该名称命名的文件夹。",
+            shot: "ui-create-object",
+          },
+          {
+            menu: ["Projects", "Check Config File"],
+            body: "检查一切是否就绪——窗口会提示 “Config is OK”。",
+            shot: "ui-object-config-ok",
+          },
+          {
+            body: "工件文件夹下会创建五个目录：cameras、labels、models、robots、videos。请确认 labels 目录中的示例 json 文件已生成，并按您的工件进行编辑。",
+            shot: "ui-object-dirs",
+          },
+        ],
+      },
+      { t: "h", text: "录制数据" },
       {
         t: "steps",
         items: [
@@ -121,7 +158,7 @@ export const guideSectionsZh: GuideSection[] = [
           { menu: ["Camera", "Select From List"], body: "选择相应的相机。" },
           { menu: ["Camera", "Connect"], body: "连接到相机。" },
           { menu: ["Camera", "Show Real Time"], body: "检查实时图像，按 q 键退出。" },
-          { menu: ["Camera", "Square Size"], body: "输入所打印标定板单个方格的实际尺寸。" },
+          { menu: ["Camera", "Square Size"], body: "输入所打印标定板单个方格的实际尺寸——控制台会确认该数值，并写入配置文件的 square_size 字段。", shot: "ui-square-size" },
           {
             menu: ["Camera", "Record Video for Calibration"],
             body: "使用 a、t 或 f 在不同位置采集 30–40 张图像，单张拍摄建议使用 a 或 t。文件会写入 cameras 文件夹。",
@@ -133,9 +170,34 @@ export const guideSectionsZh: GuideSection[] = [
         text: "标定板有两种呈现方式：显示在手机屏幕上，或打印后粘贴到刚性平面上。可打印的图案见下方文档下载部分。",
       },
       {
+        t: "shot",
+        key: "checkerboard-print",
+        label: "棋盘格标定板",
+        caption: "精确测量单个方格尺寸，并通过 Camera → Square Size 输入。",
+      },
+      {
         t: "videos",
         label: "标定示例",
         items: [{ name: "使用手机显示标定板", key: "calib-smartphone" }],
+      },
+      { t: "h", text: "标定结果" },
+      {
+        t: "steps",
+        items: [
+          {
+            body: "录制结束时按 q 键（若视频过长）开始标定阶段，识别到的角点会绘制在标定板上。",
+            shot: "calibration-screen",
+          },
+          {
+            body: "相机将针对该特定分辨率完成标定，控制台会打印标定结果摘要。",
+            shot: "calibration-console",
+          },
+          {
+            menu: ["Project", "Configuration File"],
+            body: "相机内参标定完成——相关数值已写入配置文件（square_size 与相机矩阵）。",
+            shot: "config-square-size",
+          },
+        ],
       },
     ],
   },
@@ -151,6 +213,14 @@ export const guideSectionsZh: GuideSection[] = [
         items: [
           "方式一 —— 提供工件的机械图纸。",
           "方式二 —— 使用卡尺或直尺手工测量，并附上标明测量位置的照片。",
+        ],
+      },
+      {
+        t: "shots",
+        items: [
+          { key: "measure-drawing", label: "方式一 · 图纸", caption: "标注尺寸的机械图纸。" },
+          { key: "measure-caliper-1", label: "方式二 · 卡尺", caption: "手工测量，尺寸 1。" },
+          { key: "measure-caliper-2", label: "方式二 · 卡尺", caption: "手工测量，尺寸 2。" },
         ],
       },
       {
@@ -211,6 +281,21 @@ export const guideSectionsZh: GuideSection[] = [
         t: "p",
         text: "测试您自己的模型与第 02 节的软件验证流程相同 —— 加载项目目录，在录制视频或实时相机上运行检测，并检查输出的位姿。",
       },
+      { t: "h", text: "安装 RobotAI 交付的模型" },
+      {
+        t: "steps",
+        items: [
+          {
+            body: "将模型 zip 压缩包放入工件目录，压缩包名称必须与工件名称一致。",
+            path: "C:\\RobotAI\\Parts",
+          },
+          {
+            menu: ["Training", "Unzip Model Zip File"],
+            body: "将模型解压到工件文件夹中。",
+          },
+        ],
+      },
+      { t: "h", text: "运行检测" },
       {
         t: "steps",
         items: [
@@ -219,13 +304,20 @@ export const guideSectionsZh: GuideSection[] = [
             body: "选择包含工件及 RobotAI 交付模型的文件夹。",
           },
           {
-            menu: ["Detect", "Run Video from File"],
-            body: "或在实时相机上运行。检测到的位姿会叠加显示在工件上。",
+            menu: ["Detect", "Run Standalone from File"],
+            body: "在工件的录制视频上进行测试。",
           },
           {
-            body: "按 q 停止。如果位姿正确跟随工件，则检测运行正常。",
+            menu: ["Detect", "Run Stand Alone with Camera"],
+            body: "然后在实时相机上测试。按 q 停止——如果位姿正确跟随工件，则检测运行正常。",
+            shot: "ui-detect-values",
           },
         ],
+      },
+      {
+        t: "note",
+        label: "许可证说明",
+        text: "没有许可证时，工件上仅显示 3D 坐标轴。激活许可证后，还会显示位姿数值——平移 Tx、Ty、Tz（毫米）与旋转 Rx、Ry、Rz（度）。",
       },
     ],
   },
@@ -421,6 +513,40 @@ export const guideSectionsZh: GuideSection[] = [
         label: "重要提示",
         text: "请确认 Windows 防火墙允许该配置——将 Pose6D_XXXX.exe 加入允许的应用程序列表。",
       },
+    ],
+  },
+  {
+    id: "activation",
+    n: "A",
+    title: "许可证激活与类型",
+    summary: "激活流程以及许可证解锁的功能。",
+    blocks: [
+      {
+        t: "p",
+        text: "Pose6D 启动时，主窗口可能显示 “Requires Activation”。没有许可证软件仍可运行，但检测到的工件上仅显示 3D 坐标轴——位姿数值保持隐藏。",
+      },
+      { t: "shot", key: "ui-requires-activation", label: "POSE6D · 需要激活", caption: "启动后、激活前的主窗口。" },
+      {
+        t: "steps",
+        items: [
+          {
+            body: "从 C:\\RobotAI\\SW 运行一次 Pose6D，同一目录下会生成许可证请求文件 pose6d_license.chk。",
+            path: "C:\\RobotAI\\SW\\pose6d_license.chk",
+          },
+          {
+            body: "将 pose6d_license.chk 连同您的公司名称发送给 RobotAI。",
+          },
+          {
+            body: "RobotAI 会返回许可证文件，为特定机器、期限与功能组合启用软件。",
+          },
+        ],
+      },
+      {
+        t: "note",
+        label: "许可证的作用",
+        text: "许可证类型影响机器人连接以及显示的数据内容。激活后，实时检测窗口会显示完整位姿——Tx、Ty、Tz（毫米）与 Rx、Ry、Rz（度）。",
+      },
+      { t: "shot", key: "ui-detect-values", label: "实时检测 · 已激活", caption: "USB 测试工件上显示的位姿数值。" },
     ],
   },
 ];

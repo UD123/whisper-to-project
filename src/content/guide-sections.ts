@@ -1,11 +1,15 @@
+import type { GuideShotKey } from "./guide-shots";
+
 export type Block =
   | { t: "p"; text: string }
   | { t: "bullets"; items: string[] }
-  | { t: "steps"; items: { menu?: string[]; body: string; path?: string }[] }
+  | { t: "steps"; items: { menu?: string[]; body: string; path?: string; shot?: GuideShotKey }[] }
   | { t: "note"; label: string; text: string }
   | { t: "table"; head: string[]; rows: string[][] }
   | { t: "videos"; label: string; items: { name: string; key: string }[] }
   | { t: "code"; label: string; lines: string[] }
+  | { t: "shot"; key: GuideShotKey; label: string; caption?: string }
+  | { t: "shots"; items: { key: GuideShotKey; label: string; caption?: string }[] }
   | { t: "h"; text: string };
 
 export type GuideSection = {
@@ -27,7 +31,13 @@ export const guideSections: GuideSection[] = [
       {
         t: "note",
         label: "The one rule that matters",
-        text: "The object must cover at least 200 × 200 pixels in an image of about 1280 × 720 — roughly one third to one quarter of the field of view. Camera, optics and working distance all follow from this.",
+        text: "The manual states two numbers: the general rule — the object must cover at least 250 × 250 pixels (section 02); and the POC guidance — at least 200 × 200 pixels in an image of about 1280 × 720, roughly one third to one quarter of the field of view. Camera, optics and working distance all follow from this.",
+      },
+      {
+        t: "shot",
+        key: "setup-fov-diagram",
+        label: "SETUP · WORKING DISTANCE & FIELD OF VIEW",
+        caption: "Working distance, focus and object size in pixels define the field of view.",
       },
       {
         t: "p",
@@ -87,6 +97,37 @@ export const guideSections: GuideSection[] = [
     title: "Object scanning & data acquisition",
     summary: "Record video of the part from many positions — this is the raw data for the 3D model.",
     blocks: [
+      { t: "h", text: "Create a new object first" },
+      {
+        t: "steps",
+        items: [
+          {
+            menu: ["Project", "Set Work Directory"],
+            body: "Point Pose6D at your parts directory.",
+            path: "C:\\RobotAI\\Parts",
+            shot: "ui-set-work-dir",
+          },
+          {
+            body: "Write the name of the object you want to handle in the parameter box — in the manual example it is “Tube24”.",
+            shot: "ui-object-name",
+          },
+          {
+            menu: ["Projects", "Create New Object"],
+            body: "A folder with this name is created.",
+            shot: "ui-create-object",
+          },
+          {
+            menu: ["Projects", "Check Config File"],
+            body: "Verifies that everything is in place — the window reports “Config is OK”.",
+            shot: "ui-object-config-ok",
+          },
+          {
+            body: "Five directories are created under the object folder: cameras, labels, models, robots, videos. Recheck that the example json file exists in labels and edit it for your object.",
+            shot: "ui-object-dirs",
+          },
+        ],
+      },
+      { t: "h", text: "Recording the data" },
       {
         t: "steps",
         items: [
@@ -144,7 +185,7 @@ export const guideSections: GuideSection[] = [
           { menu: ["Camera", "Select From List"], body: "Select the relevant camera." },
           { menu: ["Camera", "Connect"], body: "Connect to it." },
           { menu: ["Camera", "Show Real Time"], body: "Check the live image. Press q to quit." },
-          { menu: ["Camera", "Square Size"], body: "Enter the size of one square of your printed pattern." },
+          { menu: ["Camera", "Square Size"], body: "Enter the size of one square of your printed pattern — the console confirms the value, and it appears as the square_size field in the configuration file.", shot: "ui-square-size" },
           {
             menu: ["Camera", "Record Video for Calibration"],
             body: "Capture 30–40 images in different positions using a, t or f — prefer a or t for single shots. Files are written to the cameras folder.",
@@ -156,9 +197,34 @@ export const guideSections: GuideSection[] = [
         text: "Two ways to present the pattern: display it on a smartphone screen, or print it and stick it on a rigid flat surface. The printable pattern is in the Documents section below.",
       },
       {
+        t: "shot",
+        key: "checkerboard-print",
+        label: "CHECKERBOARD PATTERN",
+        caption: "Measure one square precisely and enter it via Camera → Square Size.",
+      },
+      {
         t: "videos",
         label: "Calibration example",
         items: [{ name: "Pattern on a smartphone", key: "calib-smartphone" }],
+      },
+      { t: "h", text: "Result" },
+      {
+        t: "steps",
+        items: [
+          {
+            body: "Press q at the end of the recording (if it is too long) to start the calibration stage. Detected corners are drawn over the pattern.",
+            shot: "calibration-screen",
+          },
+          {
+            body: "The camera is calibrated for this specific resolution. The console prints the calibration summary.",
+            shot: "calibration-console",
+          },
+          {
+            menu: ["Project", "Configuration File"],
+            body: "The calibration of the internal camera parameters is complete — the values are written into the configuration file (square_size and the camera matrix).",
+            shot: "config-square-size",
+          },
+        ],
       },
     ],
   },
@@ -177,6 +243,14 @@ export const guideSections: GuideSection[] = [
         items: [
           "Option 1 — send a mechanical drawing of the part.",
           "Option 2 — measure the part by hand (caliper or ruler) and send the dimensions with a photo showing where each was taken.",
+        ],
+      },
+      {
+        t: "shots",
+        items: [
+          { key: "measure-drawing", label: "OPTION 1 · DRAWING", caption: "A mechanical drawing with dimensions." },
+          { key: "measure-caliper-1", label: "OPTION 2 · CALIPER", caption: "Hand measurement, dimension 1." },
+          { key: "measure-caliper-2", label: "OPTION 2 · CALIPER", caption: "Hand measurement, dimension 2." },
         ],
       },
       {
@@ -237,6 +311,21 @@ export const guideSections: GuideSection[] = [
         t: "p",
         text: "Testing your own model follows the same procedure as the software verification in section 02 — load the project directory, run the detection on a recorded video or your live camera, and check the reported pose.",
       },
+      { t: "h", text: "Install the model RobotAI sent you" },
+      {
+        t: "steps",
+        items: [
+          {
+            body: "Place the model zip archive into your parts directory. The zip name must match the object name.",
+            path: "C:\\RobotAI\\Parts",
+          },
+          {
+            menu: ["Training", "Unzip Model Zip File"],
+            body: "Unpacks the model into the object folder.",
+          },
+        ],
+      },
+      { t: "h", text: "Run the detection" },
       {
         t: "steps",
         items: [
@@ -245,13 +334,20 @@ export const guideSections: GuideSection[] = [
             body: "Choose the folder with your object and the model RobotAI shared with you.",
           },
           {
-            menu: ["Detect", "Run Video from File"],
-            body: "Or run on your live camera. The detected pose is shown over the object.",
+            menu: ["Detect", "Run Standalone from File"],
+            body: "Test on a recorded video of your object.",
           },
           {
-            body: "Press q to stop. If the pose tracks the object correctly, detection is working.",
+            menu: ["Detect", "Run Stand Alone with Camera"],
+            body: "Then test on the live camera. Press q to stop — if the pose tracks the object, detection is working.",
+            shot: "ui-detect-values",
           },
         ],
+      },
+      {
+        t: "note",
+        label: "License note",
+        text: "Without a license only the 3D axis is shown over the object. With an active license you also see the numeric pose values — translations Tx, Ty, Tz in mm and rotations Rx, Ry, Rz in degrees.",
       },
     ],
   },
@@ -447,6 +543,41 @@ export const guideSections: GuideSection[] = [
         label: "Important",
         text: "Make sure the Windows firewall allows this configuration — add Pose6D_XXXX.exe to the allowed applications list.",
       },
+    ],
+  },
+  {
+    id: "activation",
+    n: "A",
+    title: "License activation & license types",
+    summary: "How activation works and what the license unlocks.",
+    blocks: [
+      {
+        t: "p",
+        text: "When Pose6D starts, the main window may show “Requires Activation”. Without a license the software runs, but only the 3D axis is displayed over the detected object — the numeric pose values stay hidden.",
+        // shot below
+      },
+      { t: "shot", key: "ui-requires-activation", label: "POSE6D · REQUIRES ACTIVATION", caption: "Main window right after launch, before activation." },
+      {
+        t: "steps",
+        items: [
+          {
+            body: "Run Pose6D once from C:\\RobotAI\\SW. A license request file pose6d_license.chk is created in the same directory.",
+            path: "C:\\RobotAI\\SW\\pose6d_license.chk",
+          },
+          {
+            body: "Send pose6d_license.chk to RobotAI together with your company name.",
+          },
+          {
+            body: "RobotAI returns a license file that enables the software for specific machines, time period and feature set.",
+          },
+        ],
+      },
+      {
+        t: "note",
+        label: "What the license changes",
+        text: "The license type affects the connection to robots and which data is shown. With an active license the live detection window displays the full pose — Tx, Ty, Tz in mm and Rx, Ry, Rz in degrees.",
+      },
+      { t: "shot", key: "ui-detect-values", label: "LIVE DETECTION · WITH LICENSE", caption: "Numeric pose values over the USB test object." },
     ],
   },
 ];
