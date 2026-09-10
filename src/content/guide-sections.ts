@@ -31,7 +31,13 @@ export const guideSections: GuideSection[] = [
       {
         t: "note",
         label: "The one rule that matters",
-        text: "The object must cover at least 200 × 200 pixels in an image of about 1280 × 720 — roughly one third to one quarter of the field of view. Camera, optics and working distance all follow from this.",
+        text: "The manual states two numbers: the general rule — the object must cover at least 250 × 250 pixels (section 02); and the POC guidance — at least 200 × 200 pixels in an image of about 1280 × 720, roughly one third to one quarter of the field of view. Camera, optics and working distance all follow from this.",
+      },
+      {
+        t: "shot",
+        key: "setup-fov-diagram",
+        label: "SETUP · WORKING DISTANCE & FIELD OF VIEW",
+        caption: "Working distance, focus and object size in pixels define the field of view.",
       },
       {
         t: "p",
@@ -91,6 +97,37 @@ export const guideSections: GuideSection[] = [
     title: "Object scanning & data acquisition",
     summary: "Record video of the part from many positions — this is the raw data for the 3D model.",
     blocks: [
+      { t: "h", text: "Create a new object first" },
+      {
+        t: "steps",
+        items: [
+          {
+            menu: ["Project", "Set Work Directory"],
+            body: "Point Pose6D at your parts directory.",
+            path: "C:\\RobotAI\\Parts",
+            shot: "ui-set-work-dir",
+          },
+          {
+            body: "Write the name of the object you want to handle in the parameter box — in the manual example it is “Tube24”.",
+            shot: "ui-object-name",
+          },
+          {
+            menu: ["Projects", "Create New Object"],
+            body: "A folder with this name is created.",
+            shot: "ui-create-object",
+          },
+          {
+            menu: ["Projects", "Check Config File"],
+            body: "Verifies that everything is in place — the window reports “Config is OK”.",
+            shot: "ui-object-config-ok",
+          },
+          {
+            body: "Five directories are created under the object folder: cameras, labels, models, robots, videos. Recheck that the example json file exists in labels and edit it for your object.",
+            shot: "ui-object-dirs",
+          },
+        ],
+      },
+      { t: "h", text: "Recording the data" },
       {
         t: "steps",
         items: [
