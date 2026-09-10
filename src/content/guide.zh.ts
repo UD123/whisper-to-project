@@ -235,15 +235,18 @@ export const guideZh: Guide = {
           {
             body: "根据您的计算机选择 Webcam 0 或 Webcam 1。",
             menu: ["Camera", "Select from List"],
+            shot: "ui-camera-list",
           },
           { body: "相机随即被激活。", menu: ["Camera", "Connect"] },
           {
             body: "选择 320×240。若相机不支持该分辨率，可另选一个，或在 “Custom” 中手动输入。使用 320×240 以外的分辨率会降低检测可靠性。",
             menu: ["Camera", "Configure", "Resolution"],
+            shot: "ui-resolution-list",
           },
           {
             body: "将出现一个实时小窗口。请保持工件后方的白纸。",
             menu: ["Detect", "Run Video from Camera"],
+            shot: "ui-live-camera",
           },
           { body: "按 q 键停止。", result: true },
         ],
@@ -282,6 +285,7 @@ export const guideZh: Guide = {
     { id: "test-detection", label: "09 — 检测测试" },
     { id: "robot-calibration", label: "10 — 相机–机器人标定" },
     { id: "communication", label: "11 — 机器人通信" },
+    { id: "activation", label: "许可证激活" },
     { id: "downloads", label: "文档下载" },
   ],
 
