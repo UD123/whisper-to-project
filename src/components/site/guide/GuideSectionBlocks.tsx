@@ -42,6 +42,9 @@ function BlockView({ b }: { b: Block }) {
                   {s.body}
                 </p>
                 {s.path ? <PathChip value={s.path} /> : null}
+                {s.shot && guideShots[s.shot] ? (
+                  <Shot src={guideShots[s.shot]} label={s.shot} />
+                ) : null}
               </div>
             </li>
           ))}
