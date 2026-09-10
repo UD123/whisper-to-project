@@ -1,11 +1,15 @@
+import type { GuideShotKey } from "./guide-shots";
+
 export type Block =
   | { t: "p"; text: string }
   | { t: "bullets"; items: string[] }
-  | { t: "steps"; items: { menu?: string[]; body: string; path?: string }[] }
+  | { t: "steps"; items: { menu?: string[]; body: string; path?: string; shot?: GuideShotKey }[] }
   | { t: "note"; label: string; text: string }
   | { t: "table"; head: string[]; rows: string[][] }
   | { t: "videos"; label: string; items: { name: string; key: string }[] }
   | { t: "code"; label: string; lines: string[] }
+  | { t: "shot"; key: GuideShotKey; label: string; caption?: string }
+  | { t: "shots"; items: { key: GuideShotKey; label: string; caption?: string }[] }
   | { t: "h"; text: string };
 
 export type GuideSection = {

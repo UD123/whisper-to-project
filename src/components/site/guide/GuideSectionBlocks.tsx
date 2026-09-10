@@ -1,6 +1,7 @@
 import type { Block, GuideSection } from "@/content/guide-sections";
 import { guideVideo } from "@/content/guide-media";
-import { Callout, MenuPath, PathChip } from "./GuideBits";
+import { Callout, MenuPath, PathChip, Shot } from "./GuideBits";
+import { guideShots } from "@/content/guide-shots";
 import { GuideClips } from "./GuideVideo";
 
 function BlockView({ b }: { b: Block }) {
