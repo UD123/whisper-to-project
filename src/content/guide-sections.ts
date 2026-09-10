@@ -185,7 +185,7 @@ export const guideSections: GuideSection[] = [
           { menu: ["Camera", "Select From List"], body: "Select the relevant camera." },
           { menu: ["Camera", "Connect"], body: "Connect to it." },
           { menu: ["Camera", "Show Real Time"], body: "Check the live image. Press q to quit." },
-          { menu: ["Camera", "Square Size"], body: "Enter the size of one square of your printed pattern." },
+          { menu: ["Camera", "Square Size"], body: "Enter the size of one square of your printed pattern — the console confirms the value, and it appears as the square_size field in the configuration file.", shot: "ui-square-size" },
           {
             menu: ["Camera", "Record Video for Calibration"],
             body: "Capture 30–40 images in different positions using a, t or f — prefer a or t for single shots. Files are written to the cameras folder.",
@@ -197,9 +197,34 @@ export const guideSections: GuideSection[] = [
         text: "Two ways to present the pattern: display it on a smartphone screen, or print it and stick it on a rigid flat surface. The printable pattern is in the Documents section below.",
       },
       {
+        t: "shot",
+        key: "checkerboard-print",
+        label: "CHECKERBOARD PATTERN",
+        caption: "Measure one square precisely and enter it via Camera → Square Size.",
+      },
+      {
         t: "videos",
         label: "Calibration example",
         items: [{ name: "Pattern on a smartphone", key: "calib-smartphone" }],
+      },
+      { t: "h", text: "Result" },
+      {
+        t: "steps",
+        items: [
+          {
+            body: "Press q at the end of the recording (if it is too long) to start the calibration stage. Detected corners are drawn over the pattern.",
+            shot: "calibration-screen",
+          },
+          {
+            body: "The camera is calibrated for this specific resolution. The console prints the calibration summary.",
+            shot: "calibration-console",
+          },
+          {
+            menu: ["Project", "Configuration File"],
+            body: "The calibration of the internal camera parameters is complete — the values are written into the configuration file (square_size and the camera matrix).",
+            shot: "config-square-size",
+          },
+        ],
       },
     ],
   },
@@ -218,6 +243,14 @@ export const guideSections: GuideSection[] = [
         items: [
           "Option 1 — send a mechanical drawing of the part.",
           "Option 2 — measure the part by hand (caliper or ruler) and send the dimensions with a photo showing where each was taken.",
+        ],
+      },
+      {
+        t: "shots",
+        items: [
+          { key: "measure-drawing", label: "OPTION 1 · DRAWING", caption: "A mechanical drawing with dimensions." },
+          { key: "measure-caliper-1", label: "OPTION 2 · CALIPER", caption: "Hand measurement, dimension 1." },
+          { key: "measure-caliper-2", label: "OPTION 2 · CALIPER", caption: "Hand measurement, dimension 2." },
         ],
       },
       {
