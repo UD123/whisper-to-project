@@ -93,6 +93,16 @@ function BlockView({ b }: { b: Block }) {
           </pre>
         </div>
       );
+    case "shot":
+      return <Shot src={guideShots[b.key]} label={b.label} caption={b.caption} />;
+    case "shots":
+      return (
+        <div className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          {b.items.map((s) => (
+            <Shot key={s.key} src={guideShots[s.key]} label={s.label} caption={s.caption} />
+          ))}
+        </div>
+      );
     case "videos":
       return (
         <GuideClips
