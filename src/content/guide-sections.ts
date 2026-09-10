@@ -545,4 +545,39 @@ export const guideSections: GuideSection[] = [
       },
     ],
   },
+  {
+    id: "activation",
+    n: "A",
+    title: "License activation & license types",
+    summary: "How activation works and what the license unlocks.",
+    blocks: [
+      {
+        t: "p",
+        text: "When Pose6D starts, the main window may show “Requires Activation”. Without a license the software runs, but only the 3D axis is displayed over the detected object — the numeric pose values stay hidden.",
+        // shot below
+      },
+      { t: "shot", key: "ui-requires-activation", label: "POSE6D · REQUIRES ACTIVATION", caption: "Main window right after launch, before activation." },
+      {
+        t: "steps",
+        items: [
+          {
+            body: "Run Pose6D once from C:\\RobotAI\\SW. A license request file pose6d_license.chk is created in the same directory.",
+            path: "C:\\RobotAI\\SW\\pose6d_license.chk",
+          },
+          {
+            body: "Send pose6d_license.chk to RobotAI together with your company name.",
+          },
+          {
+            body: "RobotAI returns a license file that enables the software for specific machines, time period and feature set.",
+          },
+        ],
+      },
+      {
+        t: "note",
+        label: "What the license changes",
+        text: "The license type affects the connection to robots and which data is shown. With an active license the live detection window displays the full pose — Tx, Ty, Tz in mm and Rx, Ry, Rz in degrees.",
+      },
+      { t: "shot", key: "ui-detect-values", label: "LIVE DETECTION · WITH LICENSE", caption: "Numeric pose values over the USB test object." },
+    ],
+  },
 ];
