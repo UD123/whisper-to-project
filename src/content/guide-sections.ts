@@ -311,6 +311,21 @@ export const guideSections: GuideSection[] = [
         t: "p",
         text: "Testing your own model follows the same procedure as the software verification in section 02 — load the project directory, run the detection on a recorded video or your live camera, and check the reported pose.",
       },
+      { t: "h", text: "Install the model RobotAI sent you" },
+      {
+        t: "steps",
+        items: [
+          {
+            body: "Place the model zip archive into your parts directory. The zip name must match the object name.",
+            path: "C:\\RobotAI\\Parts",
+          },
+          {
+            menu: ["Training", "Unzip Model Zip File"],
+            body: "Unpacks the model into the object folder.",
+          },
+        ],
+      },
+      { t: "h", text: "Run the detection" },
       {
         t: "steps",
         items: [
@@ -319,13 +334,20 @@ export const guideSections: GuideSection[] = [
             body: "Choose the folder with your object and the model RobotAI shared with you.",
           },
           {
-            menu: ["Detect", "Run Video from File"],
-            body: "Or run on your live camera. The detected pose is shown over the object.",
+            menu: ["Detect", "Run Standalone from File"],
+            body: "Test on a recorded video of your object.",
           },
           {
-            body: "Press q to stop. If the pose tracks the object correctly, detection is working.",
+            menu: ["Detect", "Run Stand Alone with Camera"],
+            body: "Then test on the live camera. Press q to stop — if the pose tracks the object, detection is working.",
+            shot: "ui-detect-values",
           },
         ],
+      },
+      {
+        t: "note",
+        label: "License note",
+        text: "Without a license only the 3D axis is shown over the object. With an active license you also see the numeric pose values — translations Tx, Ty, Tz in mm and rotations Rx, Ry, Rz in degrees.",
       },
     ],
   },
