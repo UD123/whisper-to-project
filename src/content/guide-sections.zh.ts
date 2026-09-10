@@ -216,6 +216,14 @@ export const guideSectionsZh: GuideSection[] = [
         ],
       },
       {
+        t: "shots",
+        items: [
+          { key: "measure-drawing", label: "方式一 · 图纸", caption: "标注尺寸的机械图纸。" },
+          { key: "measure-caliper-1", label: "方式二 · 卡尺", caption: "手工测量，尺寸 1。" },
+          { key: "measure-caliper-2", label: "方式二 · 卡尺", caption: "手工测量，尺寸 2。" },
+        ],
+      },
+      {
         t: "p",
         text: "请将尺寸数据与图像、标定数据一并发送，RobotAI 随后生成模型并返回给您。",
       },
@@ -273,6 +281,21 @@ export const guideSectionsZh: GuideSection[] = [
         t: "p",
         text: "测试您自己的模型与第 02 节的软件验证流程相同 —— 加载项目目录，在录制视频或实时相机上运行检测，并检查输出的位姿。",
       },
+      { t: "h", text: "安装 RobotAI 交付的模型" },
+      {
+        t: "steps",
+        items: [
+          {
+            body: "将模型 zip 压缩包放入工件目录，压缩包名称必须与工件名称一致。",
+            path: "C:\\RobotAI\\Parts",
+          },
+          {
+            menu: ["Training", "Unzip Model Zip File"],
+            body: "将模型解压到工件文件夹中。",
+          },
+        ],
+      },
+      { t: "h", text: "运行检测" },
       {
         t: "steps",
         items: [
@@ -281,13 +304,20 @@ export const guideSectionsZh: GuideSection[] = [
             body: "选择包含工件及 RobotAI 交付模型的文件夹。",
           },
           {
-            menu: ["Detect", "Run Video from File"],
-            body: "或在实时相机上运行。检测到的位姿会叠加显示在工件上。",
+            menu: ["Detect", "Run Standalone from File"],
+            body: "在工件的录制视频上进行测试。",
           },
           {
-            body: "按 q 停止。如果位姿正确跟随工件，则检测运行正常。",
+            menu: ["Detect", "Run Stand Alone with Camera"],
+            body: "然后在实时相机上测试。按 q 停止——如果位姿正确跟随工件，则检测运行正常。",
+            shot: "ui-detect-values",
           },
         ],
+      },
+      {
+        t: "note",
+        label: "许可证说明",
+        text: "没有许可证时，工件上仅显示 3D 坐标轴。激活许可证后，还会显示位姿数值——平移 Tx、Ty、Tz（毫米）与旋转 Rx、Ry、Rz（度）。",
       },
     ],
   },
