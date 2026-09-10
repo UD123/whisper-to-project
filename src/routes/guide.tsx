@@ -351,7 +351,7 @@ function GuideContent() {
                               </p>
                               {"path" in s && s.path ? <PathChip value={s.path} /> : null}
                               {"shot" in s && s.shot ? (
-                                <Shot src={guideShots[s.shot]} label={s.shot} />
+                                <Shot src={guideShots[s.shot as keyof typeof guideShots]} label={s.shot} />
                               ) : null}
                             </div>
                           </li>
