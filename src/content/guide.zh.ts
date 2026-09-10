@@ -189,23 +189,28 @@ export const guideZh: Guide = {
           {
             body: "双击可执行文件运行软件。在 CPU 模式下加载需要一定时间。",
             path: "C:\\RobotAI\\SW\\Pose6D-XXXX-cpu.exe",
+            shot: "ui-main-window",
           },
           {
             body: "选择工作项目目录，并选中 usb_test。",
             menu: ["Project", "Select Object Directory"],
+            shot: "ui-select-folder",
           },
           {
             body: "窗口保持白色并提示 “Config is OK”。",
             menu: ["Project", "Check Config File"],
+            shot: "ui-config-ok",
           },
           {
             body: "选择 usb_test 视频目录中的 mp4 文件，将打开显示 USB 工件影像的窗口。",
             menu: ["Detect", "Run Video from File"],
             path: "C:\\RobotAI\\Parts\\usb_test\\videos",
+            shot: "ui-video-file-dialog",
           },
           {
             body: "按 q 键停止。如果视频播放流畅快速，说明安装成功。",
             result: true,
+            shot: "ui-live-usb",
           },
         ],
       },
