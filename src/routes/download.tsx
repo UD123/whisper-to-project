@@ -7,8 +7,8 @@ import { Footer } from "@/components/site/Footer";
 const title = "Pose6D Downloads — Windows & Linux | RobotAI";
 const description = "Download Pose6D for Windows or Linux. Runtime, calibration tools and camera drivers for industrial 6DOF pose estimation.";
 
-const TEMP_WINDOWS_URL =
-  "https://github.com/robotai-vision/pose6d/releases/download/v1.0.0/Pose6D-Windows.exe";
+const WINDOWS_URL =
+  "https://github.com/RobotAI-Global/pose6d/releases/download/2509/Pose6D-2509-cpu.exe";
 const TEMP_LINUX_URL =
   "https://github.com/robotai-vision/pose6d/releases/download/v1.0.0/Pose6D-Linux";
 
@@ -76,7 +76,7 @@ function DownloadContent() {
         desc={d.windows.desc}
         file={d.windows.file}
         button={d.windows.button}
-        href={TEMP_WINDOWS_URL}
+        href={WINDOWS_URL}
         note={d.windows.note}
       />
       <PlatformCard
