@@ -317,9 +317,9 @@ export const en = {
     windows: {
       title: "Windows",
       desc: "Windows 10/11 installer. Includes Pose6D Runtime, data acquisition utilities and camera drivers.",
-      file: "Pose6D-Windows.exe",
+      file: "Pose6D-2509-cpu.exe",
       button: "Download for Windows",
-      note: "Temporary download link — replace with your release URL.",
+      note: "Direct download from GitHub releases.",
     },
     linux: {
       title: "Linux",
@@ -620,9 +620,9 @@ export const zh: Dict = {
     windows: {
       title: "Windows",
       desc: "Windows 10/11 安装程序，包含 Pose6D 运行时、数据采集工具及相机驱动。",
-      file: "Pose6D-Windows.exe",
+      file: "Pose6D-2509-cpu.exe",
       button: "下载 Windows 版",
-      note: "临时下载链接，后续请替换为真实发布地址。",
+      note: "直接下载自 GitHub releases。",
     },
     linux: {
       title: "Linux",
