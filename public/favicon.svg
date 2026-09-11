@@ -1,7 +1,33 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Background -->
   <rect width="64" height="64" rx="14" fill="#0f1115"/>
-  <g fill="none" stroke="#e8eaed" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M32 12 50 22v20L32 52 14 42V22z"/>
-    <path d="M32 32 50 22M32 32v20M32 32 14 22"/>
+  
+  <!-- Robot head -->
+  <g fill="none" stroke="#e8eaed" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Main face -->
+    <rect x="12" y="16" width="40" height="32" rx="4" fill="none" stroke="#e8eaed" stroke-width="2"/>
+    
+    <!-- Left eye -->
+    <circle cx="22" cy="24" r="3" fill="#00ff88" stroke="none"/>
+    
+    <!-- Right eye -->
+    <circle cx="42" cy="24" r="3" fill="#00ff88" stroke="none"/>
+    
+    <!-- Mouth line -->
+    <path d="M 20 32 Q 32 36 44 32" stroke="#e8eaed" stroke-width="1.5"/>
+    
+    <!-- Antenna left -->
+    <line x1="18" y1="14" x2="18" y2="8" stroke="#e8eaed" stroke-width="1.5"/>
+    <circle cx="18" cy="7" r="1.5" fill="#e8eaed" stroke="none"/>
+    
+    <!-- Antenna right -->
+    <line x1="46" y1="14" x2="46" y2="8" stroke="#e8eaed" stroke-width="1.5"/>
+    <circle cx="46" cy="7" r="1.5" fill="#e8eaed" stroke="none"/>
+    
+    <!-- Body -->
+    <rect x="16" y="48" width="32" height="8" rx="2" fill="none" stroke="#e8eaed" stroke-width="1.5"/>
+    
+    <!-- Chest panel -->
+    <rect x="20" y="50" width="24" height="4" rx="1" fill="none" stroke="#e8eaed" stroke-width="1"/>
   </g>
 </svg>
