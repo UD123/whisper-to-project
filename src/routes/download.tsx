@@ -27,6 +27,9 @@ export const Route = createFileRoute("/download")({
 });
 
 function DownloadPage() {
+  const t = useT();
+  const d = t.download;
+
   return (
     <LanguageProvider>
       <div className="min-h-screen bg-background">
@@ -35,12 +38,12 @@ function DownloadPage() {
           <section className="relative overflow-hidden border-b border-border">
             <div className="cad-grid-lg pointer-events-none absolute inset-0 opacity-90" />
             <div className="relative mx-auto max-w-7xl px-6 pt-16 pb-12 md:pt-20">
-              <span className="mono-label text-primary">Pose6D</span>
+              <span className="mono-label text-primary">{d.eyebrow}</span>
               <h1 className="mt-4 max-w-3xl text-4xl leading-[1.05] font-semibold tracking-[-0.03em] md:text-5xl">
-                Software Downloads
+                {d.title}
               </h1>
               <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
-                Download the Pose6D runtime and calibration tools for your platform.
+                {d.subtitle}
               </p>
             </div>
           </section>
