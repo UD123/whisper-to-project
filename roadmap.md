@@ -17,5 +17,5 @@ Still needed from the user: real download links/files for usb_test.zip and the P
 
 Current task:
 
-- [ ] Replace every video in “Detected objects — examples” with the 9 uploaded detection images
+- [x] Replace every video in “Detected objects — examples” with the 10 uploaded detection images
 - [ ] Verify the image-only gallery on desktop and mobile
