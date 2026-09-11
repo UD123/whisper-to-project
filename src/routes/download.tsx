@@ -27,34 +27,40 @@ export const Route = createFileRoute("/download")({
 });
 
 function DownloadPage() {
+  return (
+    <LanguageProvider>
+      <DownloadLayout />
+    </LanguageProvider>
+  );
+}
+
+function DownloadLayout() {
   const t = useT();
   const d = t.download;
 
   return (
-    <LanguageProvider>
-      <div className="min-h-screen bg-background">
-        <Navbar hashBase="/" solid section="download" />
-        <main>
-          <section className="relative overflow-hidden border-b border-border">
-            <div className="cad-grid-lg pointer-events-none absolute inset-0 opacity-90" />
-            <div className="relative mx-auto max-w-7xl px-6 pt-16 pb-12 md:pt-20">
-              <span className="mono-label text-primary">{d.eyebrow}</span>
-              <h1 className="mt-4 max-w-3xl text-4xl leading-[1.05] font-semibold tracking-[-0.03em] md:text-5xl">
-                {d.title}
-              </h1>
-              <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
-                {d.subtitle}
-              </p>
-            </div>
-          </section>
+    <div className="min-h-screen bg-background">
+      <Navbar hashBase="/" solid section="download" />
+      <main>
+        <section className="relative overflow-hidden border-b border-border">
+          <div className="cad-grid-lg pointer-events-none absolute inset-0 opacity-90" />
+          <div className="relative mx-auto max-w-7xl px-6 pt-16 pb-12 md:pt-20">
+            <span className="mono-label text-primary">{d.eyebrow}</span>
+            <h1 className="mt-4 max-w-3xl text-4xl leading-[1.05] font-semibold tracking-[-0.03em] md:text-5xl">
+              {d.title}
+            </h1>
+            <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
+              {d.subtitle}
+            </p>
+          </div>
+        </section>
 
-          <section className="mx-auto max-w-7xl px-6 py-14 md:py-16">
-            <DownloadContent />
-          </section>
-        </main>
-        <Footer hashBase="/" />
-      </div>
-    </LanguageProvider>
+        <section className="mx-auto max-w-7xl px-6 py-14 md:py-16">
+          <DownloadContent />
+        </section>
+      </main>
+      <Footer hashBase="/" />
+    </div>
   );
 }
 
