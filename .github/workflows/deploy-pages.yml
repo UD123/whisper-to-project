@@ -30,6 +30,13 @@ jobs:
       - name: SPA fallback for deep links
         run: cp dist/client/index.html dist/client/404.html
 
+      # Keep the custom domain and disable Jekyll processing on every deploy,
+      # so a Pages redeploy can never drop www.robotai-vision.com.
+      - name: Preserve custom domain and disable Jekyll
+        run: |
+          cp CNAME dist/client/CNAME
+          touch dist/client/.nojekyll
+
       # Bundle CDN-hosted media into the Pages artifact. Serving videos from
       # the same domain avoids cross-origin playback failures and removes the
       # runtime dependency on the Lovable deployment.
