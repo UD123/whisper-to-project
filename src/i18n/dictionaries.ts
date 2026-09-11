@@ -190,14 +190,14 @@ export const en = {
     eyebrow: "04 — Ecosystem",
     title: "Universal Hardware & Protocol Compatibility",
     subtitle:
-      "Zero vendor lock-in. Seamless integration with your existing industrial computer and robotic fleet.",
+      "Zero vendor lock-in. Seamless integration with your existing industrial cameras and robotic arms.",
     groups: [
-      "Camera interfaces",
+      "Camera brands",
       "Robot brands",
       "Communication protocols",
       "Computing hardware",
     ],
-    computing: ["Windows industrial PC", "Linux industrial PC", "NVIDIA GPU (sub-30 ms)"],
+    computing: ["Windows industrial PC", "Linux industrial PC", "NVIDIA GPU (best performance) or CPU"],
     cameraExtra: [] as string[],
   },
   specs: {
