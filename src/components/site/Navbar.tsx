@@ -11,7 +11,7 @@ export function Navbar({
 }: {
   hashBase?: string;
   solid?: boolean;
-  section?: "product" | "docs";
+  section?: "product" | "docs" | "download";
 }) {
   const t = useT();
 
@@ -69,6 +69,16 @@ export function Navbar({
               }`}
             >
               {t.nav.docs}
+            </Link>
+            <Link
+              to="/download"
+              className={`rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
+                section === "download"
+                  ? "bg-foreground text-background"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              {t.nav.download}
             </Link>
           </div>
 
