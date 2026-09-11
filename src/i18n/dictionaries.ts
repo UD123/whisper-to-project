@@ -220,7 +220,7 @@ export const en = {
     title: "Trained Object Capability Catalog",
     subtitle: "Proven 3D pose detection across diverse geometry and surface physics.",
     galleryTitle: "Detected objects — examples",
-    galleryNote: "Click a card to play a short clip",
+    galleryNote: "Click an image to view it full size",
     galleryClose: "Close",
     categories: [
       {
@@ -510,7 +510,7 @@ export const zh: Dict = {
     title: "已训练物体能力目录",
     subtitle: "在多样几何形状与表面物理特性上验证过的 3D 位姿检测能力。",
     galleryTitle: "检测物体示例",
-    galleryNote: "点击卡片播放短视频",
+    galleryNote: "点击图片查看大图",
     galleryClose: "关闭",
     categories: [
       {
