@@ -1,12 +1,9 @@
 import { useState } from "react";
-import { Play, X } from "lucide-react";
+import { Maximize2, X } from "lucide-react";
 import { objectClips, type ObjectClip } from "@/content/object-gallery";
 import { useI18n } from "@/i18n/LanguageProvider";
 
-/**
- * Poster-first gallery of detected objects. Nothing but the JPEG posters loads
- * with the page; the MP4 is mounted only after a card is opened.
- */
+/** Static gallery of detected objects with full-size image previews. */
 export function ObjectGallery() {
   const { lang, t } = useI18n();
   const [active, setActive] = useState<ObjectClip | null>(null);
@@ -28,14 +25,14 @@ export function ObjectGallery() {
           >
             <div className="relative aspect-video bg-foreground">
               <img
-                src={clip.poster}
+                src={clip.image}
                 alt={clip.name[lang]}
                 loading="lazy"
                 className="media-grade absolute inset-0 h-full w-full object-cover"
               />
               <span className="absolute inset-0 flex items-center justify-center bg-foreground/25 opacity-0 transition-opacity group-hover:opacity-100">
                 <span className="flex h-9 w-9 items-center justify-center rounded-full bg-background/90">
-                  <Play className="h-4 w-4 translate-x-[1px]" strokeWidth={1.75} />
+                  <Maximize2 className="h-4 w-4" strokeWidth={1.75} />
                 </span>
               </span>
             </div>
@@ -74,17 +71,10 @@ export function ObjectGallery() {
                 <X className="h-4 w-4" strokeWidth={1.75} />
               </button>
             </div>
-            <video
-              key={active.id}
-              src={active.src}
-              poster={active.poster}
-              autoPlay
-              loop
-              muted
-              playsInline
-              controls
-              preload="auto"
-              className="media-grade block w-full bg-foreground"
+            <img
+              src={active.image}
+              alt={active.name[lang]}
+              className="media-grade block max-h-[75vh] w-full object-contain bg-foreground"
             />
             <p className="border-t border-background/15 px-4 py-3 text-xs text-background/70">
               {active.note[lang]}
