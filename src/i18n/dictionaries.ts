@@ -131,6 +131,29 @@ export const en = {
       "We run a pose-estimation evaluation on your own geometry and surface — reflective, translucent or deformable.",
     ctaButton: "Request Evaluation",
   },
+  fastTracking: {
+    eyebrow: "Fast Tracking",
+    title: "Industrial Fast-Tracking Applications",
+    subtitle:
+      "Live 6DOF tracking of a large part on a moving gantry — pose stays locked while the object travels, rotates and changes speed.",
+    stats: [
+      {
+        label: "Speed",
+        value: "< 30 ms per frame",
+        desc: "Real-time pose output at full camera frame rate — the robot never waits for vision.",
+      },
+      {
+        label: "Precision",
+        value: "Sub-millimeter",
+        desc: "Stable translation and rotation estimates even on large, low-texture parts.",
+      },
+      {
+        label: "Robustness",
+        value: "Continuous lock",
+        desc: "Tracking is maintained through motion, partial occlusion and changing orientation.",
+      },
+    ],
+  },
   workflow: {
     eyebrow: "03 — Workflow",
     title: "3-Step Deployment Workflow",
@@ -464,6 +487,28 @@ export const zh: Dict = {
     ctaTitle: "未找到您的零件类型？欢迎寄样测试。",
     ctaDesc: "我们将针对您的特定几何形状与材质（反光、半透明或易变形件）提供专门的位姿估计评估报告。",
     ctaButton: "申请免费评估",
+  },
+  fastTracking: {
+    eyebrow: "快速跟踪",
+    title: "工业快速跟踪应用",
+    subtitle: "对移动龙门上的大型工件进行实时 6DOF 跟踪 —— 目标在移动、旋转和变速过程中位姿始终保持锁定。",
+    stats: [
+      {
+        label: "速度",
+        value: "每帧 < 30 毫秒",
+        desc: "以相机全帧率实时输出位姿 —— 机器人无需等待视觉结果。",
+      },
+      {
+        label: "精度",
+        value: "亚毫米级",
+        desc: "即使在大型、弱纹理工件上，平移与旋转估计依然稳定。",
+      },
+      {
+        label: "鲁棒性",
+        value: "持续锁定",
+        desc: "在运动、部分遮挡和姿态变化过程中跟踪不中断。",
+      },
+    ],
   },
   workflow: {
     eyebrow: "03 — 工作流程",

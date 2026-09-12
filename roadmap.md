@@ -20,3 +20,5 @@ Current task:
 - [x] Replace every video in “Detected objects — examples” with the 10 uploaded detection images
 - [x] Verify the image-only gallery on desktop and mobile
 - [x] Replace “AgriTech / Special Applications” media with a silent forward-and-reverse loop made from the source file’s first 25 seconds
+
+- [x] Add Industrial Fast-Tracking Applications section with gantry tracking clip from Drive file 1eAVGhZBTN
