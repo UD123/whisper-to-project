@@ -30,7 +30,7 @@ export function FastTracking() {
 
           <div className="flex flex-col gap-4">
             {t.fastTracking.stats.map((s, i) => {
-              const Icon = icons[i % icons.length];
+              const Icon = icons[i % icons.length] ?? Gauge;
               return (
                 <div
                   key={s.label}
