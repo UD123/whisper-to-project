@@ -24,7 +24,7 @@ export const en = {
     badge: "Deeptech · Industrial Computer Vision",
     title: "3D Vision Simplified: 6DOF Object Pose Estimation via Standard 2D RGB",
     subtitle:
-      "Transform any standard camera into a 3D measurement device. Detect exact 3D coordinates (X, Y, Z, Rx, Ry, Rz) under 30 ms without expensive, noisy 3D LiDAR or stereo sensors.",
+      "Transform any standard camera into a 3D measurement device. Detect exact 3D coordinates (Tx, Ty, Tz, Rx, Ry, Rz) under 30 ms and sub millimeter precision without expensive, noisy 3D LiDAR or stereo sensors.",
     ctaPrimary: "Schedule Technical Demo",
     ctaSecondary: "Specifications",
     ctaTechnology: "Technology",
