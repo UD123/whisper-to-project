@@ -19,3 +19,4 @@ Current task:
 
 - [x] Replace every video in “Detected objects — examples” with the 10 uploaded detection images
 - [x] Verify the image-only gallery on desktop and mobile
+- [ ] Replace “AgriTech / Special Applications” media with a silent forward-and-reverse loop made from the source file’s first 25 seconds
