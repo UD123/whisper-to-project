@@ -7,7 +7,7 @@ export function Ecosystem() {
   const groups = [
     {
       label: t.ecosystem.groups[0],
-      items: ["IDS", "Basler", "RealSense", "Allied Vision", "Balluff"],
+      items: ["IDS", "Basler", "FLIR", "RealSense", "Allied Vision", "Balluff"],
       extra: t.ecosystem.cameraExtra,
     },
     {

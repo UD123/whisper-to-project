@@ -4,6 +4,7 @@ import basler from "@/assets/logos/basler.svg";
 import denso from "@/assets/logos/denso.svg";
 import dobot from "@/assets/logos/dobot.svg";
 import fanuc from "@/assets/logos/fanuc.svg";
+import flir from "@/assets/logos/flir.svg";
 import hanwha from "@/assets/logos/hanwha.svg";
 import idsAsset from "@/assets/logos/ids-logo-official.png.asset.json";
 import kuka from "@/assets/logos/kuka.svg";
@@ -24,6 +25,7 @@ const LOGOS: Record<string, string> = {
   Denso: denso,
   Dobot: dobot,
   Fanuc: fanuc,
+  FLIR: flir,
   Hanwha: hanwha,
   IDS: idsAsset.url,
   Kuka: kuka,
