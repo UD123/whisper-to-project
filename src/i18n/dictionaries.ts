@@ -28,6 +28,7 @@ export const en = {
     ctaPrimary: "Schedule Technical Demo",
     ctaSecondary: "Explore Specifications",
     ctaTechnology: "Technology",
+    ctaApplications: "Applications",
     stats: [
       ["Speed", "< 30 ms", "1 MPix · GPU"],
       ["Precision", "Sub-millimeter", "translation + rotation"],
