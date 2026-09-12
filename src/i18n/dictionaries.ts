@@ -124,6 +124,10 @@ export const en = {
         title: "AgriTech / Special Applications",
         desc: "Mushroom growth analysis, leaf detection, flower cutting point estimation.",
       },
+      fast_tracking: {
+        title: "Fast Tracking / Moving Gantry",
+        desc: "Real-time 6DOF tracking of large parts on moving gantries — sub-30 ms per frame.",
+      },
     },
     ctaEyebrow: "Your part",
     ctaTitle: "Not on the list? Send us your component.",
@@ -481,6 +485,10 @@ export const zh: Dict = {
       agritech: {
         title: "农业科技 / 特殊应用",
         desc: "农作物生长监测、叶片特征识别与农业自动化。",
+      },
+      fast_tracking: {
+        title: "快速跟踪 / 移动龙门",
+        desc: "对移动龙门上的大型工件进行实时 6DOF 跟踪 —— 单帧处理低于 30 毫秒。",
       },
     },
     ctaEyebrow: "您的零件",

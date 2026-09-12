@@ -7,6 +7,7 @@ import palletizingVideo from "@/assets/palletizing.mp4.asset.json";
 import assemblyVideo from "@/assets/assembly.mp4.asset.json";
 import agvDockingVideo from "@/assets/agv-docking.mp4.asset.json";
 import agritechVideo from "@/assets/agritech-forward-reverse.mp4.asset.json";
+import fastTrackingVideo from "@/assets/fast-tracking.mp4.asset.json";
 
 const media = [
   ["bin_picking", randomBinPickingVideo.url],
@@ -16,6 +17,7 @@ const media = [
   ["assembly", assemblyVideo.url],
   ["agv_docking", agvDockingVideo.url],
   ["agritech", agritechVideo.url],
+  ["fast_tracking", fastTrackingVideo.url],
 ] as const;
 
 export function Applications() {
