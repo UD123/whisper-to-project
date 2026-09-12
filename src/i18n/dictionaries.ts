@@ -27,7 +27,7 @@ export const en = {
       "Transform any standard camera into a 3D measurement device. Detect exact 3D coordinates (X, Y, Z, Rx, Ry, Rz) under 30 ms without expensive, noisy 3D LiDAR or stereo sensors.",
     ctaPrimary: "Schedule Technical Demo",
     ctaSecondary: "Explore Specifications",
-    ctaTechnology: "01 — Technology",
+    ctaTechnology: "Technology",
     stats: [
       ["Speed", "< 30 ms", "1 MPix · GPU"],
       ["Precision", "Sub-millimeter", "translation + rotation"],
@@ -371,7 +371,7 @@ export const zh: Dict = {
       "将任意标准相机转变为 3D 测量设备，在 30 毫秒内输出精确的三维坐标（X、Y、Z、Rx、Ry、Rz），无需昂贵且噪声大的 3D 激光雷达或立体传感器。",
     ctaPrimary: "预约技术演示",
     ctaSecondary: "查看技术参数",
-    ctaTechnology: "01 — 技术",
+    ctaTechnology: "技术",
     stats: [
       ["速度", "< 30 毫秒", "1 MPix · GPU"],
       ["精度", "亚毫米级", "平移 + 旋转"],
