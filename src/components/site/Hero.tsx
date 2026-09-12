@@ -28,6 +28,12 @@ export function Hero() {
               {t.hero.ctaTechnology}
             </a>
             <a
+              href="#use-cases"
+              className="rounded-md border border-border bg-card px-5 py-3 text-sm font-medium transition-all duration-200 hover:border-foreground/25 hover:shadow-sm"
+            >
+              {t.hero.ctaApplications}
+            </a>
+            <a
               href="#specs"
               className="rounded-md border border-border bg-card px-5 py-3 text-sm font-medium transition-all duration-200 hover:border-foreground/25 hover:shadow-sm"
             >

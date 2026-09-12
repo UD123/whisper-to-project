@@ -28,6 +28,7 @@ export const en = {
     ctaPrimary: "Schedule Technical Demo",
     ctaSecondary: "Explore Specifications",
     ctaTechnology: "Technology",
+    ctaApplications: "Applications",
     stats: [
       ["Speed", "< 30 ms", "1 MPix · GPU"],
       ["Precision", "Sub-millimeter", "translation + rotation"],
@@ -372,6 +373,7 @@ export const zh: Dict = {
     ctaPrimary: "预约技术演示",
     ctaSecondary: "查看技术参数",
     ctaTechnology: "技术",
+    ctaApplications: "应用场景",
     stats: [
       ["速度", "< 30 毫秒", "1 MPix · GPU"],
       ["精度", "亚毫米级", "平移 + 旋转"],
