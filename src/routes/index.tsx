@@ -6,7 +6,7 @@ import { TrustMetrics } from "@/components/site/TrustMetrics";
 import { Clients } from "@/components/site/Clients";
 import { RgbAdvantage } from "@/components/site/RgbAdvantage";
 import { Applications } from "@/components/site/Applications";
-import { FastTracking } from "@/components/site/FastTracking";
+
 import { Workflow } from "@/components/site/Workflow";
 import { Ecosystem } from "@/components/site/Ecosystem";
 import { Specs } from "@/components/site/Specs";
@@ -48,7 +48,7 @@ function Index() {
 
           <RgbAdvantage />
           <Applications />
-          <FastTracking />
+          
           <Workflow />
           <Ecosystem />
           <Specs />
