@@ -31,7 +31,7 @@ const LOGOS: Record<string, string> = {
   Kuka: kuka,
   Mitsubishi: mitsubishi,
   Nachi: nachi,
-  RealSense: realsense,
+  RealSense: realsenseAsset.url,
   "TM Robots": tmRobots,
   "Universal Robots": universalRobots,
   Yaskawa: yaskawa,
