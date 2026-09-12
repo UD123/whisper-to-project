@@ -49,7 +49,7 @@ export const en = {
   },
   technology: {
     eyebrow: "01 — Technology",
-    title: "Comparison: Traditional 3D Vision vs. RobotAI",
+    title: "Comparison: Traditional 3D Vision versus RobotAI",
     subtitle:
       "A direct comparison across the five most critical dimensions for production-grade robotic vision.",
     legacyTitle: "Traditional 3D Vision & LiDAR",
