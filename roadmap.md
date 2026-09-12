@@ -22,3 +22,4 @@ Current task:
 - [x] Replace “AgriTech / Special Applications” media with a silent forward-and-reverse loop made from the source file’s first 25 seconds
 
 - [x] Add Industrial Fast-Tracking Applications section with gantry tracking clip from Drive file 1eAVGhZBTN
+- [x] Replace CAM_09 with the new 8.4-second Fast Tracking source clip
