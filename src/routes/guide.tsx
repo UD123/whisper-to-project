@@ -221,7 +221,7 @@ function GuideContent() {
                       {g.getSoftware.hint}
                     </p>
                     <a
-                      href="/#demo"
+                      href="/#evaluation"
                       className="mt-4 inline-flex rounded-md bg-foreground px-4 py-2.5 text-sm font-medium text-background transition-opacity hover:opacity-90"
                     >
                       {g.getSoftware.cta}
@@ -409,7 +409,7 @@ function GuideContent() {
                     <p className="mt-1.5 text-sm text-muted-foreground">{g.help.body}</p>
                   </div>
                   <a
-                    href="/#demo"
+                    href="/#evaluation"
                     className="rounded-md bg-foreground px-5 py-3 text-sm font-medium text-background transition-opacity hover:opacity-90"
                   >
                     {g.help.cta}
