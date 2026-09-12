@@ -68,7 +68,7 @@ export function Applications() {
               </p>
             </div>
             <a
-              href="#demo"
+              href="#evaluation"
               className="mt-6 inline-flex w-fit rounded-md bg-foreground px-5 py-3 text-sm font-medium text-background transition-opacity hover:opacity-90"
             >
               {t.applications.ctaButton}
