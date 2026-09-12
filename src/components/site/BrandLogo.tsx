@@ -5,7 +5,7 @@ import denso from "@/assets/logos/denso.svg";
 import dobot from "@/assets/logos/dobot.svg";
 import fanuc from "@/assets/logos/fanuc.svg";
 import hanwha from "@/assets/logos/hanwha.svg";
-import ids from "@/assets/logos/ids.svg";
+import idsAsset from "@/assets/logos/ids-logo-official.png.asset.json";
 import kuka from "@/assets/logos/kuka.svg";
 import mitsubishi from "@/assets/logos/mitsubishi.svg";
 import nachi from "@/assets/logos/nachi.svg";
@@ -25,7 +25,7 @@ const LOGOS: Record<string, string> = {
   Dobot: dobot,
   Fanuc: fanuc,
   Hanwha: hanwha,
-  IDS: ids,
+  IDS: idsAsset.url,
   Kuka: kuka,
   Mitsubishi: mitsubishi,
   Nachi: nachi,
