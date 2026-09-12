@@ -112,7 +112,7 @@ export const guideZh: Guide = {
     title: "下载免费 POC 版本",
     subtitle: "概念验证版本免费提供，仅支持 CPU 运行 —— 无需 GPU。",
     bullets: [
-      "Pose6D POC 版本（仅 CPU），适用于 Windows 10",
+      "Pose6D POC 版本（仅 CPU），适用于 Windows 10/11",
       "配套文档 —— 本页面即为简明版",
       "用于验证安装的 usb_test 示例数据（见第 02 节）",
     ],
@@ -123,16 +123,16 @@ export const guideZh: Guide = {
   installation: {
     eyebrow: "02 — 硬件与软件安装",
     title: "约 15 分钟完成 Pose6D 安装与验证",
-    subtitle: "本节内容均针对运行于 Windows 10 的免费 POC 版本（仅 CPU）。",
+    subtitle: "本节内容均针对运行于 Windows 10/11 的免费 POC 版本（仅 CPU）。",
     requirementsTitle: "运行要求",
     requirements: [
-      { k: "操作系统", v: "Windows 10", note: "POC 版本仅支持 Windows" },
+      { k: "操作系统", v: "Windows 10/11", note: "POC 版本仅支持 Windows" },
       { k: "内存", v: "最低 8 GB", note: "内存越大，加载速度越快" },
       { k: "显卡", v: "无需 GPU", note: "CPU 版本运行速度低于 GPU 版本" },
       { k: "CUDA", v: "个别情况需要", note: "参见手册的故障排查章节" },
       {
         k: "相机驱动",
-        v: "Windows 10 自带 USB 驱动",
+        v: "Windows 10/11 自带 USB 驱动",
         note: "其他相机需定制适配，请联系 RobotAI",
       },
     ],

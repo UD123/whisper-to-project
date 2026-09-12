@@ -409,7 +409,7 @@ export const guideSectionsZh: GuideSection[] = [
       {
         t: "bullets",
         items: [
-          "Pose6D 安装于 Windows 10。",
+          "Pose6D 安装于 Windows 10/11。",
           "与机器人控制器之间为以太网连接。",
           "在 Windows 防火墙中放行端口 8480（或 5555，或自定义端口）。",
         ],
