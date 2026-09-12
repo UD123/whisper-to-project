@@ -299,7 +299,7 @@ export const en = {
   },
   faq: {
     eyebrow: "08 — FAQ",
-    title: "B2B FAQ",
+    title: "FAQ",
     subtitle: "Common questions from engineering and procurement teams.",
     items: [
       {
