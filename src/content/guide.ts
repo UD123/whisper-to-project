@@ -117,7 +117,7 @@ export const guide = {
     title: "Download the free POC version",
     subtitle: "The proof-of-concept build is free and runs on CPU only — no GPU needed.",
     bullets: [
-      "Pose6D POC build (CPU only) for Windows 10",
+      "Pose6D POC build (CPU only) for Windows 10/11",
       "Documentation — the short version is this page",
       "usb_test sample data for verifying the installation (section 02)",
     ],
@@ -129,14 +129,14 @@ export const guide = {
     eyebrow: "02 — Hardware & Software Installation",
     title: "Install Pose6D and verify it in about 15 minutes",
     subtitle:
-      "Everything in this section refers to the free POC build (CPU only) running on Windows 10.",
+      "Everything in this section refers to the free POC build (CPU only) running on Windows 10/11.",
     requirementsTitle: "Requirements",
     requirements: [
-      { k: "Operating system", v: "Windows 10", note: "POC build is Windows-only" },
+      { k: "Operating system", v: "Windows 10/11", note: "POC build is Windows-only" },
       { k: "Memory", v: "8 GB minimum", note: "More memory speeds up loading" },
       { k: "GPU", v: "Not required", note: "CPU build runs slower than the GPU version" },
       { k: "CUDA", v: "Occasionally required", note: "See the troubleshooting page of the manual" },
-      { k: "Camera drivers", v: "USB built into Windows 10", note: "Other cameras need customization — contact RobotAI" },
+      { k: "Camera drivers", v: "USB built into Windows 10/11", note: "Other cameras need customization — contact RobotAI" },
     ],
     callout: {
       label: "Important",

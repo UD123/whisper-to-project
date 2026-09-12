@@ -17,7 +17,7 @@ export function InstallDiagram({ label, caption }: { label: string; caption?: st
 
           {[
             { x: 20, t: "CAMERA", s: "USB / GigE / IP" },
-            { x: 270, t: "VISION PC", s: "Pose6D · Windows 10" },
+            { x: 270, t: "VISION PC", s: "Pose6D · Windows 10/11" },
             { x: 520, t: "ROBOT CONTROLLER", s: "TCP/IP · port 8480" },
           ].map((b) => (
             <g key={b.t}>

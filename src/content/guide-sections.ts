@@ -439,7 +439,7 @@ export const guideSections: GuideSection[] = [
       {
         t: "bullets",
         items: [
-          "Pose6D installed on Windows 10.",
+          "Pose6D installed on Windows 10/11.",
           "Ethernet connection to the robot controller.",
           "Port 8480 (or 5555, or your own) allowed through the Windows firewall.",
         ],
