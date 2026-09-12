@@ -6,7 +6,7 @@ import randomBinPickingVideo from "@/assets/bin-picking-loop.mp4.asset.json";
 import palletizingVideo from "@/assets/palletizing.mp4.asset.json";
 import assemblyVideo from "@/assets/assembly.mp4.asset.json";
 import agvDockingVideo from "@/assets/agv-docking.mp4.asset.json";
-import agritechVideo from "@/assets/agritech.mp4.asset.json";
+import agritechVideo from "@/assets/agritech-forward-reverse.mp4.asset.json";
 
 const media = [
   ["bin_picking", randomBinPickingVideo.url],
