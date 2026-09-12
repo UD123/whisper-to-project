@@ -10,7 +10,7 @@ import idsAsset from "@/assets/logos/ids-logo-official.png.asset.json";
 import kuka from "@/assets/logos/kuka.svg";
 import mitsubishi from "@/assets/logos/mitsubishi.svg";
 import nachi from "@/assets/logos/nachi.svg";
-import realsense from "@/assets/logos/realsense.svg";
+import realsenseAsset from "@/assets/logos/realsense-logo.png.asset.json";
 import tmRobots from "@/assets/logos/tm-robots.svg";
 import universalRobots from "@/assets/logos/universal-robots.svg";
 import yaskawa from "@/assets/logos/yaskawa.svg";
@@ -31,7 +31,7 @@ const LOGOS: Record<string, string> = {
   Kuka: kuka,
   Mitsubishi: mitsubishi,
   Nachi: nachi,
-  RealSense: realsense,
+  RealSense: realsenseAsset.url,
   "TM Robots": tmRobots,
   "Universal Robots": universalRobots,
   Yaskawa: yaskawa,
