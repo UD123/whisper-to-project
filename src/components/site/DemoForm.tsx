@@ -7,17 +7,19 @@ export function DemoForm() {
   const [sent, setSent] = useState(false);
 
   return (
-    <section id="demo" className="border-b border-border bg-card">
-      <div className="mx-auto max-w-3xl px-6 py-16 md:py-20">
-        <div className="rounded-xl border border-border bg-background p-8 md:p-10">
+    <section id="evaluation" className="border-b border-border bg-card">
+      <div className="mx-auto max-w-7xl px-6 py-16 md:py-20">
+        <div className="max-w-2xl">
           <span className="mono-label text-primary">{t.demo.eyebrow}</span>
-          <h2 className="mt-4 text-2xl font-semibold tracking-[-0.02em] md:text-3xl">
+          <h2 className="mt-4 text-3xl font-semibold tracking-[-0.02em] md:text-4xl">
             {t.demo.title}
           </h2>
-          <p className="mt-3 text-sm text-muted-foreground">{t.demo.subtitle}</p>
+          <p className="mt-4 text-muted-foreground">{t.demo.subtitle}</p>
+        </div>
 
+        <div className="mt-12 max-w-3xl rounded-xl border border-border bg-background">
           <form
-            className="mt-8 grid gap-5 sm:grid-cols-2"
+            className="grid gap-5 p-6 sm:grid-cols-2 md:p-8"
             onSubmit={(e) => {
               e.preventDefault();
               setSent(true);
