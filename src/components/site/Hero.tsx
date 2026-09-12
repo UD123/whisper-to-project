@@ -22,16 +22,16 @@ export function Hero() {
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <a
-              href="#demo"
-              className="rounded-md bg-foreground px-5 py-3 text-sm font-medium text-background transition-all duration-200 hover:opacity-90 hover:shadow-[0_10px_28px_-12px_var(--foreground)]"
-            >
-              {t.hero.ctaPrimary}
-            </a>
-            <a
               href="#specs"
               className="rounded-md border border-border bg-card px-5 py-3 text-sm font-medium transition-all duration-200 hover:border-foreground/25 hover:shadow-sm"
             >
               {t.hero.ctaSecondary}
+            </a>
+            <a
+              href="#demo"
+              className="rounded-md bg-foreground px-5 py-3 text-sm font-medium text-background transition-all duration-200 hover:opacity-90 hover:shadow-[0_10px_28px_-12px_var(--foreground)]"
+            >
+              {t.hero.ctaPrimary}
             </a>
           </div>
         </div>
