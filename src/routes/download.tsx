@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Monitor, Terminal, Download, AlertCircle } from "lucide-react";
+import { Monitor, Terminal, Download, AlertCircle, FileText } from "lucide-react";
 import { LanguageProvider, useT } from "@/i18n/LanguageProvider";
 import { Navbar } from "@/components/site/Navbar";
 import { Footer } from "@/components/site/Footer";
