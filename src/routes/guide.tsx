@@ -42,6 +42,9 @@ const pdfs: Record<string, string> = {
   checkerboard: "/media/Pose6D-Checkerboard.pdf",
 };
 
+const USB_TEST_URL =
+  "https://github.com/RobotAI-Global/pose6d-deploy/releases/download/v01.02-model-usb/usb_test.zip";
+
 const accordionIds = [
   "video",
   "get-software",
