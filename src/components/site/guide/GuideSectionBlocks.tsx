@@ -113,6 +113,17 @@ function BlockView({ b }: { b: Block }) {
             .map((v) => ({ name: v.name, ...guideVideo[v.key]! }))}
         />
       );
+    case "button":
+      return (
+        <a
+          href={b.url}
+          download={b.download}
+          className="mt-5 inline-flex items-center gap-2 rounded-md bg-foreground px-4 py-2.5 text-sm font-medium text-background transition-opacity hover:opacity-90"
+        >
+          {b.download ? <Download className="h-4 w-4" /> : <ArrowUpRight className="h-4 w-4" />}
+          {b.text}
+        </a>
+      );
     case "download":
       return (
         <div className="mt-6 rounded-xl border border-border bg-background p-5">
