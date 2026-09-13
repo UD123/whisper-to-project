@@ -405,7 +405,8 @@ export const zh: Dict = {
     badge: "深科技 · 工业机器视觉",
     title: "简化 3D 视觉：基于标准 2D RGB 的 6DOF 物体位姿估计",
     subtitle:
-      "将任意标准相机转变为 3D 测量设备，在 30 毫秒内输出精确的三维坐标（X、Y、Z、Rx、Ry、Rz），无需昂贵且噪声大的 3D 激光雷达或立体传感器。",
+      "将任意标准相机转变为 3D 测量设备，在 30 毫秒内输出精确的三维坐标（Tx、Ty、Tz、Rx、Ry、Rz），达到亚毫米级精度。无需云连接，也无需昂贵的 3D 激光雷达或立体传感器。",
+
     ctaPrimary: "预约技术演示",
     ctaSecondary: "技术参数",
     ctaTechnology: "技术",
@@ -430,7 +431,7 @@ export const zh: Dict = {
   },
   technology: {
     eyebrow: "01 — 技术",
-    title: "对比：传统 3D 视觉 vs. RobotAI",
+    title: "对比：传统 3D 视觉 versus RobotAI",
     subtitle: "从五个对量产级机器人视觉最关键的维度进行直接对比。",
     legacyTitle: "传统 3D 视觉与激光雷达",
     modernTitle: "RobotAI 2D RGB 引擎",
@@ -640,7 +641,7 @@ export const zh: Dict = {
   },
   faq: {
     eyebrow: "08 — 常见问题",
-    title: "B2B 常见问题",
+    title: "FAQ",
     subtitle: "来自工程与采购团队的高频问题。",
     items: [
       {
