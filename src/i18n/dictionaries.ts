@@ -641,7 +641,7 @@ export const zh: Dict = {
   },
   faq: {
     eyebrow: "08 — 常见问题",
-    title: "B2B 常见问题",
+    title: "FAQ",
     subtitle: "来自工程与采购团队的高频问题。",
     items: [
       {
