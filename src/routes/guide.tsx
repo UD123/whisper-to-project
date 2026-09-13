@@ -39,7 +39,6 @@ export const Route = createFileRoute("/guide")({
 });
 
 const pdfs: Record<string, string> = {
-  manual: "/media/Pose6D-User-Guide.pdf",
   checkerboard: "/media/Pose6D-Checkerboard.pdf",
 };
 
@@ -86,15 +85,6 @@ function GuideContent() {
               <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
                 {g.meta.subtitle}
               </p>
-              <div className="mt-7 flex flex-wrap items-center gap-3">
-                <a
-                  href={pdfs["manual"]}
-                  download
-                  className="rounded-md bg-foreground px-5 py-3 text-sm font-medium text-background transition-opacity hover:opacity-90"
-                >
-                  {g.meta.download}
-                </a>
-              </div>
             </div>
           </section>
 
