@@ -3,6 +3,7 @@ import { guideVideo } from "@/content/guide-media";
 import { Callout, MenuPath, PathChip, Shot } from "./GuideBits";
 import { guideShots } from "@/content/guide-shots";
 import { GuideClips } from "./GuideVideo";
+import { Download, FileText } from "lucide-react";
 
 function BlockView({ b }: { b: Block }) {
   switch (b.t) {

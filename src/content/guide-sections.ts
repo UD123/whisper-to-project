@@ -10,6 +10,7 @@ export type Block =
   | { t: "code"; label: string; lines: string[] }
   | { t: "shot"; key: GuideShotKey; label: string; caption?: string }
   | { t: "shots"; items: { key: GuideShotKey; label: string; caption?: string }[] }
+  | { t: "download"; name: string; note: string; url: string; label: string }
   | { t: "h"; text: string };
 
 export type GuideSection = {
