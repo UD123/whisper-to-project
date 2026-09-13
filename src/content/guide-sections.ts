@@ -10,6 +10,7 @@ export type Block =
   | { t: "code"; label: string; lines: string[] }
   | { t: "shot"; key: GuideShotKey; label: string; caption?: string }
   | { t: "shots"; items: { key: GuideShotKey; label: string; caption?: string }[] }
+  | { t: "download"; name: string; note: string; url: string; label: string }
   | { t: "h"; text: string };
 
 export type GuideSection = {
@@ -201,6 +202,13 @@ export const guideSections: GuideSection[] = [
         key: "checkerboard-print",
         label: "CHECKERBOARD PATTERN",
         caption: "Measure one square precisely and enter it via Camera → Square Size.",
+      },
+      {
+        t: "download",
+        name: "Checkerboard calibration pattern",
+        note: "Print at 100% scale, no fit-to-page",
+        url: "/media/checkerboardPattern-2.pdf",
+        label: "Download",
       },
       {
         t: "videos",
