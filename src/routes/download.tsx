@@ -10,7 +10,7 @@ const description = "Download Pose6D for Windows or Linux. Runtime, calibration 
 const WINDOWS_URL =
   "https://github.com/RobotAI-Global/pose6d-deploy/releases/download/v25.09-windows-cpu/Pose6D-2509-cpu.exe";
 const TEMP_LINUX_URL =
-  "https://github.com/robotai-vision/pose6d/releases/download/v1.0.0/Pose6D-Linux";
+  "https://github.com/RobotAI-Global/pose6d-deploy/releases/download/v18.15-linux-cpu/Pose6D-1815";
 
 export const Route = createFileRoute("/download")({
   head: () => ({

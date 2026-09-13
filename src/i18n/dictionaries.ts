@@ -354,9 +354,9 @@ export const en = {
     linux: {
       title: "Linux",
       desc: "Linux industrial PC build. Tested on Ubuntu 22.04 LTS and compatible distributions.",
-      file: "Pose6D-Linux",
+      file: "Pose6D-1815",
       button: "Download for Linux",
-      note: "Temporary download link — replace with your release URL.",
+      note: "Direct download from GitHub releases.",
     },
     manual: {
       title: "Documentation",
@@ -693,9 +693,9 @@ export const zh: Dict = {
     linux: {
       title: "Linux",
       desc: "Linux 工业电脑版本，已在 Ubuntu 22.04 LTS 及兼容发行版上测试。",
-      file: "Pose6D-Linux",
+      file: "Pose6D-1815",
       button: "下载 Linux 版",
-      note: "临时下载链接，后续请替换为真实发布地址。",
+      note: "直接下载自 GitHub releases。",
     },
     manual: {
       title: "文档",
