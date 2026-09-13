@@ -69,25 +69,55 @@ function DownloadContent() {
   const d = t.download;
 
   return (
-    <div className="grid gap-6 md:grid-cols-2">
-      <PlatformCard
-        icon={<Monitor className="h-6 w-6" />}
-        platform={d.windows.title}
-        desc={d.windows.desc}
-        file={d.windows.file}
-        button={d.windows.button}
-        href={WINDOWS_URL}
-        note={d.windows.note}
-      />
-      <PlatformCard
-        icon={<Terminal className="h-6 w-6" />}
-        platform={d.linux.title}
-        desc={d.linux.desc}
-        file={d.linux.file}
-        button={d.linux.button}
-        href={TEMP_LINUX_URL}
-        note={d.linux.note}
-      />
+    <div className="space-y-14">
+      <div className="grid gap-6 md:grid-cols-2">
+        <PlatformCard
+          icon={<Monitor className="h-6 w-6" />}
+          platform={d.windows.title}
+          desc={d.windows.desc}
+          file={d.windows.file}
+          button={d.windows.button}
+          href={WINDOWS_URL}
+          note={d.windows.note}
+        />
+        <PlatformCard
+          icon={<Terminal className="h-6 w-6" />}
+          platform={d.linux.title}
+          desc={d.linux.desc}
+          file={d.linux.file}
+          button={d.linux.button}
+          href={TEMP_LINUX_URL}
+          note={d.linux.note}
+        />
+      </div>
+
+      <section>
+        <span className="mono-label text-primary">{d.manual.title}</span>
+        <h2 className="mt-3 text-2xl font-semibold tracking-[-0.02em] md:text-3xl">
+          {d.manual.title}
+        </h2>
+        <p className="mt-3 max-w-2xl text-muted-foreground">{d.manual.desc}</p>
+
+        <div className="mt-6 flex flex-col rounded-xl border border-border bg-card p-6 md:flex-row md:items-center md:justify-between md:gap-6">
+          <div className="flex items-start gap-4">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border bg-background text-primary">
+              <FileText className="h-6 w-6" />
+            </span>
+            <div>
+              <h3 className="font-semibold tracking-tight">{d.manual.file}</h3>
+              <p className="mt-1 text-sm text-muted-foreground">{d.manual.note}</p>
+            </div>
+          </div>
+          <a
+            href="/media/Pose6D-User-Guide.pdf"
+            download
+            className="mt-5 inline-flex items-center justify-center gap-2 rounded-md bg-foreground px-5 py-3 text-sm font-medium text-background transition-opacity hover:opacity-90 md:mt-0"
+          >
+            <Download className="h-4 w-4" />
+            {d.manual.button}
+          </a>
+        </div>
+      </section>
     </div>
   );
 }
