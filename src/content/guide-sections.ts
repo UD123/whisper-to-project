@@ -175,6 +175,7 @@ export const guideSections: GuideSection[] = [
     title: "Camera calibration",
     summary: "Calibrate the camera with the checkerboard pattern, held at the working distance.",
     blocks: [
+      { t: "button", text: "Download checker board pattern", url: "/media/checkerboardPattern-2.pdf", download: true },
       {
         t: "note",
         label: "Most important",
