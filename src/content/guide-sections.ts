@@ -11,6 +11,7 @@ export type Block =
   | { t: "shot"; key: GuideShotKey; label: string; caption?: string }
   | { t: "shots"; items: { key: GuideShotKey; label: string; caption?: string }[] }
   | { t: "download"; name: string; note: string; url: string; label: string }
+  | { t: "button"; text: string; url: string; download?: boolean }
   | { t: "h"; text: string };
 
 export type GuideSection = {
@@ -174,6 +175,7 @@ export const guideSections: GuideSection[] = [
     title: "Camera calibration",
     summary: "Calibrate the camera with the checkerboard pattern, held at the working distance.",
     blocks: [
+      { t: "button", text: "Download checker board pattern", url: "/media/checkerboardPattern-2.pdf", download: true },
       {
         t: "note",
         label: "Most important",
