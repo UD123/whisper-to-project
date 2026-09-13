@@ -146,6 +146,7 @@ export const guideSectionsZh: GuideSection[] = [
     title: "相机标定",
     summary: "在工作距离处使用棋盘格标定板完成相机标定。",
     blocks: [
+      { t: "button", text: "下载棋盘格标定图案", url: "/media/checkerboardPattern-2.pdf", download: true },
       {
         t: "note",
         label: "最重要的一点",
