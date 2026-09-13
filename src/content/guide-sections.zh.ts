@@ -176,6 +176,13 @@ export const guideSectionsZh: GuideSection[] = [
         caption: "精确测量单个方格尺寸，并通过 Camera → Square Size 输入。",
       },
       {
+        t: "download",
+        name: "棋盘格标定图案",
+        note: "请按 100% 比例打印，勿使用适应页面缩放",
+        url: "/media/checkerboardPattern-2.pdf",
+        label: "下载",
+      },
+      {
         t: "videos",
         label: "标定示例",
         items: [{ name: "使用手机显示标定板", key: "calib-smartphone" }],

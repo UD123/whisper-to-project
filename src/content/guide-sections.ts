@@ -204,6 +204,13 @@ export const guideSections: GuideSection[] = [
         caption: "Measure one square precisely and enter it via Camera → Square Size.",
       },
       {
+        t: "download",
+        name: "Checkerboard calibration pattern",
+        note: "Print at 100% scale, no fit-to-page",
+        url: "/media/checkerboardPattern-2.pdf",
+        label: "Download",
+      },
+      {
         t: "videos",
         label: "Calibration example",
         items: [{ name: "Pattern on a smartphone", key: "calib-smartphone" }],
