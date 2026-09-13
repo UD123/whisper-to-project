@@ -431,7 +431,7 @@ export const zh: Dict = {
   },
   technology: {
     eyebrow: "01 — 技术",
-    title: "对比：传统 3D 视觉 vs. RobotAI",
+    title: "对比：传统 3D 视觉 versus RobotAI",
     subtitle: "从五个对量产级机器人视觉最关键的维度进行直接对比。",
     legacyTitle: "传统 3D 视觉与激光雷达",
     modernTitle: "RobotAI 2D RGB 引擎",
