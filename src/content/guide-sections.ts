@@ -8,8 +8,8 @@ export type Block =
   | { t: "table"; head: string[]; rows: string[][] }
   | { t: "videos"; label: string; items: { name: string; key: string }[] }
   | { t: "code"; label: string; lines: string[] }
-  | { t: "shot"; key: GuideShotKey; label: string; caption?: string }
-  | { t: "shots"; items: { key: GuideShotKey; label: string; caption?: string }[] }
+  | { t: "shot"; key: GuideShotKey; label: string; caption?: string; className?: string }
+  | { t: "shots"; items: { key: GuideShotKey; label: string; caption?: string; className?: string }[] }
   | { t: "download"; name: string; note: string; url: string; label: string }
   | { t: "button"; text: string; url: string; download?: boolean }
   | { t: "h"; text: string };
@@ -204,6 +204,7 @@ export const guideSections: GuideSection[] = [
         key: "checkerboard-print",
         label: "CHECKERBOARD PATTERN",
         caption: "Measure one square precisely and enter it via Camera → Square Size.",
+        className: "max-w-sm",
       },
       {
         t: "download",

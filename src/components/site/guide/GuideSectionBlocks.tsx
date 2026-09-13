@@ -95,12 +95,12 @@ function BlockView({ b }: { b: Block }) {
         </div>
       );
     case "shot":
-      return <Shot src={guideShots[b.key]} label={b.label} caption={b.caption} />;
+      return <Shot src={guideShots[b.key]} label={b.label} caption={b.caption} className={b.className} />;
     case "shots":
       return (
         <div className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
           {b.items.map((s) => (
-            <Shot key={s.key} src={guideShots[s.key]} label={s.label} caption={s.caption} />
+            <Shot key={s.key} src={guideShots[s.key]} label={s.label} caption={s.caption} className={s.className} />
           ))}
         </div>
       );
