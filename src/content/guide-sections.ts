@@ -11,6 +11,7 @@ export type Block =
   | { t: "shot"; key: GuideShotKey; label: string; caption?: string }
   | { t: "shots"; items: { key: GuideShotKey; label: string; caption?: string }[] }
   | { t: "download"; name: string; note: string; url: string; label: string }
+  | { t: "button"; text: string; url: string; download?: boolean }
   | { t: "h"; text: string };
 
 export type GuideSection = {
