@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Download } from "lucide-react";
 import { LanguageProvider, useI18n } from "@/i18n/LanguageProvider";
 import { Navbar } from "@/components/site/Navbar";
 import { Footer } from "@/components/site/Footer";
@@ -41,6 +41,9 @@ export const Route = createFileRoute("/guide")({
 const pdfs: Record<string, string> = {
   checkerboard: "/media/Pose6D-Checkerboard.pdf",
 };
+
+const USB_TEST_URL =
+  "https://github.com/RobotAI-Global/pose6d-deploy/releases/download/v01.02-model-usb/usb_test.zip";
 
 const accordionIds = [
   "video",
@@ -271,9 +274,20 @@ function GuideContent() {
                             </p>
                             {s.path ? <PathChip value={s.path} /> : null}
                             {"file" in s && s.file ? (
-                              <span className="mt-2 inline-flex items-center gap-2 rounded-md border border-dashed border-border bg-background px-3 py-1.5 font-mono text-xs text-muted-foreground">
-                                {s.file} · {g.installation.fileSoon}
-                              </span>
+                              s.file === "usb_test.zip" ? (
+                                <a
+                                  href={USB_TEST_URL}
+                                  rel="noopener noreferrer"
+                                  className="mt-2 inline-flex items-center gap-2 rounded-md bg-foreground px-3 py-1.5 text-sm font-medium text-background transition-opacity hover:opacity-90"
+                                >
+                                  <Download className="h-3.5 w-3.5" />
+                                  {lang === "zh" ? `下载 ${s.file}` : `Download ${s.file}`}
+                                </a>
+                              ) : (
+                                <span className="mt-2 inline-flex items-center gap-2 rounded-md border border-dashed border-border bg-background px-3 py-1.5 font-mono text-xs text-muted-foreground">
+                                  {s.file} · {g.installation.fileSoon}
+                                </span>
+                              )
                             ) : null}
                           </div>
                         </li>
