@@ -113,6 +113,30 @@ function BlockView({ b }: { b: Block }) {
             .map((v) => ({ name: v.name, ...guideVideo[v.key]! }))}
         />
       );
+    case "download":
+      return (
+        <div className="mt-6 rounded-xl border border-border bg-background p-5">
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div className="flex items-start gap-3">
+              <FileText className="mt-0.5 h-5 w-5 shrink-0 text-primary" strokeWidth={1.6} />
+              <div>
+                <p className="text-sm font-medium">{b.name}</p>
+                <p className="mono-label mt-1 text-muted-foreground normal-case tracking-normal">
+                  {b.note}
+                </p>
+              </div>
+            </div>
+            <a
+              href={b.url}
+              download
+              className="inline-flex items-center gap-1.5 rounded-md bg-foreground px-3.5 py-2 text-sm font-medium text-background transition-opacity hover:opacity-90"
+            >
+              <Download className="h-3.5 w-3.5" />
+              {b.label}
+            </a>
+          </div>
+        </div>
+      );
     default:
       return null;
   }
