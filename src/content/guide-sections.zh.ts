@@ -175,6 +175,7 @@ export const guideSectionsZh: GuideSection[] = [
         key: "checkerboard-print",
         label: "棋盘格标定板",
         caption: "精确测量单个方格尺寸，并通过 Camera → Square Size 输入。",
+        className: "max-w-sm",
       },
       {
         t: "download",

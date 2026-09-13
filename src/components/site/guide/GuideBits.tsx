@@ -53,7 +53,7 @@ export function MenuPath({ parts }: { parts: string[] }) {
   );
 }
 
-export function Shot({ src, label, caption }: { src: string; label: string; caption?: string | undefined }) {
+export function Shot({ src, label, caption, className }: { src: string; label: string; caption?: string | undefined; className?: string | undefined }) {
   return (
     <figure className="mt-8 overflow-hidden rounded-xl border border-border bg-card">
       <div className="flex items-center justify-between border-b border-border px-3 py-2">
@@ -61,7 +61,7 @@ export function Shot({ src, label, caption }: { src: string; label: string; capt
         <span className="mono-label text-signal">figure</span>
       </div>
       <div className="bg-background p-4">
-        <img src={src} alt={caption ?? label} loading="lazy" className="mx-auto w-full max-w-3xl" />
+        <img src={src} alt={caption ?? label} loading="lazy" className={`mx-auto w-full ${className ?? "max-w-3xl"}`} />
       </div>
       {caption ? (
         <figcaption className="border-t border-border px-4 py-3 text-xs text-muted-foreground">
