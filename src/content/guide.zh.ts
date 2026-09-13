@@ -6,7 +6,6 @@ export const guideZh: Guide = {
     eyebrow: "技术文档",
     title: "Pose6D — 快速入门",
     subtitle: "3D 位姿估计的主要步骤：从软件安装到机器人实际取放。",
-    download: "下载完整手册（PDF）",
   },
 
   instructions: {
@@ -261,7 +260,6 @@ export const guideZh: Guide = {
     title: "文档下载",
     subtitle: "可在线打开或下载，全部文件均由本站提供。",
     items: [
-      { id: "manual", name: "Pose6D — 用户手册（POC）", note: "完整手册，版本 0919" },
       { id: "checkerboard", name: "棋盘格标定图案", note: "请按 100% 比例打印，勿使用适应页面缩放" },
     ],
     open: "打开",
