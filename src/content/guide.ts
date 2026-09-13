@@ -11,7 +11,6 @@ export const guide = {
     eyebrow: "Documentation",
     title: "Pose6D — Getting Started",
     subtitle: "Main steps for 3D pose estimation, from installation to a working robot.",
-    download: "Download full manual (PDF)",
   },
 
   instructions: {
@@ -236,7 +235,6 @@ export const guide = {
     title: "Documents",
     subtitle: "Open them here or download — everything is served from this site.",
     items: [
-      { id: "manual", name: "Pose6D — User Guide (POC)", note: "Full manual, version 0919" },
       { id: "checkerboard", name: "Checkerboard calibration pattern", note: "Print at 100% scale, no fit-to-page" },
     ],
     open: "Open",

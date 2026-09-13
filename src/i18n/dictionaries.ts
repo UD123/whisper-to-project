@@ -358,6 +358,13 @@ export const en = {
       button: "Download for Linux",
       note: "Temporary download link — replace with your release URL.",
     },
+    manual: {
+      title: "Documentation",
+      desc: "Download the full Pose6D user guide for the POC release.",
+      file: "Pose6D-User-Guide.pdf",
+      button: "Download full manual (PDF)",
+      note: "Version 0919 · served from this site.",
+    },
   },
   footer: {
     ctaTitle: "Ready to Upgrade Your Robotic Vision?",
@@ -689,6 +696,13 @@ export const zh: Dict = {
       file: "Pose6D-Linux",
       button: "下载 Linux 版",
       note: "临时下载链接，后续请替换为真实发布地址。",
+    },
+    manual: {
+      title: "文档",
+      desc: "下载 POC 版本的完整 Pose6D 用户手册。",
+      file: "Pose6D-User-Guide.pdf",
+      button: "下载完整手册（PDF）",
+      note: "版本 0919 · 由本站直接提供。",
     },
   },
   footer: {
