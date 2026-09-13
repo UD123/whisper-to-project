@@ -53,7 +53,7 @@ export function MenuPath({ parts }: { parts: string[] }) {
   );
 }
 
-export function Shot({ src, label, caption, className }: { src: string; label: string; caption?: string | undefined; className?: string }) {
+export function Shot({ src, label, caption, className }: { src: string; label: string; caption?: string | undefined; className?: string | undefined }) {
   return (
     <figure className="mt-8 overflow-hidden rounded-xl border border-border bg-card">
       <div className="flex items-center justify-between border-b border-border px-3 py-2">
