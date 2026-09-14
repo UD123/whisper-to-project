@@ -109,8 +109,9 @@ function DownloadContent() {
             </div>
           </div>
           <a
-            href="/media/Pose6D-User-Guide.pdf"
+            href="https://github.com/RobotAI-Global/pose6d-deploy/releases/download/v19.09-user-guide-poc-windows/Pose6D-User.Guide.for.POC.-.0919.pdf"
             download
+            rel="noopener noreferrer"
             className="mt-5 inline-flex items-center justify-center gap-2 rounded-md bg-foreground px-5 py-3 text-sm font-medium text-background transition-opacity hover:opacity-90 md:mt-0"
           >
             <Download className="h-4 w-4" />
