@@ -36,7 +36,7 @@ export function Navbar({
           </span>
         </a>
 
-        <nav className="hidden items-center gap-6 xl:flex">
+        <nav className="hidden items-center gap-5 2xl:flex">
           {t.nav.links.map((l) => (
             <a
               key={l.href}
