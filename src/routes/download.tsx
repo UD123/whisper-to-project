@@ -92,7 +92,7 @@ function DownloadContent() {
       </div>
 
       <section>
-        <span className="mono-label text-primary">{d.manual.title}</span>
+        <span className="mono-label text-primary">{d.manual.eyebrow}</span>
         <h2 className="mt-3 text-2xl font-semibold tracking-[-0.02em] md:text-3xl">
           {d.manual.title}
         </h2>

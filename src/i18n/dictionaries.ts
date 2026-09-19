@@ -359,7 +359,8 @@ export const en = {
       note: "Direct download from GitHub releases.",
     },
     manual: {
-      title: "Documentation",
+      eyebrow: "Documentation",
+      title: "User Guide",
       desc: "Download the full Pose6D user guide for the POC release.",
       file: "Pose6D-User-Guide.pdf",
       button: "Download full manual (PDF)",
@@ -699,7 +700,8 @@ export const zh: Dict = {
       note: "直接下载自 GitHub releases。",
     },
     manual: {
-      title: "文档",
+      eyebrow: "文档",
+      title: "用户手册",
       desc: "下载 POC 版本的完整 Pose6D 用户手册。",
       file: "Pose6D-User-Guide.pdf",
       button: "下载完整手册（PDF）",
