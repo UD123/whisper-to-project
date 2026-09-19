@@ -38,8 +38,8 @@ const en: PricingDict = {
     {
       id: "demo",
       name: "Demo",
-      price: "$0",
-      unit: "evaluation",
+      price: "$1",
+      unit: "one-time evaluation",
       desc: "Full runtime with a sample object model for bench evaluation.",
       features: [
         "Pose6D runtime (Windows / Linux)",
@@ -48,8 +48,8 @@ const en: PricingDict = {
         "Full documentation and setup guide",
         "Evaluation use only",
       ],
-      cta: "Request evaluation",
-      href: "/#evaluation",
+      cta: "Buy Demo license",
+      priceId: "pose6d_demo_onetime",
     },
     {
       id: "objects",
@@ -118,8 +118,8 @@ const zh: PricingDict = {
     {
       id: "demo",
       name: "评测版",
-      price: "$0",
-      unit: "评测使用",
+      price: "$1",
+      unit: "一次性评测",
       desc: "完整运行时与示例物体模型，用于台架评测。",
       features: [
         "Pose6D 运行时（Windows / Linux）",
@@ -128,8 +128,8 @@ const zh: PricingDict = {
         "完整文档与安装指南",
         "仅限评测用途",
       ],
-      cta: "申请评测",
-      href: "/#evaluation",
+      cta: "购买评测许可",
+      priceId: "pose6d_demo_onetime",
     },
     {
       id: "objects",
