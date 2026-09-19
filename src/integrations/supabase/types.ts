@@ -14,6 +14,66 @@ export type Database = {
   }
   public: {
     Tables: {
+      orders: {
+        Row: {
+          amount_cents: number
+          created_at: string
+          currency: string
+          customer_email: string | null
+          customer_name: string | null
+          environment: string
+          id: string
+          license_key: string | null
+          paddle_customer_id: string | null
+          paddle_transaction_id: string
+          price_id: string | null
+          product_id: string | null
+          quantity: number
+          raw: Json | null
+          status: string
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          amount_cents?: number
+          created_at?: string
+          currency?: string
+          customer_email?: string | null
+          customer_name?: string | null
+          environment?: string
+          id?: string
+          license_key?: string | null
+          paddle_customer_id?: string | null
+          paddle_transaction_id: string
+          price_id?: string | null
+          product_id?: string | null
+          quantity?: number
+          raw?: Json | null
+          status?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          amount_cents?: number
+          created_at?: string
+          currency?: string
+          customer_email?: string | null
+          customer_name?: string | null
+          environment?: string
+          id?: string
+          license_key?: string | null
+          paddle_customer_id?: string | null
+          paddle_transaction_id?: string
+          price_id?: string | null
+          product_id?: string | null
+          quantity?: number
+          raw?: Json | null
+          status?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       site_media: {
         Row: {
           id: string
