@@ -24,7 +24,7 @@ export function LanguageSwitcher() {
           onClick={() => setLang(o.code)}
           aria-pressed={lang === o.code}
           title={o.full}
-          className={`rounded-[5px] px-2 py-1 font-mono text-[11px] tracking-tight transition-colors duration-200 ${
+          className={`whitespace-nowrap rounded-[5px] px-2 py-1 font-mono text-[11px] tracking-tight transition-colors duration-200 ${
             lang === o.code
               ? "bg-foreground text-background"
               : "text-muted-foreground hover:text-foreground"

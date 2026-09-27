@@ -1,7 +1,12 @@
 import { Link } from "@tanstack/react-router";
+import { Menu } from "lucide-react";
+import { useState } from "react";
 import { LogoMark } from "./Logo";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { useT } from "@/i18n/LanguageProvider";
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+
+type Section = "product" | "docs" | "download" | "pricing";
 
 /** `hashBase` is "/" on sub-pages so in-page anchors point back to the landing page. */
 export function Navbar({
@@ -11,9 +16,22 @@ export function Navbar({
 }: {
   hashBase?: string;
   solid?: boolean;
-  section?: "product" | "docs" | "download" | "pricing";
+  section?: Section;
 }) {
   const t = useT();
+  const [open, setOpen] = useState(false);
+
+  const tabs: { to: "/" | "/guide" | "/download" | "/pricing"; key: Section; label: string }[] = [
+    { to: "/", key: "product", label: t.nav.product },
+    { to: "/guide", key: "docs", label: t.nav.docs },
+    { to: "/download", key: "download", label: t.nav.download },
+    { to: "/pricing", key: "pricing", label: t.nav.pricing },
+  ];
+
+  const tabClass = (active: boolean) =>
+    `whitespace-nowrap rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
+      active ? "bg-foreground text-background" : "text-muted-foreground hover:text-foreground"
+    }`;
 
   return (
     <header
@@ -21,13 +39,13 @@ export function Navbar({
         solid ? "bg-background" : "bg-background/80 backdrop-blur-xl"
       }`}
     >
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
-        <a href={`${hashBase}#top`} className="flex items-center gap-3">
-          <span className="flex items-center gap-2 text-[17px] font-semibold tracking-tight">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-3 px-4 sm:px-6">
+        <a href={`${hashBase}#top`} className="flex min-w-0 items-center gap-3">
+          <span className="flex shrink-0 items-center gap-2 whitespace-nowrap text-[17px] font-semibold tracking-tight">
             <LogoMark className="h-5 w-5 text-primary" />
             RobotAI
           </span>
-          <span className="hidden items-center gap-1.5 rounded-full border border-border bg-card px-2 py-1 sm:inline-flex">
+          <span className="hidden shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border border-border bg-card px-2 py-1 md:inline-flex">
             <span className="relative flex h-1.5 w-1.5">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-500 opacity-70" />
               <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-red-500" />
@@ -36,66 +54,72 @@ export function Navbar({
           </span>
         </a>
 
-        <nav className="hidden items-center gap-5 2xl:flex">
-          {t.nav.links.map((l) => (
-            <a
-              key={l.href}
-              href={`${hashBase}${l.href}`}
-              className="text-sm text-muted-foreground transition-colors duration-200 hover:text-foreground"
-            >
-              {l.label}
-            </a>
-          ))}
-        </nav>
-
-        <div className="flex items-center gap-2">
-          <div className="flex items-center rounded-lg border border-border bg-card p-1">
-            <Link
-              to="/"
-              className={`rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
-                section === "product"
-                  ? "bg-foreground text-background"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              {t.nav.product}
-            </Link>
-            <Link
-              to="/guide"
-              className={`rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
-                section === "docs"
-                  ? "bg-foreground text-background"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              {t.nav.docs}
-            </Link>
-            <Link
-              to="/download"
-              className={`rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
-                section === "download"
-                  ? "bg-foreground text-background"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              {t.nav.download}
-            </Link>
-            <Link
-              to="/pricing"
-              className={`rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
-                section === "pricing"
-                  ? "bg-foreground text-background"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              {t.nav.pricing}
-            </Link>
+        <div className="flex shrink-0 items-center gap-2">
+          <div className="hidden items-center rounded-lg border border-border bg-card p-1 sm:flex">
+            {tabs.map((tab) => (
+              <Link key={tab.key} to={tab.to} className={tabClass(section === tab.key)}>
+                {tab.label}
+              </Link>
+            ))}
           </div>
 
           <LanguageSwitcher />
 
+          <Sheet open={open} onOpenChange={setOpen}>
+            <SheetTrigger
+              aria-label="Menu"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border bg-card sm:hidden"
+            >
+              <Menu className="h-4 w-4" />
+            </SheetTrigger>
+            <SheetContent side="right" className="w-72">
+              <SheetTitle className="text-base">RobotAI</SheetTitle>
+              <div className="mt-6 flex flex-col gap-1">
+                {tabs.map((tab) => (
+                  <Link
+                    key={tab.key}
+                    to={tab.to}
+                    onClick={() => setOpen(false)}
+                    className={tabClass(section === tab.key)}
+                  >
+                    {tab.label}
+                  </Link>
+                ))}
+              </div>
+              {section === "product" && (
+                <div className="mt-6 flex flex-col gap-1 border-t border-border pt-4">
+                  {t.nav.links.map((l) => (
+                    <a
+                      key={l.href}
+                      href={`${hashBase}${l.href}`}
+                      onClick={() => setOpen(false)}
+                      className="rounded-md px-3 py-1.5 text-sm text-muted-foreground hover:text-foreground"
+                    >
+                      {l.label}
+                    </a>
+                  ))}
+                </div>
+              )}
+            </SheetContent>
+          </Sheet>
         </div>
       </div>
+
+      {section === "product" && (
+        <div className="hidden border-t border-border sm:block">
+          <nav className="mx-auto flex h-10 max-w-7xl items-center gap-5 overflow-x-auto px-6 [scrollbar-width:none]">
+            {t.nav.links.map((l) => (
+              <a
+                key={l.href}
+                href={`${hashBase}${l.href}`}
+                className="shrink-0 whitespace-nowrap text-[13px] text-muted-foreground transition-colors duration-200 hover:text-foreground"
+              >
+                {l.label}
+              </a>
+            ))}
+          </nav>
+        </div>
+      )}
     </header>
   );
 }
