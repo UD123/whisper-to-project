@@ -1,10 +1,9 @@
 import { Link } from "@tanstack/react-router";
-import { Menu } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import { LogoMark } from "./Logo";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { useT } from "@/i18n/LanguageProvider";
-import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 
 type Section = "product" | "docs" | "download" | "pricing";
 
@@ -65,16 +64,21 @@ export function Navbar({
 
           <LanguageSwitcher />
 
-          <Sheet open={open} onOpenChange={setOpen}>
-            <SheetTrigger
+          <button
+              type="button"
               aria-label="Menu"
+              aria-expanded={open}
+              onClick={() => setOpen((v) => !v)}
               className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border bg-card sm:hidden"
             >
-              <Menu className="h-4 w-4" />
-            </SheetTrigger>
-            <SheetContent side="right" className="w-72">
-              <SheetTitle className="text-base">RobotAI</SheetTitle>
-              <div className="mt-6 flex flex-col gap-1">
+              {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+            </button>
+        </div>
+      </div>
+
+      {open && (
+            <div className="border-t border-border bg-background px-4 pb-4 sm:hidden">
+              <div className="mt-3 flex flex-col gap-1">
                 {tabs.map((tab) => (
                   <Link
                     key={tab.key}
@@ -100,10 +104,8 @@ export function Navbar({
                   ))}
                 </div>
               )}
-            </SheetContent>
-          </Sheet>
-        </div>
-      </div>
+            </div>
+      )}
 
       {section === "product" && (
         <div className="hidden border-t border-border sm:block">
