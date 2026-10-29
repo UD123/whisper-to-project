@@ -45,7 +45,7 @@ export function Footer({ hashBase = "" }: { hashBase?: string }) {
           <div className="flex flex-col gap-4 md:items-end">
             <nav className="flex flex-wrap gap-6 text-sm">
               <Link
-                to="/guide"
+                to="/manual"
                 className="text-muted-foreground transition-colors hover:text-foreground"
               >
                 Documentation
