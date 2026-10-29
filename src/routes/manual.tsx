@@ -19,7 +19,7 @@ function ManualPage() {
   return (
     <div className="flex h-screen flex-col bg-background">
       <Navbar hashBase="/" solid section="manual" />
-      <iframe src="/manual/index.html" title="Pose6D User Manual" className="w-full flex-1 border-0" />
+      <iframe src="/user-guide/index.html" title="Pose6D User Manual" className="w-full flex-1 border-0" />
     </div>
   );
 }
