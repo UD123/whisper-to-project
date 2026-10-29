@@ -1,0 +1,838 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>pose6d User Guide</title>
+<link rel="icon" href="img/favicon.png">
+<style>
+:root {
+  --bg: #f7f8fa; --panel: #ffffff; --text: #1d2430; --muted: #5b6575; --border: #dde1e7;
+  --accent: #1565c0; --accent-soft: #e3eefb; --code-bg: #f0f2f5; --note: #1565c0; --warn: #b26a00;
+  --warn-soft: #fff4e0; --ok: #2e7d32; --ok-soft: #e7f4e8; --shadow: 0 1px 3px rgba(0,0,0,.08);
+}
+:root[data-theme="dark"] {
+  --bg: #15181d; --panel: #1d2128; --text: #e3e6eb; --muted: #9aa3b0; --border: #2e343e;
+  --accent: #64a8f0; --accent-soft: #1e2d40; --code-bg: #252a33; --note: #64a8f0; --warn: #f0b45a;
+  --warn-soft: #3a2f1c; --ok: #6cc070; --ok-soft: #1f3322; --shadow: 0 1px 3px rgba(0,0,0,.4);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #15181d; --panel: #1d2128; --text: #e3e6eb; --muted: #9aa3b0; --border: #2e343e;
+    --accent: #64a8f0; --accent-soft: #1e2d40; --code-bg: #252a33; --note: #64a8f0; --warn: #f0b45a;
+    --warn-soft: #3a2f1c; --ok: #6cc070; --ok-soft: #1f3322; --shadow: 0 1px 3px rgba(0,0,0,.4);
+  }
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 16px; }
+body { margin: 0; background: var(--bg); color: var(--text);
+  font: 15px/1.6 "Segoe UI", system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+code, pre, kbd { font-family: Consolas, "Cascadia Mono", Menlo, monospace; font-size: 13px; }
+code { background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+pre { background: var(--code-bg); padding: 12px 14px; border-radius: 8px; overflow-x: auto; line-height: 1.45; }
+pre code { background: none; padding: 0; }
+kbd { border: 1px solid var(--border); border-bottom-width: 2px; border-radius: 4px; padding: 0 5px; background: var(--panel); }
+
+/* layout */
+.layout { display: flex; min-height: 100vh; }
+.sidebar { position: sticky; top: 0; height: 100vh; width: 290px; flex: 0 0 290px; overflow-y: auto;
+  background: var(--panel); border-right: 1px solid var(--border); padding: 18px 14px 40px; }
+.brand { display: flex; align-items: center; gap: 10px; margin: 0 4px 14px; }
+.brand img { width: 34px; height: 34px; }
+.brand b { font-size: 17px; display: block; }
+.brand span { font-size: 12px; color: var(--muted); }
+.search { width: 100%; padding: 8px 10px; border: 1px solid var(--border); border-radius: 8px;
+  background: var(--bg); color: var(--text); font: inherit; margin-bottom: 6px; }
+.search-info { font-size: 12px; color: var(--muted); min-height: 18px; margin: 0 4px 8px; }
+.toc { list-style: none; margin: 0; padding: 0; font-size: 14px; }
+.toc ul { list-style: none; margin: 0; padding: 0 0 0 14px; }
+.toc a { display: block; padding: 3px 8px; border-radius: 6px; color: var(--text); }
+.toc ul a { color: var(--muted); font-size: 13px; }
+.toc a:hover { background: var(--accent-soft); text-decoration: none; }
+.toc a.active { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+.toc li.hidden { display: none; }
+.theme-btn { margin-top: 18px; width: 100%; padding: 7px; border: 1px solid var(--border); border-radius: 8px;
+  background: var(--bg); color: var(--text); cursor: pointer; font: inherit; font-size: 13px; }
+main { flex: 1; min-width: 0; padding: 28px 40px 80px; }
+.content { max-width: 1040px; margin: 0 auto; }
+.menu-btn { display: none; }
+
+/* text */
+h1 { font-size: 32px; line-height: 1.2; margin: 0 0 6px; }
+h2 { font-size: 24px; margin: 52px 0 12px; padding-top: 8px; border-top: 1px solid var(--border); }
+h3 { font-size: 18px; margin: 30px 0 8px; }
+h4 { font-size: 15px; margin: 20px 0 6px; }
+h2 .anchor, h3 .anchor { opacity: 0; margin-left: 6px; font-weight: 400; }
+h2:hover .anchor, h3:hover .anchor { opacity: .6; }
+.lead { font-size: 17px; color: var(--muted); margin: 0 0 18px; }
+.meta { font-size: 13px; color: var(--muted); margin-bottom: 22px; }
+
+/* tables */
+.table-wrap { overflow-x: auto; margin: 12px 0 18px; border: 1px solid var(--border); border-radius: 8px; background: var(--panel); }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th, td { text-align: left; vertical-align: top; padding: 8px 12px; border-bottom: 1px solid var(--border); }
+th { background: var(--code-bg); font-weight: 600; white-space: nowrap; }
+tr:last-child td { border-bottom: none; }
+td:first-child { white-space: nowrap; }
+td.wrap { white-space: normal; }
+
+/* callouts */
+.callout { border-left: 4px solid var(--note); background: var(--accent-soft); padding: 10px 14px; border-radius: 0 8px 8px 0; margin: 14px 0; }
+.callout.warn { border-color: var(--warn); background: var(--warn-soft); }
+.callout.ok { border-color: var(--ok); background: var(--ok-soft); }
+.callout > b:first-child { display: block; margin-bottom: 2px; }
+
+/* figures */
+figure { margin: 16px 0 22px; }
+figure img { width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 8px;
+  box-shadow: var(--shadow); cursor: zoom-in; background: #2b2b2b; }
+figure.small img { max-width: 620px; }
+figcaption { font-size: 13px; color: var(--muted); margin-top: 6px; }
+.lightbox { position: fixed; inset: 0; background: rgba(0,0,0,.85); display: none; align-items: center;
+  justify-content: center; z-index: 50; cursor: zoom-out; padding: 20px; }
+.lightbox.open { display: flex; }
+.lightbox img { max-width: 100%; max-height: 100%; border-radius: 6px; }
+
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; margin: 14px 0; }
+.card { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; }
+.card b { display: block; margin-bottom: 4px; }
+.card span { font-size: 13px; color: var(--muted); }
+.steps { counter-reset: s; padding-left: 0; list-style: none; }
+.steps > li { counter-increment: s; position: relative; padding-left: 36px; margin: 8px 0; }
+.steps > li::before { content: counter(s); position: absolute; left: 0; top: 1px; width: 24px; height: 24px;
+  border-radius: 50%; background: var(--accent); color: #fff; font-size: 13px; font-weight: 600;
+  display: flex; align-items: center; justify-content: center; }
+mark { background: #ffe36e; color: #000; border-radius: 2px; }
+
+@media (max-width: 900px) {
+  .layout { display: block; }
+  .sidebar { position: fixed; z-index: 40; left: 0; top: 0; transform: translateX(-100%); transition: transform .2s; box-shadow: var(--shadow); }
+  .sidebar.open { transform: none; }
+  main { padding: 16px 16px 60px; }
+  .menu-btn { display: inline-block; position: sticky; top: 8px; z-index: 30; margin-bottom: 10px; padding: 6px 12px;
+    border: 1px solid var(--border); border-radius: 8px; background: var(--panel); color: var(--text); font: inherit; }
+  h1 { font-size: 26px; }
+  td:first-child { white-space: normal; }
+}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar" id="sidebar" aria-label="Contents">
+  <div class="brand"><img src="img/favicon.png" alt=""><div><b>pose6d</b><span>User Guide · v01.06</span></div></div>
+  <input class="search" id="search" type="search" placeholder="Search the guide…  ( / )" aria-label="Search">
+  <div class="search-info" id="search-info"></div>
+  <ul class="toc" id="toc"></ul>
+  <button class="theme-btn" id="theme-btn" type="button">Toggle light / dark</button>
+</nav>
+
+<main>
+<button class="menu-btn" id="menu-btn" type="button">☰ Contents</button>
+<div class="content" id="content">
+
+<h1>pose6d — User Guide</h1>
+<p class="lead"><b>pose6d</b> finds objects in a camera image and reports their full 6D pose (position and
+orientation) so a robot arm can pick them. You teach it a new object by labeling a few images, it trains a
+keypoint-detection network, and from then on it detects every instance of that object live and streams the poses
+to the robot over TCP/IP.</p>
+<p class="meta">This guide explains <b>every control in the desktop application</b>: what it does, where its value is
+stored, the sensible default and when to change it. It also documents the configuration files, the robot
+communication protocol and the files the application writes.</p>
+
+<figure>
+  <img src="img/validation-axis.png" alt="Validation tab: six wooden bricks, each with a red/green/blue pose axis drawn at its origin">
+  <figcaption>The Validation tab detecting six instances of the sample object <code>bricks-15</code>. Each red/green/blue
+  axis is one estimated 6D pose.</figcaption>
+</figure>
+
+<!-- ============================================================ -->
+<h2 id="getting-started">Getting started</h2>
+
+<h3 id="launching">Launching the app</h3>
+<p>The same application runs in three ways:</p>
+<div class="table-wrap"><table>
+<tr><th>How</th><th>Command</th><th>Use it for</th></tr>
+<tr><td>From source</td><td class="wrap"><code>python main_app.py</code> from the <code>pose6d</code> folder, with the project
+environment activated (on the development PC: <code>C:\Work\Envs\qtgui</code>)</td><td class="wrap">Development, labeling, training</td></tr>
+<tr><td>Deployed exe</td><td class="wrap"><code>pose6d.exe</code> (built by <code>main_app_deploy.py</code>; entry point
+<code>main_app_wrapper.py</code>)</td><td class="wrap">Production PCs next to the robot</td></tr>
+<tr><td>Web interface</td><td class="wrap"><code>python -m webapp</code>, then open <code>http://127.0.0.1:5000/</code></td>
+<td class="wrap">Quick detection tests and remote viewing. No labeling or training.</td></tr>
+</table></div>
+
+<p>Installing from source (Windows):</p>
+<pre><code>python -m venv C:\Work\Envs\qtgui
+C:\Work\Envs\qtgui\Scripts\activate.bat
+pip install torch torchvision            # or the CUDA build: --index-url https://download.pytorch.org/whl/cu118
+pip install -r requirements.txt</code></pre>
+<div class="callout"><b>Note</b><code>pyrealsense2</code> is only needed for Intel RealSense cameras (D435 / D455 / D580 are
+the tested models). A plain USB webcam works without it.</div>
+
+<h3 id="source-vs-deployed">Source mode vs deployed mode</h3>
+<p>The application detects at startup whether it runs from source or deployed (<code>pose6d.exe</code>, or the
+Cython-compiled modules in <code>pose6d_deploy</code>) and behaves slightly differently:</p>
+<div class="table-wrap"><table>
+<tr><th>Behaviour</th><th>Source</th><th>Deployed</th></tr>
+<tr><td>License check at startup</td><td>Skipped</td><td class="wrap">Checked. See <a href="#license">License</a>.</td></tr>
+<tr><td>Console log</td><td>Everything (DEBUG and up)</td><td>Warnings and errors only</td></tr>
+<tr><td>Log file</td><td>None</td><td class="wrap"><code>logs\pose6d.log</code> next to the exe (INFO and up, 5 MB × 4 files).
+If that folder is not writable: <code>%LOCALAPPDATA%\pose6d\logs</code>.</td></tr>
+<tr><td>Validation debug overlays</td><td>Shown</td><td class="wrap"><b>Show Heatmap</b> and <b>Show Joints</b> are hidden</td></tr>
+</table></div>
+<p>Two environment variables override this, for testing or support:</p>
+<div class="table-wrap"><table>
+<tr><th>Variable</th><th>Values</th><th>Effect</th></tr>
+<tr><td><code>POSE6D_DEPLOY_MODE</code></td><td><code>frozen</code> · <code>cython</code> · <code>source</code></td><td class="wrap">Forces the mode instead of detecting it</td></tr>
+<tr><td><code>POSE6D_LOG_DIR</code></td><td>a folder path</td><td class="wrap">Writes the deployed log file there instead</td></tr>
+</table></div>
+
+<h3 id="layout">Layout &amp; navigation</h3>
+<p>The main window is a row of tabs. They follow the order you normally work in:</p>
+<div class="table-wrap"><table>
+<tr><th>Tab</th><th>Purpose</th></tr>
+<tr><td><a href="#workflow">📈 Workflow</a></td><td class="wrap">Step-by-step overview; create or select the object, basic camera/robot/communication choices</td></tr>
+<tr><td><a href="#camera-setup">📷 Camera Setup</a></td><td class="wrap">Connect the camera, capture images, calibrate the camera lens (intrinsics)</td></tr>
+<tr><td><a href="#object-teaching">🖊️ Object Teaching</a></td><td class="wrap">Label keypoints on images and train the detection model</td></tr>
+<tr><td><a href="#validation">🔍 Validation</a></td><td class="wrap">Run the trained model on a camera, an image, a folder or a video; publish results to the robot</td></tr>
+<tr><td><a href="#robot-setup">📐 Robot Setup</a></td><td class="wrap">Hand-eye calibration between camera and robot</td></tr>
+<tr><td><a href="#communication">📡 Communication</a></td><td class="wrap">Robot server and a test client, with a live monitor of every packet</td></tr>
+<tr><td><a href="#settings">⚙️ Settings</a></td><td class="wrap">Edit the active object's <code>object_config.json</code> in a form</td></tr>
+<tr><td><a href="#results">📊 Results &amp; Logs</a></td><td class="wrap">Results list (placeholder for now)</td></tr>
+<tr><td><a href="#license">🔑 License</a></td><td class="wrap">License status and activation</td></tr>
+</table></div>
+
+<h3 id="data-folders">Where data lives</h3>
+<p>Everything that belongs to one object lives in one <b>object folder</b>, by default under <code>data\objects\</code>:</p>
+<pre><code>data\objects\bricks-15\
+  object_config.json   ← the object's settings: keypoints, camera, detection (see <a href="#config-reference">reference</a>)
+  images\              ← captured images, plus one &lt;image&gt;.json label file next to each labeled image
+  models\              ← trained checkpoints keypoint_group_model_NNNN.pth
+  cameras\             ← calibration.json (camera intrinsics)
+  results\             ← benchmark / evaluation output
+  labels\              ← reserved
+  robots\              ← reserved</code></pre>
+<p>Application-wide state that is not tied to an object is kept in <code>main_app_config.json</code> in the
+<code>pose6d</code> folder: the last selected object, the default camera type, communication addresses. It is
+machine-local, created on first run, and never shipped.</p>
+
+<!-- ============================================================ -->
+<h2 id="concepts">Concepts &amp; vocabulary</h2>
+<div class="table-wrap"><table>
+<tr><th>Term</th><th>Meaning</th></tr>
+<tr><td>Object</td><td class="wrap">One kind of part the robot should pick, for example a wooden brick. Stored as an object folder.</td></tr>
+<tr><td>Keypoint / target point</td><td class="wrap">A named, distinctive point on the object (a corner, an edge midpoint) with known 3D coordinates in
+millimetres in the object's own coordinate frame. <code>bricks-15</code> has 13: corners <code>t1–t4</code> (top), <code>b1–b4</code>
+(bottom), edge midpoints <code>c12 c23 c34 c14</code> and the top centre <code>tc</code>.</td></tr>
+<tr><td>Object Id (instance)</td><td class="wrap">Several copies of the same object can appear in one image. Each copy gets its own id (1, 2, 3 …) when
+labeling, and detection reports one result per instance.</td></tr>
+<tr><td>Label</td><td class="wrap">The pixel position of a keypoint on one image, saved in <code>&lt;image&gt;.json</code>.</td></tr>
+<tr><td>Model</td><td class="wrap">The trained keypoint network, <code>models\keypoint_group_model_NNNN.pth</code> (NNNN = epoch). The highest number is
+used for detection and for further training.</td></tr>
+<tr><td>Pose</td><td class="wrap">Where the object is relative to the camera: <b>tvec</b> = translation (x, y, z) in millimetres, <b>rvec</b> = rotation
+as a Rodrigues rotation vector in radians (axis × angle). Computed with PnP from the detected keypoints and their 3D coordinates.</td></tr>
+<tr><td>Quality</td><td class="wrap">0–1 score of how well the detected keypoints fit the object model. Closer to 1 is a tighter fit; good detections
+of the sample object score about 0.97–0.99.</td></tr>
+<tr><td>Intrinsics</td><td class="wrap">The camera's lens parameters (focal lengths, image centre, distortion), found by camera calibration. Needed for
+correct poses.</td></tr>
+<tr><td>Hand-eye calibration</td><td class="wrap">Finding where the camera sits relative to the robot flange (camera on the arm), so poses can be
+converted into robot coordinates.</td></tr>
+</table></div>
+
+<!-- ============================================================ -->
+<h2 id="workflow">📈 Workflow</h2>
+<p>A checklist of the whole process. The left column shows the seven steps (green = done, blue = current); the right
+side shows the current step's description and, for some steps, its controls. Move with <b>Previous Step</b> /
+<b>Next Step</b> at the bottom. Steps 4 and 7 have no controls of their own; use the Validation and Results tabs.</p>
+
+<h3 id="wf-init">Step 1 · Initialize Project</h3>
+<figure><img src="img/workflow-1-init.png" alt="Workflow step 1 with Current Object path and Select Object, Select Multiple and Create New buttons"></figure>
+<div class="table-wrap"><table>
+<tr><th>Control</th><th>What it does</th></tr>
+<tr><td>Current Object</td><td class="wrap">Path of the active object folder. Every tab works on this object. Restored from the previous session at startup.</td></tr>
+<tr><td><b>Select Object …</b></td><td class="wrap">Folder picker. Choose an existing object folder; it becomes the active object for all tabs.</td></tr>
+<tr><td><b>Create New …</b></td><td class="wrap">Opens the <i>Create New Object</i> dialog (below) and creates a new object folder.</td></tr>
+<tr><td><b>Select Multiple …</b></td><td class="wrap">Intended for working with several objects at once. Currently opens the same <i>Create New Object</i> dialog
+(see <a href="#known-limitations">known limitations</a>).</td></tr>
+</table></div>
+<figure class="small"><img src="img/dialog-new-object.png" alt="Create New Object dialog with Parent Folder and Object Name">
+<figcaption>Create New Object: <b>Parent Folder</b> (default <code>data\objects</code>, <b>Browse…</b> to change) and <b>Object Name</b>.</figcaption></figure>
+<p><b>OK</b> creates <code>&lt;parent&gt;\&lt;name&gt;\</code> with the standard sub-folders and a default
+<code>object_config.json</code>, and makes it the active object.</p>
+<div class="callout warn"><b>A new object starts with a placeholder geometry</b>A new object gets a 9-point cube (<code>A1–A8</code>, <code>TC</code>) as
+its keypoints, not your real object. Rename points and set their real coordinates in <a href="#object-teaching">Object Teaching</a>
+(double-click a target point). To change the <i>number</i> of points or the faces used by <b>Show Shape</b>, edit
+<code>point_names</code> / <code>point_coord</code> / <code>point_faces</code> in the <a href="#settings">Settings</a> tab before you start labeling.</div>
+
+<h3 id="wf-camera">Step 2 · Setup &amp; Calibrate Camera</h3>
+<figure><img src="img/workflow-2-camera.png" alt="Workflow step 2 with a Camera Type dropdown"></figure>
+<div class="table-wrap"><table>
+<tr><th>Control</th><th>What it does</th></tr>
+<tr><td>Camera Type</td><td class="wrap">Default camera type in <code>main_app_config.json</code> (<code>camera_type</code>). The camera that is actually opened is set per object
+in <a href="#camera-setup">Camera Setup</a>, so the two can differ.</td></tr>
+</table></div>
+
+<h3 id="wf-object">Step 3 · Teaching Object Model</h3>
+<figure><img src="img/workflow-3-object.png" alt="Workflow step 3 with Object and Object Type dropdowns"></figure>
+<div class="table-wrap"><table>
+<tr><th>Control</th><th>What it does</th></tr>
+<tr><td>Object</td><td class="wrap">Every valid object folder under the objects directory. Picking one makes it the active object (same as <b>Select Object</b>).</td></tr>
+<tr><td>Object Type</td><td class="wrap">Kind of object model: <code>CHESSBOARD</code>, <code>BOX</code>, <code>KEYPOINT</code>, <code>POSE</code>, <code>SKELETON</code>. Written to the object's
+<code>object_config.json</code> immediately. Trained keypoint objects such as <code>bricks-15</code> use <code>POSE</code>; only this type
+produces 6D poses for the robot.</td></tr>
+</table></div>
+
+<h3 id="wf-robot">Step 5 · Camera Robot Calibration</h3>
+<figure><img src="img/workflow-5-robot.png" alt="Workflow step 5 with Robot Type and Camera Position dropdowns"></figure>
+<div class="table-wrap"><table>
+<tr><th>Control</th><th>Values</th><th>What it does</th></tr>
+<tr><td>Robot Type</td><td class="wrap"><code>UR KUKA TM ABB FANUC YASKAWA DENSO DOBOT OTHER</code></td><td class="wrap">Robot brand, stored as <code>robot_type</code> in <code>main_app_config.json</code></td></tr>
+<tr><td>Camera Position</td><td class="wrap"><code>Moving (On Arm)</code> · <code>Static</code></td><td class="wrap">Camera mounted on the robot arm or fixed in the cell, stored as <code>camera_position</code></td></tr>
+</table></div>
+<p>The calibration itself runs in <a href="#robot-setup">Robot Setup</a>.</p>
+
+<h3 id="wf-comm">Step 6 · Robot Communication</h3>
+<figure><img src="img/workflow-6-comm.png" alt="Workflow step 6 with IP, port and protocol fields and a Test Connection button"></figure>
+<div class="table-wrap"><table>
+<tr><th>Control</th><th>Default</th><th>What it does</th></tr>
+<tr><td>This computer IP / Port</td><td><code>0.0.0.0</code> / <code>5000</code></td><td class="wrap">Local address, saved as <code>local_ip</code> / <code>local_port</code></td></tr>
+<tr><td>Destination IP / Port</td><td><code>127.0.0.1</code> / <code>5000</code></td><td class="wrap">Robot controller address, saved as <code>remote_ip</code> / <code>remote_port</code></td></tr>
+<tr><td>Protocol</td><td><code>TCP-IP</code></td><td class="wrap"><code>TCP-IP</code> or <code>MODBUS</code></td></tr>
+<tr><td><b>Test Connection</b></td><td></td><td class="wrap">Saves the fields, then tries a TCP connection to the destination for 2 s. The button turns
+<b>Connection OK</b> (green) or <b>Connection Failed</b> (red). MODBUS testing is not implemented and always reports failure.</td></tr>
+</table></div>
+<div class="callout"><b>Note</b>These addresses describe the robot controller. The pose server that sends detection results to the robot is started from
+the <a href="#communication">Communication</a> tab or from <a href="#val-output">Validation → Output</a>, and has its own address (default <code>127.0.0.1:5005</code>).</div>
+
+<!-- ============================================================ -->
+<h2 id="camera-setup">📷 Camera Setup</h2>
+<p>Connect the camera, look at the live image, capture images for labeling, and calibrate the camera lens.</p>
+<figure><img src="img/camera-setup.png" alt="Camera Setup tab with camera settings, calibration panel and a live image of bricks on a table"></figure>
+
+<h3 id="cam-settings">Camera Settings</h3>
+<div class="table-wrap"><table>
+<tr><th>Control</th><th>Values</th><th>What it does / guidance</th></tr>
+<tr><td>Camera Type</td><td class="wrap"><code>REALSENSE WEBCAM0 WEBCAM1 BASLER IDS FLIR DALSA GENICAM OTHER</code></td><td class="wrap">Camera driver to use. RealSense, webcam and Basler have their
+own drivers; the other entries currently open through the generic webcam (OpenCV) driver. Stored per object in
+<code>camera_parameters.camera_type</code>.</td></tr>
+<tr><td>Resolution</td><td><code>1280x720</code> · <code>640x480</code> · <code>640x360</code></td><td class="wrap">Requested capture size. Higher is more detail but slower detection. Calibrate the camera
+again after changing it, because the intrinsics depend on the resolution.</td></tr>
+<tr><td>Exposure</td><td class="wrap"><code>330 100 200 500 1000 2000 5000</code>, or type a value</td><td class="wrap">Exposure in the camera's own units, applied immediately while connected. Lower it
+if moving parts look blurred; raise it in a dark cell.</td></tr>
+<tr><td><b>💡 Projector: ON/OFF</b></td><td></td><td class="wrap">RealSense IR dot projector. Turn it off if the dot pattern is visible in the images you label.</td></tr>
+<tr><td>Saved Image Format</td><td><code>RGB Left Right Depth RGD LRD All</code></td><td class="wrap">Which stream(s) <b>Save Image</b> writes. Use <code>RGB</code> for labeling. Left/Right/Depth need a RealSense camera.</td></tr>
+<tr><td><b>📂 Load Init File</b></td><td></td><td class="wrap">Opens a file dialog for an <code>.ini</code> settings file. Loading is not implemented yet.</td></tr>
+</table></div>
+
+<h3 id="cam-capture">Capturing images</h3>
+<ol class="steps">
+<li>Select the object first (<a href="#wf-init">Workflow, step 1</a>). Images are saved into that object's folder.</li>
+<li>Set Camera Type, Resolution and Exposure, then click <b>🟢 Connect Camera</b>. The live image appears on the right and the button turns red (<b>🔴 Disconnect Camera</b>).</li>
+<li>Click <b>🖼️ Save Image</b> for each view. Move the objects and the camera between shots: different positions, angles, lighting and partial occlusions make a more robust model.</li>
+</ol>
+<p>Images are saved as <code>&lt;format&gt;_YYYYMMDD_HHMMSS.png</code> (for example <code>rgb_20261028_141502.png</code>) in the
+object's <code>images\</code> folder, or in the folder chosen with <b>Select Image Folder</b> in the calibration panel if you picked one.</p>
+<div class="callout"><b>How many images?</b>The sample object <code>bricks-15</code> was trained from 14 labeled images with several bricks each. Start with 10–20 varied images and
+add more where detection is weak.</div>
+
+<h3 id="cam-calibration">Camera Calibration</h3>
+<p>Computes the camera intrinsics from photos of a printed chessboard (<code>doc\checkerboard_pattern.pdf</code>).</p>
+<div class="table-wrap"><table>
+<tr><th>Control</th><th>Values</th><th>Meaning / guidance</th></tr>
+<tr><td>Calibration Pattern</td><td class="wrap"><code>6x9 7x10 4x11 5x5</code>, or type <code>NxM</code></td><td class="wrap">Number of <b>inner corners</b> of the chessboard (columns × rows), not squares.</td></tr>
+<tr><td>Square size (mm)</td><td class="wrap"><code>10 20 30 50 100 200 300</code>, or type a value</td><td class="wrap">Side of one printed square, measured on the print. It sets the scale of the calibration.</td></tr>
+<tr><td><b>📁 Select Image Folder</b></td><td></td><td class="wrap">Folder with the chessboard photos; they are listed under <b>Images</b>. Click one to view it.</td></tr>
+<tr><td><b>🛠️ Calibrate</b></td><td></td><td class="wrap">Runs the calibration on every image in the folder.</td></tr>
+</table></div>
+<div class="callout ok"><b>Expected result</b>A <i>Calibration Complete</i> message. The camera matrix and distortion are written to the object's
+<code>object_config.json</code> and to <code>cameras\calibration.json</code>, which detection reads.</div>
+<p>Take 15–25 photos with the board filling different parts of the image and tilted at different angles. An invalid
+pattern or square size shows <i>Bad Pattern</i> / <i>Bad Square Size</i>; too few usable images show <i>Calibration Failed</i>.</p>
+
+<!-- ============================================================ -->
+<h2 id="object-teaching">🖊️ Object Teaching</h2>
+<p>Mark where each keypoint is on your images, check the labels with overlays, and train the model.</p>
+<figure><img src="img/teaching-labels.png" alt="Object Teaching tab: an image with labeled keypoints on six bricks in different colors, target point list with coordinates"></figure>
+
+<h3 id="teach-controls">Controls</h3>
+<div class="table-wrap"><table>
+<tr><th>Control</th><th>What it does</th></tr>
+<tr><td><b>🖱️ Select Object</b></td><td class="wrap">Switches to another object folder. Shows <i>Invalid Object</i> if the folder has no valid <code>object_config.json</code>.</td></tr>
+<tr><td>Object Id</td><td class="wrap">Instance number 1–20 you are labeling. Each instance is drawn in its own color. Label every visible copy of the object in an image with a different id.</td></tr>
+<tr><td><b>❌ Delete Object</b></td><td class="wrap">Removes all points of the selected Object Id from the current image.</td></tr>
+<tr><td>Target Points</td><td class="wrap">The object's keypoints with their 3D coordinates in mm. The selected point is the one the next click places.
+<b>Double-click</b> a point to rename it or change its X/Y/Z. That changes the object model for all images, not the label on this image.</td></tr>
+<tr><td><b>📁 Select Image Folder</b></td><td class="wrap">Folder whose images appear in the Images list (default: the object's <code>images\</code>).</td></tr>
+<tr><td>Images</td><td class="wrap">Click to load. Labeled images (with a saved <code>.json</code>) are shown in <b>green</b>.</td></tr>
+<tr><td><b>🗑️ Clear Points</b></td><td class="wrap">Removes all points from the current image (not saved until <b>Save Points</b>).</td></tr>
+<tr><td><b>💾 Save Points</b></td><td class="wrap">Writes the points to <code>&lt;image&gt;.json</code> next to the image and turns the image green.</td></tr>
+<tr><td><b>📐 Show Axis</b></td><td class="wrap">Computes each instance's pose from the labels and draws its coordinate axis (X red, Y green, Z blue).</td></tr>
+<tr><td><b>🔷 Show Shape</b></td><td class="wrap">Same, but draws the object's faces (<code>point_faces</code>) as outlines.</td></tr>
+<tr><td><b>🚀 Train Model</b></td><td class="wrap">Starts or stops training. See <a href="#training">Training</a>.</td></tr>
+</table></div>
+
+<h3 id="labeling">Labeling an image</h3>
+<ol class="steps">
+<li>Pick an <b>Object Id</b> (start with 1) and click an image in the <b>Images</b> list.</li>
+<li>Click a row in <b>Target Points</b>, or just start: the first point is pre-selected.</li>
+<li><b>Left-click</b> the keypoint's position on the image. A cross and label appear and the selection moves to the next point, so you can click through the whole object in order.</li>
+<li><b>Right-click</b> near a point to delete it.</li>
+<li>Repeat with the next Object Id for every other copy of the object in the image.</li>
+<li>Click <b>💾 Save Points</b>.</li>
+</ol>
+<p>Label only points you can actually see; hidden corners are left out. Loading a green image shows its saved points so
+you can fix them and save again.</p>
+
+<h3 id="teach-overlays">Checking labels with overlays</h3>
+<p>Turn on <b>Show Axis</b> or <b>Show Shape</b> after labeling. If the axes sit on the object corners and the outlines
+match the edges, the labels, the 3D coordinates and the camera calibration agree.</p>
+<figure><img src="img/teaching-axis.png" alt="Labeled image with a pose axis drawn on each brick"><figcaption>Show Axis: one pose axis per labeled instance.</figcaption></figure>
+<figure><img src="img/teaching-shape.png" alt="Labeled image with face outlines drawn on each brick"><figcaption>Show Shape: the faces defined in <code>point_faces</code>, projected with the computed pose.</figcaption></figure>
+<div class="callout warn"><b>Nothing drawn for an instance?</b>An instance needs at least 4 labeled points. The overlay is also skipped (with a warning in the log) when the
+reprojection error is above 5 px, which usually means a mislabeled point, wrong 3D coordinates, or a missing or wrong camera calibration.</div>
+
+<h3 id="training">Training</h3>
+<figure><img src="img/teaching-training.png" alt="Training progress bar over the image: epoch 120 of 500, 24 percent, loss and error reduction"><figcaption>While training runs, a progress bar over the image shows the epoch, the percentage, the current loss and how much the error has dropped.</figcaption></figure>
+<ol class="steps">
+<li>With the labeled object selected, click <b>🚀 Train Model</b>.</li>
+<li>If the object has no model yet, confirm <i>No Model Found → start training?</i>. If a model exists, <i>Model Exists → retrain it?</i> continues from the latest checkpoint instead of starting over.</li>
+<li>Training runs in the background; the app stays usable. The button reads <b>🛑 Stop Training</b>.</li>
+<li>To stop early, click it again. You are asked whether to save the model at the current epoch (<i>Save Partial Model</i>).</li>
+</ol>
+<div class="table-wrap"><table>
+<tr><th>Setting</th><th>Where</th><th>Default</th><th>Meaning</th></tr>
+<tr><td>Epochs</td><td><code>detection_parameters.n_epochs</code></td><td>100</td><td class="wrap">Passes over the training images, for a new run and for each retrain</td></tr>
+<tr><td>Learning rate</td><td><code>detection_parameters.lr</code></td><td>0.0001</td><td class="wrap">Step size of the optimiser. Leave it unless training diverges.</td></tr>
+<tr><td>Image scale</td><td><code>detection_parameters.image_scale</code></td><td>0.5</td><td class="wrap">Images are scaled by this before entering the network. Smaller is faster but loses small details.</td></tr>
+<tr><td>Train split</td><td><code>detection_parameters.train_split</code></td><td>0.95</td><td class="wrap">Fraction of labeled images used for training; the rest for validation.</td></tr>
+</table></div>
+<p><code>n_epochs</code> and <code>lr</code> are not in a new <code>object_config.json</code>; add them to <code>detection_parameters</code>
+(Settings tab or a text editor) to change them. Checkpoints are written to <code>models\keypoint_group_model_NNNN.pth</code>.</p>
+
+<!-- ============================================================ -->
+<h2 id="validation">🔍 Validation</h2>
+<p>Runs the trained model and shows the detected poses. It can also publish every result to the robot.</p>
+<figure><img src="img/validation-shape.png" alt="Validation tab with both pose axes and face outlines drawn on six bricks"><figcaption>Detector ON with Show Axis and Show Shape.</figcaption></figure>
+
+<h3 id="val-config">Configuration</h3>
+<div class="table-wrap"><table>
+<tr><th>Control</th><th>Values</th><th>What it does</th></tr>
+<tr><td>Source</td><td class="wrap"><code>Camera Image Directory Video File Video Stream</code></td><td class="wrap">Where the images come from. See the table below.</td></tr>
+<tr><td>Objects</td><td class="wrap">objects in the objects directory</td><td class="wrap">Object (and its model) to detect. Selecting one loads it.</td></tr>
+<tr><td id="val-output">Output</td><td class="wrap"><code>Screen MP4 File TCP/IP Stream ROS Topic MQTT</code></td><td class="wrap"><code>Screen</code>: display only. <code>TCP/IP Stream</code>: also
+computes the poses of every frame and publishes them to the robot server, starting it if needed (see <a href="#communication">Communication</a>).
+MP4 File, ROS Topic and MQTT are not implemented yet and behave like Screen.</td></tr>
+</table></div>
+<div class="table-wrap"><table>
+<tr><th>Source</th><th>Behaviour after 🟢 Detect…</th></tr>
+<tr><td>Camera</td><td class="wrap">Connects the object's camera (or reuses the Camera Setup connection) and detects on the live image until <b>🔴 Stop Detection</b>.</td></tr>
+<tr><td>Image</td><td class="wrap">Asks for one image file, detects once and shows the result.</td></tr>
+<tr><td>Directory</td><td class="wrap">Asks for a folder and goes through all its images (<code>.png .jpg .jpeg .bmp</code>) in name order, <b>over and over until you press Stop</b>.
+Stops by itself if none of the files can be read.</td></tr>
+<tr><td>Video File</td><td class="wrap">Asks for an <code>.mp4</code> / <code>.avi</code> and plays it at its frame rate, detecting every frame, until the end or Stop.</td></tr>
+<tr><td>Video Stream</td><td class="wrap">Not implemented yet.</td></tr>
+</table></div>
+
+<h3 id="val-display">Display Info</h3>
+<div class="table-wrap"><table>
+<tr><th>Control</th><th>What it does</th></tr>
+<tr><td><b>💡 Detector: ON/OFF</b></td><td class="wrap">Main switch for detection on screen. With it off you see the plain image. (TCP/IP output still detects.)</td></tr>
+<tr><td><b>📐 Show Axis</b></td><td class="wrap">Pose axis per detected instance: X red, Y green, Z blue, at the object origin.</td></tr>
+<tr><td><b>🔷 Show Shape</b></td><td class="wrap">Object face outlines (<code>point_faces</code>) projected with the detected pose.</td></tr>
+<tr><td><b>🌡️ Show Heatmap</b></td><td class="wrap">Raw network output: where the model believes each keypoint is. For diagnosing weak detection. Hidden in the deployed app.</td></tr>
+<tr><td><b>🔗 Show Joints</b></td><td class="wrap">Detected keypoints and how they were grouped into instances. Hidden in the deployed app.</td></tr>
+<tr><td><b>+ Cross: ON/OFF</b></td><td class="wrap">Crosshair at the image centre, for aligning the camera.</td></tr>
+<tr><td>Coordinates</td><td class="wrap"><code>Camera</code> · <code>Object</code> · <code>Robot</code>. Frame for displayed poses. Not applied yet: poses are always in camera coordinates.</td></tr>
+<tr><td>Text Size</td><td class="wrap"><code>10</code> · <code>20</code> · <code>50</code>. See <a href="#known-limitations">known limitations</a>: this field currently changes the camera exposure.</td></tr>
+</table></div>
+<div class="callout"><b>Reading the result</b>Each detected instance gets its own axis and/or outline. Instances with fewer than 4 detected keypoints get no pose. If nothing is
+drawn: check that the Detector is ON, the right object is selected, and the object is visible and not cut off by the image border.</div>
+
+<h3 id="val-tcpip">Sending results to the robot</h3>
+<figure><img src="img/validation-tcpip.png" alt="Validation tab with Output set to TCP/IP Stream"></figure>
+<p>Set <b>Output = TCP/IP Stream</b> and start detection. For every frame, the model runs <b>once</b> and the same result
+is drawn on screen and stored in the robot server. Each time the robot asks (<code>get results</code>) it receives the
+newest result. The server keeps running when you stop detection or switch the output back; stop it from the
+<a href="#communication">Communication</a> tab.</p>
+
+<!-- ============================================================ -->
+<h2 id="robot-setup">📐 Robot Setup</h2>
+<p>Hand-eye calibration: finds the camera's position on the robot flange from images of a chessboard taken at known robot poses.</p>
+<figure><img src="img/robot-setup.png" alt="Robot Setup tab with a chessboard image and the robot pose of that image"></figure>
+<div class="table-wrap"><table>
+<tr><th>Control</th><th>What it does</th></tr>
+<tr><td><b>🟢 Connect Camera</b></td><td class="wrap">Live view from the camera; enables <b>Save Image</b>.</td></tr>
+<tr><td><b>Save Image</b></td><td class="wrap">Saves the current frame as <code>capture_N.jpg</code> (in the folder pose6d was started from) and adds it to the list.</td></tr>
+<tr><td>Calibration Method</td><td class="wrap"><code>Intrinsic</code> · <code>Extrinsic</code> · <code>Hand-Eye</code>. Currently not used: <b>Calibrate System</b> always runs hand-eye calibration.</td></tr>
+<tr><td>Robot Model</td><td class="wrap">How the three rotation values of a robot pose are read. <code>UR-Euler</code>: Euler angles, R = Rz·Ry·Rx (degrees
+if any value is above 2π, otherwise radians). All others (<code>UR-RVEC</code>, KUKA, DENSO, ABB, TM, NEURA, DOBOT): rotation vector in radians.</td></tr>
+<tr><td>Image Files</td><td class="wrap">Images in <code>data\robot_calibration\</code>. Selecting one shows it and fills <b>Robot Pose</b> from the dataset file.</td></tr>
+<tr><td>Robot Pose tX tY tZ / rX rY rZ</td><td class="wrap">Robot flange pose when the selected image was taken (translation in mm, rotation per Robot Model). Display only.</td></tr>
+<tr><td><b>✨ Calibrate System</b></td><td class="wrap">Runs the calibration on the whole dataset (OpenCV <code>calibrateHandEye</code>, Tsai method).</td></tr>
+</table></div>
+
+<h3 id="handeye-dataset">Calibration dataset</h3>
+<p>The images and <code>camera_robot_calibration.json</code> must be in <code>data\robot_calibration\</code>:</p>
+<pre><code>{
+  "chessBoardSize": [9, 6],          // inner corners (columns, rows)
+  "chessBoardSquareSize": 10.0,      // mm
+  "viewInfo": [
+    { "imageName": "calib_robot_0001.jpg",
+      "robotPose": [142.72, 356.93, -74.27, 0.5825, 3.0991, 0.0186] },   // x y z (mm), r1 r2 r3
+    ...
+  ]
+}</code></pre>
+<p>At least 3 images with a detected chessboard are required; 10–15 views with large rotations between them give a stable result.</p>
+<div class="callout warn"><b>Where is the result?</b>The calibration result (samples used, camera RMS error, camera matrix, distortion, and the camera-to-gripper rotation
+<code>R_cam2gripper</code> / translation <code>t_cam2gripper</code>) is currently only printed to the console window. It is not shown in the tab or saved.</div>
+
+<!-- ============================================================ -->
+<h2 id="communication">📡 Communication</h2>
+<p>Runs the pose server the robot connects to, and a test client that behaves like a robot. Both monitors show every packet the server receives and sends.</p>
+<figure><img src="img/communication.png" alt="Communication tab: server running, client connected, request and response monitors with detection results"></figure>
+
+<h3 id="comm-server">Robot Server</h3>
+<div class="table-wrap"><table>
+<tr><th>Control</th><th>Default</th><th>What it does</th></tr>
+<tr><td>Protocol</td><td><code>TCP/IP</code></td><td class="wrap">Only TCP/IP is available.</td></tr>
+<tr><td>Server IP Address</td><td><code>127.0.0.1</code></td><td class="wrap">Address the server listens on. Use the PC's network address (or <code>0.0.0.0</code> for all) when the robot is a different machine.</td></tr>
+<tr><td>Server Port</td><td><code>5005</code></td><td class="wrap">TCP port, 1–65535.</td></tr>
+<tr><td><b>▶ Server Start / ⏹ Server Stop</b></td><td></td><td class="wrap">Starts or stops the server. The server may also have been started by Validation with Output = TCP/IP Stream; the button follows its real state.</td></tr>
+<tr><td>Status line</td><td></td><td class="wrap">Listening address, number of requests answered, latest frame number and number of detected objects.</td></tr>
+</table></div>
+<div class="callout"><b>The server only has results while detection runs</b>Results are published while the Validation tab is detecting with <b>Output = TCP/IP Stream</b>. Otherwise a client is answered
+with the last result, or with <code>"success": false, "message": "No results yet"</code>.</div>
+
+<h3 id="comm-client">Client</h3>
+<div class="table-wrap"><table>
+<tr><th>Control</th><th>What it does</th></tr>
+<tr><td>Server IP Address / Port</td><td class="wrap">Server to connect to: this app's server, or any other pose6d server.</td></tr>
+<tr><td><b>▶ Client Start / ⏹ Client Stop</b></td><td class="wrap">Connects (3 s timeout) or disconnects.</td></tr>
+<tr><td>Command</td><td class="wrap"><code>get results</code> or <code>ping</code>.</td></tr>
+<tr><td><b>📤 Send Command</b></td><td class="wrap">Sends the command once.</td></tr>
+<tr><td>Repeat every [ms]</td><td class="wrap">Sends the command repeatedly at this period (minimum 50 ms). While the model runs on the GUI thread the real rate is at most one request per detected frame.</td></tr>
+<tr><td><b>Clear Monitors</b></td><td class="wrap">Empties both monitors (each keeps at most 3000 lines).</td></tr>
+</table></div>
+
+<h3 id="protocol">Protocol reference</h3>
+<p>Each message is a <b>4-byte big-endian length</b> followed by that many bytes of <b>UTF-8 JSON</b>. The client sends a
+request and the server answers on the same connection, any number of times.</p>
+<div class="table-wrap"><table>
+<tr><th>Request</th><th>Response <code>result</code></th></tr>
+<tr><td><code>{"command": "get results", "params": {}}</code></td><td class="wrap">Latest detection, see below</td></tr>
+<tr><td><code>{"command": "ping", "params": {}}</code></td><td class="wrap"><code>{"success": true, "message": "pong"}</code></td></tr>
+<tr><td>anything else</td><td class="wrap"><code>{"success": false, "message": "Unknown command: …"}</code></td></tr>
+</table></div>
+<pre><code>{ "status": "ok", "command": "get results",
+  "result": {
+    "success": true,
+    "frame_id": 128,                    // increases by 1 per processed frame
+    "timestamp": 1793190045.698,        // seconds since 1970 when the frame was processed
+    "objects": {
+      "1": { "success": true,
+             "rvec": [2.2796, -0.6202, -0.0567],   // rotation vector, radians
+             "tvec": [-206.12, 118.24, 1553.01],   // translation, mm, camera frame
+             "quality": 0.9798 },
+      "2": { "success": false, "rvec": null, "tvec": null, "quality": 0.0 }
+    } } }</code></pre>
+<div class="table-wrap"><table>
+<tr><th>Field</th><th>Meaning</th></tr>
+<tr><td><code>status</code></td><td class="wrap"><code>ok</code>, or <code>error</code> with a <code>message</code> if the server failed to handle the request</td></tr>
+<tr><td><code>frame_id</code></td><td class="wrap">Same number in two answers means no new frame was processed in between</td></tr>
+<tr><td><code>objects</code></td><td class="wrap">One entry per detected instance, keyed by instance number</td></tr>
+<tr><td><code>success</code> (object)</td><td class="wrap"><code>false</code> when too few keypoints were found to compute a pose; skip that entry</td></tr>
+<tr><td><code>rvec</code> / <code>tvec</code></td><td class="wrap">Object pose in the camera frame (see <a href="#concepts">concepts</a>). Convert with the hand-eye result for robot coordinates.</td></tr>
+<tr><td><code>quality</code></td><td class="wrap">0–1 fit score; reject low values (for example below 0.9) in the robot program</td></tr>
+</table></div>
+<p>A minimal robot-side client in Python:</p>
+<pre><code>import json, socket, struct
+
+def request(sock, command):
+    payload = json.dumps({"command": command, "params": {}}).encode()
+    sock.sendall(struct.pack(">I", len(payload)) + payload)
+    size = struct.unpack(">I", sock.recv(4, socket.MSG_WAITALL))[0]
+    return json.loads(sock.recv(size, socket.MSG_WAITALL))
+
+with socket.create_connection(("127.0.0.1", 5005)) as s:
+    result = request(s, "get results")["result"]
+    for obj_id, obj in result["objects"].items():
+        if obj["success"] and obj["quality"] > 0.9:
+            print(obj_id, obj["tvec"], obj["rvec"])</code></pre>
+
+<!-- ============================================================ -->
+<h2 id="settings">⚙️ Settings</h2>
+<p>A form for the active object's <code>object_config.json</code>. The object path is shown at the top; the form reloads
+when you switch objects.</p>
+<figure><img src="img/settings.png" alt="Settings tab showing Application and Object Parameters sections as form fields"></figure>
+<div class="table-wrap"><table>
+<tr><th>Field type</th><th>How to edit</th></tr>
+<tr><td>Number / text</td><td class="wrap">Type directly. Check boxes for true/false values.</td></tr>
+<tr><td>Short list or matrix</td><td class="wrap">One box per value (e.g. <code>pose</code>, <code>point_coord</code>, <code>intrinsic_matrix</code>).</td></tr>
+<tr><td>List of names</td><td class="wrap">Comma-separated, e.g. <code>t1, t2, t3</code>.</td></tr>
+<tr><td>Nested list</td><td class="wrap">Raw JSON, e.g. <code>[["t1","t2","t3","t4"],["b1","b2","b3","b4"]]</code>. Hover for a hint.</td></tr>
+</table></div>
+<p><b>Save Configuration</b> checks the values first and saves only if all checks pass:</p>
+<ul>
+<li><code>point_names</code> and <code>point_coord</code> have the same number of entries, and every coordinate is <code>[x, y, z]</code>;</li>
+<li>every name in <code>point_faces</code> exists in <code>point_names</code>;</li>
+<li>every <code>resolution</code> is <code>[width, height]</code>;</li>
+<li><code>intrinsic_matrix</code> is 3×3.</li>
+</ul>
+
+<h3 id="config-reference">object_config.json reference</h3>
+<h4>object_parameters</h4>
+<div class="table-wrap"><table>
+<tr><th>Key</th><th>Example</th><th>Meaning</th></tr>
+<tr><td><code>name</code></td><td><code>bricks-15</code></td><td class="wrap">Object name (the folder name)</td></tr>
+<tr><td><code>type</code></td><td><code>pose</code></td><td class="wrap">Object model type, see <a href="#wf-object">Object Type</a></td></tr>
+<tr><td><code>point_names</code></td><td><code>t1 … tc</code></td><td class="wrap">Keypoint names, in the order the network learns them</td></tr>
+<tr><td><code>point_coord</code></td><td><code>[[0,0,40], [0,70,40], …]</code></td><td class="wrap">3D position of each keypoint in mm, same order as <code>point_names</code>. Defines the object frame: the pose axis is drawn at (0, 0, 0).</td></tr>
+<tr><td><code>point_faces</code></td><td><code>[["t1","t2","t3","t4"], …]</code></td><td class="wrap">Closed outlines drawn by Show Shape</td></tr>
+<tr><td><code>resolution</code></td><td><code>[1920, 1080]</code></td><td class="wrap">Image size of the training images</td></tr>
+<tr><td><code>id</code>, <code>pose</code>, <code>image_path</code></td><td></td><td class="wrap">Bookkeeping; not needed for detection</td></tr>
+</table></div>
+<h4>camera_parameters</h4>
+<div class="table-wrap"><table>
+<tr><th>Key</th><th>Example</th><th>Meaning</th></tr>
+<tr><td><code>camera_type</code></td><td><code>WEBCAM0</code></td><td class="wrap">Camera driver, see <a href="#cam-settings">Camera Type</a></td></tr>
+<tr><td><code>cameraid</code></td><td><code>0</code></td><td class="wrap">Device index for webcams. If that index fails, the first working camera (0–3) is used.</td></tr>
+<tr><td><code>resolution</code></td><td><code>[640, 480]</code></td><td class="wrap">Capture size requested from the camera</td></tr>
+<tr><td><code>mode</code></td><td><code>rgb</code></td><td class="wrap">Stream shown: <code>rgb</code>, <code>irl</code>/<code>irr</code> (left/right IR), <code>dep</code> (depth), <code>rgd</code>, <code>lrd</code>, <code>rgbd</code></td></tr>
+<tr><td><code>intrinsic_matrix</code></td><td><code>[[2700,0,960],[0,2700,540],[0,0,1]]</code></td><td class="wrap">Focal lengths and image centre in pixels. Replaced by camera calibration.</td></tr>
+<tr><td><code>intrinsic_distortion</code></td><td><code>[[0,0,0,0,0]]</code></td><td class="wrap">Lens distortion k1 k2 p1 p2 k3</td></tr>
+<tr><td><code>exposure</code>, <code>gain</code>, <code>focus</code>, <code>format</code>, <code>crop_box</code>, <code>rotation_type</code></td><td></td><td class="wrap">Stored camera settings; exposure is set from Camera Setup</td></tr>
+</table></div>
+<h4>detection_parameters</h4>
+<div class="table-wrap"><table>
+<tr><th>Key</th><th>Default</th><th>Meaning</th></tr>
+<tr><td><code>image_scale</code></td><td><code>0.5</code></td><td class="wrap">Scale applied to images before the network, for training and detection</td></tr>
+<tr><td><code>train_split</code></td><td><code>0.95</code></td><td class="wrap">Fraction of labeled images used for training</td></tr>
+<tr><td><code>n_epochs</code></td><td><code>100</code></td><td class="wrap">Training epochs (add the key to change it)</td></tr>
+<tr><td><code>lr</code></td><td><code>0.0001</code></td><td class="wrap">Learning rate (add the key to change it)</td></tr>
+<tr><td><code>net_name</code>, <code>net_path</code>, <code>gain</code>, <code>augment_type</code>, <code>resolution</code></td><td></td><td class="wrap">Kept for compatibility; not used by the keypoint model</td></tr>
+</table></div>
+<p><code>application</code> and <code>measurement_parameters</code> are kept for compatibility and do not affect detection.
+Camera calibration also adds <code>camera_matrix</code> and <code>camera_distortion</code> at the top level.</p>
+
+<!-- ============================================================ -->
+<h2 id="results">📊 Results &amp; Logs</h2>
+<figure><img src="img/results.png" alt="Results and Logs tab with an empty results list"></figure>
+<p>A placeholder list for calibration and run results; it currently only shows <i>System initialized…</i>. The application log
+is in the console window when running from source, and in <code>logs\pose6d.log</code> in the deployed app
+(see <a href="#source-vs-deployed">source vs deployed</a>).</p>
+
+<!-- ============================================================ -->
+<h2 id="license">🔑 License</h2>
+<figure><img src="img/license.png" alt="License tab: machine id, license status, Activate / Renew License button"></figure>
+<p>pose6d uses an offline license locked to the machine. No network connection is needed.</p>
+<div class="table-wrap"><table>
+<tr><th>Item</th><th>Meaning</th></tr>
+<tr><td>Machine id</td><td class="wrap">Identifies this PC. The license only works on the machine it was issued for.</td></tr>
+<tr><td>Status</td><td class="wrap"><i>Licensed - expires: &lt;date or never&gt;</i>, or why it is not valid: not activated, invalid format/signature, wrong machine, expired, clock rollback detected</td></tr>
+<tr><td>Features</td><td class="wrap">Bitmask of licensed functions, see below</td></tr>
+<tr><td><b>Activate / Renew License…</b></td><td class="wrap">Opens the activation dialog</td></tr>
+</table></div>
+<figure class="small"><img src="img/dialog-license.png" alt="License activation dialog with request code and enable code fields"></figure>
+<ol class="steps">
+<li>Under <b>1. Your request code</b>, click <b>Copy to Clipboard</b> or <b>Save Request File (.req)…</b> and send it to your vendor.</li>
+<li>Paste the enable code you receive under <b>2.</b>, or click <b>Load Enable File (.lic)…</b>.</li>
+<li>Click <b>Activate</b>. The license is saved as <code>pose6d_license.lic</code> in the folder pose6d is started from
+(for the exe, also looked up next to <code>pose6d.exe</code>).</li>
+</ol>
+<div class="table-wrap"><table>
+<tr><th>Feature bit</th><th>Function</th></tr>
+<tr><td><code>0x0001</code></td><td>Detection display</td></tr>
+<tr><td><code>0x0002</code></td><td>Training</td></tr>
+<tr><td><code>0x0004</code></td><td class="wrap">Robot communication. Without it, communication works for a 1-hour grace period, then the Communication tab is disabled.</td></tr>
+<tr><td><code>0x0008</code></td><td>Labeling</td></tr>
+</table></div>
+<div class="callout warn"><b>Do not set the PC clock back</b>The license detects a clock moved backwards and stops accepting the license for that session.</div>
+<p>Vendors issue licenses offline with <code>vendor_tools/issue_license.py</code> (see <code>docs/getting-started/licensing.md</code>).</p>
+
+<!-- ============================================================ -->
+<h2 id="examples">Worked examples</h2>
+
+<h3 id="ex-new-object">1 · Teach a new object from scratch</h3>
+<ol class="steps">
+<li><b>Workflow → Create New…</b>: name the object, for example <code>bracket-01</code>.</li>
+<li><b>Settings</b>: replace the placeholder cube with the real keypoints: <code>point_names</code>, <code>point_coord</code> (mm, measured from a corner you choose as origin) and <code>point_faces</code>. <b>Save Configuration</b>.</li>
+<li><b>Camera Setup</b>: connect the camera and calibrate it with 15–25 chessboard images.</li>
+<li><b>Camera Setup</b>: <b>Save Image</b> 15–20 varied views of one or more parts.</li>
+<li><b>Object Teaching</b>: label every visible part (one Object Id per part), <b>Save Points</b> per image, and check with <b>Show Axis</b>.</li>
+<li><b>Object Teaching → Train Model</b>. When it finishes, test in <b>Validation</b> with Source = Directory on the same images, then with Source = Camera.</li>
+<li>Where detection is weak, capture and label more images of those situations and click <b>Train Model</b> again (retrain continues from the last checkpoint).</li>
+</ol>
+
+<h3 id="ex-folder">2 · Soak-test detection on a folder</h3>
+<p>Validation → Source = <code>Directory</code>, Detector ON, Show Axis ON → <b>Detect…</b> → choose the folder. The images repeat until you press Stop. Use it
+to watch for unstable or missing detections over many cycles without a camera.</p>
+
+<h3 id="ex-robot">3 · Stream poses to a robot</h3>
+<ol class="steps">
+<li><b>Validation</b>: Source = Camera, Output = <code>TCP/IP Stream</code>, <b>Detect…</b>. The server starts on <code>127.0.0.1:5005</code>.</li>
+<li>For a robot on another machine: stop detection, set the server address in <b>Communication</b> (the PC's network IP), <b>Server Start</b>, then start detection again.</li>
+<li>Check with the built-in client: <b>Communication → Client Start</b>, Command = <code>get results</code>, <b>Repeat every 1000 ms</b>. Results appear in the lower monitor.</li>
+<li>Program the robot to send <code>get results</code> whenever it is ready to pick (see <a href="#protocol">protocol</a>), and to skip objects with <code>success: false</code> or low <code>quality</code>.</li>
+</ol>
+
+<h3 id="ex-handeye">4 · Hand-eye calibration</h3>
+<ol class="steps">
+<li>Fix the chessboard in the cell. Move the robot (camera on the flange) to 10–15 different poses that look at the board from different angles.</li>
+<li>At each pose save an image into <code>data\robot_calibration\</code> and write its file name and robot pose into <code>camera_robot_calibration.json</code>.</li>
+<li><b>Robot Setup</b>: choose the <b>Robot Model</b> that matches how your controller reports rotations, check a few images (the pose fields show what was read), then <b>Calibrate System</b>.</li>
+<li>Read the result in the console. A camera RMS error under 1 px indicates good images.</li>
+</ol>
+
+<!-- ============================================================ -->
+<h2 id="troubleshooting">Troubleshooting</h2>
+<div class="table-wrap"><table>
+<tr><th>Symptom</th><th>Likely cause → fix</th></tr>
+<tr><td class="wrap">Camera connects but the image stays black / "Failed to acquire an image"</td><td class="wrap">Some Windows camera drivers open the camera but never deliver frames through the default
+backend. pose6d tests for this and retries with DirectShow automatically; if it still fails, close other programs using the camera and try another <code>cameraid</code>.</td></tr>
+<tr><td class="wrap">Nothing is detected</td><td class="wrap">Detector OFF; wrong object selected; object partly outside the image; model trained on too few or too different images. Turn on Show Heatmap (source mode) to see whether the model finds keypoints at all.</td></tr>
+<tr><td class="wrap">Some instances have no axis</td><td class="wrap">Fewer than 4 keypoints were found for them (log: <i>Object N has K keypoints (need &gt;= 4)</i>). Add training images with similar views or occlusions.</td></tr>
+<tr><td class="wrap">Axes are drawn but in the wrong place</td><td class="wrap">Camera not calibrated, or calibrated at another resolution; wrong <code>point_coord</code>. Recalibrate and check Show Shape in Object Teaching.</td></tr>
+<tr><td class="wrap">Show Axis draws nothing in Object Teaching</td><td class="wrap">Under 4 labeled points, or reprojection error above 5 px: a point is labeled with the wrong name or the 3D coordinates are wrong.</td></tr>
+<tr><td class="wrap">Server does not start (<i>port in use?</i>)</td><td class="wrap">Another program, or a second pose6d, is using the port. Choose another port or close the other program.</td></tr>
+<tr><td class="wrap">Client receives the same <code>frame_id</code> every time</td><td class="wrap">Detection is not running, or Output is not TCP/IP Stream.</td></tr>
+<tr><td class="wrap">Communication tab is greyed out</td><td class="wrap">No license with the robot-communication feature and the 1-hour grace period has ended. Activate a license with feature <code>0x0004</code>.</td></tr>
+<tr><td class="wrap">Settings: <i>Validation Error</i></td><td class="wrap">The message lists the rule that failed (see <a href="#settings">Settings</a>), most often <code>point_names</code> and <code>point_coord</code> with different counts.</td></tr>
+<tr><td class="wrap">Training is very slow</td><td class="wrap">Training runs on the CPU without a CUDA build of PyTorch. Install the CUDA build, or lower <code>image_scale</code>.</td></tr>
+</table></div>
+
+<!-- ============================================================ -->
+<h2 id="appendix-files">Appendix A · Files written by pose6d</h2>
+<div class="table-wrap"><table>
+<tr><th>File</th><th>Written by</th><th>Content</th></tr>
+<tr><td><code>&lt;object&gt;\object_config.json</code></td><td class="wrap">Create New, Settings, Object Type, camera calibration, point editing</td><td class="wrap">Object definition and settings</td></tr>
+<tr><td><code>&lt;object&gt;\images\&lt;format&gt;_&lt;time&gt;.png</code></td><td>Camera Setup → Save Image</td><td class="wrap">Captured images</td></tr>
+<tr><td><code>&lt;object&gt;\images\&lt;image&gt;.json</code></td><td>Object Teaching → Save Points</td><td class="wrap"><code>{"points": [{"label", "object_id", "image_x", "image_y"}, …]}</code></td></tr>
+<tr><td><code>&lt;object&gt;\models\keypoint_group_model_NNNN.pth</code></td><td>Training</td><td class="wrap">Model checkpoint after epoch NNNN</td></tr>
+<tr><td><code>&lt;object&gt;\cameras\calibration.json</code></td><td>Camera Setup → Calibrate</td><td class="wrap"><code>camera_matrix</code>, <code>dist_coeffs</code></td></tr>
+<tr><td><code>main_app_config.json</code></td><td>Most tabs</td><td class="wrap">Session: last object, camera/robot/communication defaults</td></tr>
+<tr><td><code>pose6d_license.lic</code></td><td>License activation</td><td class="wrap">Enable code</td></tr>
+<tr><td><code>logs\pose6d.log</code></td><td>Deployed app</td><td class="wrap">Application log, rotated at 5 MB</td></tr>
+</table></div>
+
+<h2 id="known-limitations">Appendix B · Known limitations</h2>
+<p>Behaviour of the current version (v01.06) that differs from what the controls suggest:</p>
+<div class="table-wrap"><table>
+<tr><th>Where</th><th>Limitation</th></tr>
+<tr><td>Validation → Text Size</td><td class="wrap">Changing it sets the <b>camera exposure</b> to the typed value instead of the text size.</td></tr>
+<tr><td>Validation → Coordinates</td><td class="wrap">No effect; poses are always in camera coordinates.</td></tr>
+<tr><td>Validation → Output</td><td class="wrap">MP4 File, ROS Topic and MQTT are not implemented. Source Video Stream is not implemented.</td></tr>
+<tr><td>Robot Setup</td><td class="wrap">Calibration Method is ignored; the hand-eye result is only printed to the console and not saved.</td></tr>
+<tr><td>Workflow → Select Multiple</td><td class="wrap">Opens the Create New Object dialog.</td></tr>
+<tr><td>Workflow → Camera Type</td><td class="wrap">Sets the session default; the camera actually used comes from the object (Camera Setup).</td></tr>
+<tr><td>Workflow → Test Connection</td><td class="wrap">MODBUS is not tested and always reports failure.</td></tr>
+<tr><td>Camera Setup → Load Init File</td><td class="wrap">Opens a file dialog only.</td></tr>
+<tr><td>Object Teaching</td><td class="wrap">Keypoints cannot be added or removed from the tab; edit <code>point_names</code> / <code>point_coord</code> in Settings.</td></tr>
+<tr><td>Results &amp; Logs</td><td class="wrap">Placeholder; the tab title is shown as "Results _Logs".</td></tr>
+</table></div>
+
+<p class="meta" style="margin-top:40px">Screenshots are captured from the real application with <code>python docs/html/tools/capture_screenshots.py</code>
+using the bundled sample object <code>data/objects/bricks-15</code>.</p>
+</div>
+</main>
+</div>
+<div class="lightbox" id="lightbox" role="dialog" aria-label="Enlarged screenshot"><img alt=""></div>
+
+<script>
+(function () {
+  var content = document.getElementById('content');
+  var toc = document.getElementById('toc');
+  var headings = Array.prototype.slice.call(content.querySelectorAll('h2[id], h3[id]'));
+
+  // build the contents tree and the heading anchors
+  var current = null;
+  headings.forEach(function (h) {
+    var a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent;
+    var li = document.createElement('li');
+    li.appendChild(a);
+    li.dataset.target = h.id;
+    if (h.tagName === 'H2') {
+      toc.appendChild(li);
+      current = document.createElement('ul');
+      li.appendChild(current);
+    } else if (current) {
+      current.appendChild(li);
+    }
+    var anchor = document.createElement('a');
+    anchor.href = '#' + h.id; anchor.className = 'anchor'; anchor.textContent = '#';
+    anchor.setAttribute('aria-label', 'Link to this section');
+    h.appendChild(anchor);
+  });
+  var links = Array.prototype.slice.call(toc.querySelectorAll('a'));
+
+  // highlight the section in view
+  var byId = {};
+  links.forEach(function (a) { byId[a.getAttribute('href').slice(1)] = a; });
+  function onScroll() {
+    var y = window.scrollY + 80, active = headings[0];
+    headings.forEach(function (h) { if (h.offsetTop <= y) active = h; });
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (active && byId[active.id]) byId[active.id].classList.add('active');
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // section text for search: everything from a heading to the next heading
+  var sectionText = {};
+  headings.forEach(function (h, i) {
+    var text = h.textContent, n = h.nextElementSibling;
+    while (n && !(n.matches && n.matches('h2[id], h3[id]'))) { text += ' ' + n.textContent; n = n.nextElementSibling; }
+    sectionText[h.id] = text.toLowerCase();
+  });
+  var search = document.getElementById('search'), info = document.getElementById('search-info');
+  search.addEventListener('input', function () {
+    var q = search.value.trim().toLowerCase(), hits = 0;
+    toc.querySelectorAll('li').forEach(function (li) {
+      var own = sectionText[li.dataset.target] || '';
+      var child = Array.prototype.some.call(li.querySelectorAll('li'), function (c) {
+        return (sectionText[c.dataset.target] || '').indexOf(q) >= 0;
+      });
+      var match = !q || own.indexOf(q) >= 0 || child;
+      li.classList.toggle('hidden', !match);
+      if (q && own.indexOf(q) >= 0) hits++;
+    });
+    info.textContent = q ? (hits ? hits + ' section' + (hits > 1 ? 's' : '') + ' match' : 'No matches') : '';
+  });
+  search.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') {
+      var first = toc.querySelector('li:not(.hidden) > a');
+      if (first) { location.hash = first.getAttribute('href'); }
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === '/' && document.activeElement !== search) { e.preventDefault(); search.focus(); }
+    if (e.key === 'Escape') { lightbox.classList.remove('open'); }
+  });
+
+  // theme: remembered per browser when possible
+  var root = document.documentElement;
+  try { var saved = localStorage.getItem('pose6d-docs-theme'); if (saved) root.dataset.theme = saved; } catch (e) {}
+  document.getElementById('theme-btn').addEventListener('click', function () {
+    var dark = root.dataset.theme ? root.dataset.theme === 'dark'
+                                  : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    root.dataset.theme = dark ? 'light' : 'dark';
+    try { localStorage.setItem('pose6d-docs-theme', root.dataset.theme); } catch (e) {}
+  });
+
+  // enlarge screenshots
+  var lightbox = document.getElementById('lightbox'), lbImg = lightbox.querySelector('img');
+  content.querySelectorAll('figure img').forEach(function (img) {
+    img.addEventListener('click', function () { lbImg.src = img.src; lbImg.alt = img.alt; lightbox.classList.add('open'); });
+  });
+  lightbox.addEventListener('click', function () { lightbox.classList.remove('open'); });
+
+  // mobile contents drawer
+  var sidebar = document.getElementById('sidebar');
+  document.getElementById('menu-btn').addEventListener('click', function () { sidebar.classList.toggle('open'); });
+  toc.addEventListener('click', function (e) { if (e.target.tagName === 'A') sidebar.classList.remove('open'); });
+})();
+</script>
+</body>
+</html>

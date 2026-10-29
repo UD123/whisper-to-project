@@ -5,7 +5,7 @@ import { LogoMark } from "./Logo";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { useT } from "@/i18n/LanguageProvider";
 
-type Section = "product" | "docs" | "download" | "pricing";
+type Section = "product" | "docs" | "manual" | "download" | "pricing";
 
 /** `hashBase` is "/" on sub-pages so in-page anchors point back to the landing page. */
 export function Navbar({
@@ -20,9 +20,10 @@ export function Navbar({
   const t = useT();
   const [open, setOpen] = useState(false);
 
-  const tabs: { to: "/" | "/guide" | "/download" | "/pricing"; key: Section; label: string }[] = [
+  const tabs: { to: "/" | "/guide" | "/manual" | "/download" | "/pricing"; key: Section; label: string }[] = [
     { to: "/", key: "product", label: t.nav.product },
     { to: "/guide", key: "docs", label: t.nav.docs },
+    { to: "/manual", key: "manual", label: t.nav.manual },
     { to: "/download", key: "download", label: t.nav.download },
     { to: "/pricing", key: "pricing", label: t.nav.pricing },
   ];

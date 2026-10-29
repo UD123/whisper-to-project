@@ -14,6 +14,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as DownloadRouteImport } from './routes/download'
 import { Route as GuideRouteImport } from './routes/guide'
+import { Route as ManualRouteImport } from './routes/manual'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as CheckoutSuccessRouteImport } from './routes/checkout/success'
 import { Route as AuthenticatedAdminOrdersRouteImport } from './routes/_authenticated/admin/orders'
@@ -41,6 +42,11 @@ const DownloadRoute = DownloadRouteImport.update({
 const GuideRoute = GuideRouteImport.update({
   id: '/guide',
   path: '/guide',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ManualRoute = ManualRouteImport.update({
+  id: '/manual',
+  path: '/manual',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PricingRoute = PricingRouteImport.update({
@@ -71,6 +77,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/download': typeof DownloadRoute
   '/guide': typeof GuideRoute
+  '/manual': typeof ManualRoute
   '/pricing': typeof PricingRoute
   '/checkout/success': typeof CheckoutSuccessRoute
   '/admin/orders': typeof AuthenticatedAdminOrdersRoute
@@ -81,6 +88,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/download': typeof DownloadRoute
   '/guide': typeof GuideRoute
+  '/manual': typeof ManualRoute
   '/pricing': typeof PricingRoute
   '/checkout/success': typeof CheckoutSuccessRoute
   '/admin/orders': typeof AuthenticatedAdminOrdersRoute
@@ -93,6 +101,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/download': typeof DownloadRoute
   '/guide': typeof GuideRoute
+  '/manual': typeof ManualRoute
   '/pricing': typeof PricingRoute
   '/checkout/success': typeof CheckoutSuccessRoute
   '/_authenticated/admin/orders': typeof AuthenticatedAdminOrdersRoute
@@ -105,6 +114,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/download'
     | '/guide'
+    | '/manual'
     | '/pricing'
     | '/checkout/success'
     | '/admin/orders'
@@ -115,6 +125,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/download'
     | '/guide'
+    | '/manual'
     | '/pricing'
     | '/checkout/success'
     | '/admin/orders'
@@ -126,6 +137,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/download'
     | '/guide'
+    | '/manual'
     | '/pricing'
     | '/checkout/success'
     | '/_authenticated/admin/orders'
@@ -138,6 +150,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   DownloadRoute: typeof DownloadRoute
   GuideRoute: typeof GuideRoute
+  ManualRoute: typeof ManualRoute
   PricingRoute: typeof PricingRoute
   CheckoutSuccessRoute: typeof CheckoutSuccessRoute
   ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
@@ -178,6 +191,13 @@ declare module '@tanstack/react-router' {
       path: '/guide'
       fullPath: '/guide'
       preLoaderRoute: typeof GuideRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/manual': {
+      id: '/manual'
+      path: '/manual'
+      fullPath: '/manual'
+      preLoaderRoute: typeof ManualRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/pricing': {
@@ -228,6 +248,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   DownloadRoute: DownloadRoute,
   GuideRoute: GuideRoute,
+  ManualRoute: ManualRoute,
   PricingRoute: PricingRoute,
   CheckoutSuccessRoute: CheckoutSuccessRoute,
   ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,
