@@ -22,7 +22,6 @@ export function Navbar({
 
   const tabs: { to: "/" | "/guide" | "/manual" | "/download" | "/pricing"; key: Section; label: string }[] = [
     { to: "/", key: "product", label: t.nav.product },
-    { to: "/guide", key: "docs", label: t.nav.docs },
     { to: "/manual", key: "manual", label: t.nav.manual },
     { to: "/download", key: "download", label: t.nav.download },
     { to: "/pricing", key: "pricing", label: t.nav.pricing },
