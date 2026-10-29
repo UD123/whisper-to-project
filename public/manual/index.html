@@ -5,31 +5,29 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>pose6d User Guide</title>
 <link rel="icon" href="img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #f7f8fa; --panel: #ffffff; --text: #1d2430; --muted: #5b6575; --border: #dde1e7;
-  --accent: #1565c0; --accent-soft: #e3eefb; --code-bg: #f0f2f5; --note: #1565c0; --warn: #b26a00;
+  --bg: oklch(0.966 0.0027 264.54); --panel: #ffffff; --text: oklch(0.21 0.0338 264.36);
+  --muted: oklch(0.52 0.02 264.36); --border: oklch(0.921 0.0042 264.54);
+  --accent: oklch(0.5305 0.2515 263.9); --accent-soft: color-mix(in oklab, oklch(0.5305 0.2515 263.9) 9%, white);
+  --code-bg: oklch(0.945 0.006 264.54); --note: oklch(0.5305 0.2515 263.9); --warn: #b26a00;
   --warn-soft: #fff4e0; --ok: #2e7d32; --ok-soft: #e7f4e8; --shadow: 0 1px 3px rgba(0,0,0,.08);
 }
 :root[data-theme="dark"] {
   --bg: #15181d; --panel: #1d2128; --text: #e3e6eb; --muted: #9aa3b0; --border: #2e343e;
-  --accent: #64a8f0; --accent-soft: #1e2d40; --code-bg: #252a33; --note: #64a8f0; --warn: #f0b45a;
+  --accent: #7aa8f5; --accent-soft: #1e2d40; --code-bg: #252a33; --note: #7aa8f5; --warn: #f0b45a;
   --warn-soft: #3a2f1c; --ok: #6cc070; --ok-soft: #1f3322; --shadow: 0 1px 3px rgba(0,0,0,.4);
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #15181d; --panel: #1d2128; --text: #e3e6eb; --muted: #9aa3b0; --border: #2e343e;
-    --accent: #64a8f0; --accent-soft: #1e2d40; --code-bg: #252a33; --note: #64a8f0; --warn: #f0b45a;
-    --warn-soft: #3a2f1c; --ok: #6cc070; --ok-soft: #1f3322; --shadow: 0 1px 3px rgba(0,0,0,.4);
-  }
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: 16px; }
-body { margin: 0; background: var(--bg); color: var(--text);
-  font: 15px/1.6 "Segoe UI", system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif; }
+body { margin: 0; background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased;
+  font: 15px/1.6 "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif; }
 a { color: var(--accent); text-decoration: none; }
 a:hover { text-decoration: underline; }
-code, pre, kbd { font-family: Consolas, "Cascadia Mono", Menlo, monospace; font-size: 13px; }
+code, pre, kbd { font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; }
 code { background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
 pre { background: var(--code-bg); padding: 12px 14px; border-radius: 8px; overflow-x: auto; line-height: 1.45; }
 pre code { background: none; padding: 0; }
