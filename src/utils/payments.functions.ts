@@ -53,3 +53,32 @@ export const listOrders = createServerFn({ method: "GET" })
     if (error) throw new Error(error.message);
     return (data ?? []) as OrderRow[];
   });
+
+export type MyLicense = {
+  id: string;
+  created_at: string;
+  product_id: string | null;
+  amount_cents: number;
+  currency: string;
+  status: string;
+  license_key: string | null;
+  revoked_at: string | null;
+  paddle_transaction_id: string;
+};
+
+/** Signed-in customer's own orders/licenses (RLS: user_id = auth.uid()). */
+export const listMyLicenses = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+    const { data, error } = await context.supabase
+      .from("orders")
+      .select("id, created_at, product_id, amount_cents, currency, status, license_key, revoked_at, paddle_transaction_id")
+      .eq("user_id", context.userId)
+      .order("created_at", { ascending: false });
+    if (error) throw new Error(error.message);
+    return (data ?? []).map((o) => ({
+      ...o,
+      // Never expose a key that was revoked by a refund.
+      license_key: o.revoked_at ? null : o.license_key,
+    })) as MyLicense[];
+  });
