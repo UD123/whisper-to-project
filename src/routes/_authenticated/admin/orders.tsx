@@ -11,6 +11,10 @@ export const Route = createFileRoute("/_authenticated/admin/orders")({
     meta: [
       { title: "License Orders | RobotAI Admin" },
       { name: "description", content: "Internal list of Pose6D license purchases." },
+      { property: "og:title", content: "License Orders | RobotAI Admin" },
+      { property: "og:description", content: "Internal list of Pose6D license purchases." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: OrdersPage,
