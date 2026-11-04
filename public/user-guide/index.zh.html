@@ -116,3 +116,87 @@ mark { background: #ffe36e; color: #000; border-radius: 2px; }
 }
 </style>
 </head>
+<body>
+<div class="layout">
+<nav class="sidebar" id="sidebar" aria-label="目录">
+  <div class="brand"><img src="img/favicon.png" alt=""><div><b>pose6d</b><span>用户手册 · v01.06</span></div></div>
+  <input class="search" id="search" type="search" placeholder="搜索手册…  ( / )" aria-label="搜索">
+  <div class="search-info" id="search-info"></div>
+  <ul class="toc" id="toc"></ul>
+  <button class="theme-btn" id="theme-btn" type="button">切换浅色 / 深色</button>
+</nav>
+
+<main>
+<button class="menu-btn" id="menu-btn" type="button">☰ 目录</button>
+<div class="content" id="content">
+
+<h1>pose6d — 用户手册</h1>
+<p class="lead"><b>pose6d</b> 在相机图像中找到物体，并报告其完整的 6D 位姿（位置与姿态），以便机械臂抓取。你通过在少量图像上标注来"教"它一个新物体，它会训练一个关键点检测网络，此后就能实时检测该物体的每一个实例，并通过 TCP/IP 把位姿发送给机器人。</p>
+<p class="meta">本手册说明<b>桌面应用中的每一个控件</b>：它做什么、数值保存在哪里、合理的默认值是什么、何时应当修改。同时记录了配置文件、机器人通信协议以及应用写入的文件。界面控件名称保留英文，与软件实际显示一致。</p>
+
+<figure>
+  <img src="img/validation-axis.png" alt="验证选项卡：六个木块，每个原点处画有红/绿/蓝位姿轴">
+  <figcaption>验证选项卡检测示例物体 <code>bricks-15</code> 的六个实例。每条红/绿/蓝轴就是一个估计出的 6D 位姿。</figcaption>
+</figure>
+
+<!-- ============================================================ -->
+<h2 id="getting-started">快速上手</h2>
+
+<h3 id="launching">启动应用</h3>
+<p>同一个应用可以以三种方式运行：</p>
+<div class="table-wrap"><table>
+<tr><th>方式</th><th>命令</th><th>用途</th></tr>
+<tr><td>从源码运行</td><td class="wrap">在 <code>pose6d</code> 文件夹中执行 <code>python main_app.py</code>，并激活项目环境（开发电脑上为 <code>C:\Work\Envs\qtgui</code>）</td><td class="wrap">开发、标注、训练</td></tr>
+<tr><td>部署版 exe</td><td class="wrap"><code>pose6d.exe</code>（由 <code>main_app_deploy.py</code> 构建；入口为 <code>main_app_wrapper.py</code>）</td><td class="wrap">机器人旁边的生产电脑</td></tr>
+<tr><td>Web 界面</td><td class="wrap"><code>python -m webapp</code>，然后打开 <code>http://127.0.0.1:5000/</code></td><td class="wrap">快速检测测试与远程查看。不支持标注或训练。</td></tr>
+</table></div>
+
+<p>从源码安装（Windows）：</p>
+<pre><code>python -m venv C:\Work\Envs\qtgui
+C:\Work\Envs\qtgui\Scripts\activate.bat
+pip install torch torchvision            # 或使用 CUDA 版本：--index-url https://download.pytorch.org/whl/cu118
+pip install -r requirements.txt</code></pre>
+<div class="callout"><b>说明</b><code>pyrealsense2</code> 只有 Intel RealSense 相机才需要（已测试型号为 D435 / D455 / D580）。普通 USB 网络摄像头无需它即可工作。</div>
+
+<h3 id="source-vs-deployed">源码模式与部署模式</h3>
+<p>应用启动时会判断自己是从源码运行还是部署版运行（<code>pose6d.exe</code>，或 <code>pose6d_deploy</code> 中经 Cython 编译的模块），行为略有不同：</p>
+<div class="table-wrap"><table>
+<tr><th>行为</th><th>源码</th><th>部署版</th></tr>
+<tr><td>启动时许可证检查</td><td>跳过</td><td class="wrap">检查。见<a href="#license">许可证</a>。</td></tr>
+<tr><td>控制台日志</td><td>全部（DEBUG 及以上）</td><td>仅警告与错误</td></tr>
+<tr><td>日志文件</td><td>无</td><td class="wrap">exe 旁边的 <code>logs\pose6d.log</code>（INFO 及以上，5 MB × 4 个文件）。若该文件夹不可写：<code>%LOCALAPPDATA%\pose6d\logs</code>。</td></tr>
+<tr><td>验证调试叠加层</td><td>显示</td><td class="wrap"><b>Show Heatmap</b> 与 <b>Show Joints</b> 被隐藏</td></tr>
+</table></div>
+<p>两个环境变量可以覆盖这一判断，用于测试或技术支持：</p>
+<div class="table-wrap"><table>
+<tr><th>变量</th><th>取值</th><th>作用</th></tr>
+<tr><td><code>POSE6D_DEPLOY_MODE</code></td><td><code>frozen</code> · <code>cython</code> · <code>source</code></td><td class="wrap">强制指定模式，而不是自动检测</td></tr>
+<tr><td><code>POSE6D_LOG_DIR</code></td><td>文件夹路径</td><td class="wrap">把部署版日志文件写到该处</td></tr>
+</table></div>
+
+<h3 id="layout">布局与导航</h3>
+<p>主窗口是一排选项卡，顺序与正常工作流程一致：</p>
+<div class="table-wrap"><table>
+<tr><th>选项卡</th><th>用途</th></tr>
+<tr><td><a href="#workflow">📈 Workflow（工作流）</a></td><td class="wrap">分步总览；创建或选择物体，相机/机器人/通信的基本设置</td></tr>
+<tr><td><a href="#camera-setup">📷 Camera Setup（相机设置）</a></td><td class="wrap">连接相机、采集图像、标定相机镜头（内参）</td></tr>
+<tr><td><a href="#object-teaching">🖊️ Object Teaching（物体示教）</a></td><td class="wrap">在图像上标注关键点并训练检测模型</td></tr>
+<tr><td><a href="#validation">🔍 Validation（验证）</a></td><td class="wrap">在相机、图像、文件夹或视频上运行训练好的模型；把结果发送给机器人</td></tr>
+<tr><td><a href="#robot-setup">📐 Robot Setup（机器人设置）</a></td><td class="wrap">相机与机器人之间的手眼标定</td></tr>
+<tr><td><a href="#communication">📡 Communication（通信）</a></td><td class="wrap">机器人服务器与测试客户端，实时监视每一个数据包</td></tr>
+<tr><td><a href="#settings">⚙️ Settings（设置）</a></td><td class="wrap">以表单方式编辑当前物体的 <code>object_config.json</code></td></tr>
+<tr><td><a href="#results">📊 Results &amp; Logs（结果与日志）</a></td><td class="wrap">结果列表（目前为占位）</td></tr>
+<tr><td><a href="#license">🔑 License（许可证）</a></td><td class="wrap">许可证状态与激活</td></tr>
+</table></div>
+
+<h3 id="data-folders">数据存放位置</h3>
+<p>属于一个物体的全部内容都放在一个<b>物体文件夹</b>中，默认位于 <code>data\objects\</code> 下：</p>
+<pre><code>data\objects\bricks-15\
+  object_config.json   ← 物体设置：关键点、相机、检测（见<a href="#config-reference">参考</a>）
+  images\              ← 采集的图像，每张已标注图像旁有一个 &lt;image&gt;.json 标签文件
+  models\              ← 训练得到的权重 keypoint_group_model_NNNN.pth
+  cameras\             ← calibration.json（相机内参）
+  results\             ← 基准 / 评估输出
+  labels\              ← 预留
+  robots\              ← 预留</code></pre>
+<p>与具体物体无关的应用级状态保存在 <code>pose6d</code> 文件夹的 <code>pose6d_config.json</code> 中：上次选择的物体、默认相机类型、通信地址。它是本机私有的，首次运行时创建，不会随发行包提供。</p>
