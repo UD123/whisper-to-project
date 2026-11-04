@@ -53,7 +53,7 @@ function AuthPage() {
         setMode("signin");
         return;
       }
-      navigate({ to: target });
+      navigate({ to: target as "/account" });
     } finally {
       setBusy(false);
     }
