@@ -5,12 +5,17 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/auth")({
+  validateSearch: (s: Record<string, unknown>): { redirect?: string } => {
+    const r = typeof s.redirect === "string" ? s.redirect : undefined;
+    // Only allow same-origin relative paths.
+    return { redirect: r && r.startsWith("/") && !r.startsWith("//") ? r : undefined };
+  },
   head: () => ({
     meta: [
       { title: "Sign in | RobotAI" },
-      { name: "description", content: "Sign in to the RobotAI admin area to review Pose6D license orders." },
+      { name: "description", content: "Sign in to RobotAI to buy Pose6D licenses and view your license keys." },
       { property: "og:title", content: "Sign in | RobotAI" },
-      { property: "og:description", content: "Sign in to the RobotAI admin area." },
+      { property: "og:description", content: "Sign in to buy and manage Pose6D licenses." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
@@ -20,6 +25,8 @@ export const Route = createFileRoute("/auth")({
 
 function AuthPage() {
   const navigate = useNavigate();
+  const { redirect } = Route.useSearch();
+  const target = redirect ?? "/account";
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [mode, setMode] = useState<"signin" | "signup">("signin");
@@ -29,19 +36,24 @@ function AuthPage() {
     e.preventDefault();
     setBusy(true);
     try {
-      const { error } =
+      const { data, error } =
         mode === "signin"
           ? await supabase.auth.signInWithPassword({ email, password })
           : await supabase.auth.signUp({
               email,
               password,
-              options: { emailRedirectTo: `${window.location.origin}/admin/orders` },
+              options: { emailRedirectTo: `${window.location.origin}/auth?redirect=${encodeURIComponent(target)}` },
             });
       if (error) {
         toast.error(error.message);
         return;
       }
-      navigate({ to: "/admin/orders" });
+      if (!data.session) {
+        toast.success("Check your email to confirm your account, then sign in.");
+        setMode("signin");
+        return;
+      }
+      navigate({ to: target });
     } finally {
       setBusy(false);
     }

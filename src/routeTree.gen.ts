@@ -16,7 +16,9 @@ import { Route as DownloadRouteImport } from './routes/download'
 import { Route as GuideRouteImport } from './routes/guide'
 import { Route as ManualRouteImport } from './routes/manual'
 import { Route as PricingRouteImport } from './routes/pricing'
+import { Route as AuthenticatedAccountRouteImport } from './routes/_authenticated/account'
 import { Route as AuthenticatedAdminOrdersRouteImport } from './routes/_authenticated/admin/orders'
+import { Route as AuthenticatedCheckoutSuccessRouteImport } from './routes/_authenticated/checkout/success'
 import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
 
 const IndexRoute = IndexRouteImport.update({
@@ -53,10 +55,21 @@ const PricingRoute = PricingRouteImport.update({
   path: '/pricing',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAccountRoute = AuthenticatedAccountRouteImport.update({
+  id: '/account',
+  path: '/account',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedAdminOrdersRoute =
   AuthenticatedAdminOrdersRouteImport.update({
     id: '/admin/orders',
     path: '/admin/orders',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedCheckoutSuccessRoute =
+  AuthenticatedCheckoutSuccessRouteImport.update({
+    id: '/checkout/success',
+    path: '/checkout/success',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const ApiPublicPaymentsWebhookRoute =
@@ -73,7 +86,9 @@ export interface FileRoutesByFullPath {
   '/guide': typeof GuideRoute
   '/manual': typeof ManualRoute
   '/pricing': typeof PricingRoute
+  '/account': typeof AuthenticatedAccountRoute
   '/admin/orders': typeof AuthenticatedAdminOrdersRoute
+  '/checkout/success': typeof AuthenticatedCheckoutSuccessRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
 export interface FileRoutesByTo {
@@ -83,7 +98,9 @@ export interface FileRoutesByTo {
   '/guide': typeof GuideRoute
   '/manual': typeof ManualRoute
   '/pricing': typeof PricingRoute
+  '/account': typeof AuthenticatedAccountRoute
   '/admin/orders': typeof AuthenticatedAdminOrdersRoute
+  '/checkout/success': typeof AuthenticatedCheckoutSuccessRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
 export interface FileRoutesById {
@@ -95,7 +112,9 @@ export interface FileRoutesById {
   '/guide': typeof GuideRoute
   '/manual': typeof ManualRoute
   '/pricing': typeof PricingRoute
+  '/_authenticated/account': typeof AuthenticatedAccountRoute
   '/_authenticated/admin/orders': typeof AuthenticatedAdminOrdersRoute
+  '/_authenticated/checkout/success': typeof AuthenticatedCheckoutSuccessRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
 export interface FileRouteTypes {
@@ -107,7 +126,9 @@ export interface FileRouteTypes {
     | '/guide'
     | '/manual'
     | '/pricing'
+    | '/account'
     | '/admin/orders'
+    | '/checkout/success'
     | '/api/public/payments/webhook'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -117,7 +138,9 @@ export interface FileRouteTypes {
     | '/guide'
     | '/manual'
     | '/pricing'
+    | '/account'
     | '/admin/orders'
+    | '/checkout/success'
     | '/api/public/payments/webhook'
   id:
     | '__root__'
@@ -128,7 +151,9 @@ export interface FileRouteTypes {
     | '/guide'
     | '/manual'
     | '/pricing'
+    | '/_authenticated/account'
     | '/_authenticated/admin/orders'
+    | '/_authenticated/checkout/success'
     | '/api/public/payments/webhook'
   fileRoutesById: FileRoutesById
 }
@@ -194,11 +219,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PricingRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/account': {
+      id: '/_authenticated/account'
+      path: '/account'
+      fullPath: '/account'
+      preLoaderRoute: typeof AuthenticatedAccountRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/admin/orders': {
       id: '/_authenticated/admin/orders'
       path: '/admin/orders'
       fullPath: '/admin/orders'
       preLoaderRoute: typeof AuthenticatedAdminOrdersRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/checkout/success': {
+      id: '/_authenticated/checkout/success'
+      path: '/checkout/success'
+      fullPath: '/checkout/success'
+      preLoaderRoute: typeof AuthenticatedCheckoutSuccessRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/api/public/payments/webhook': {
@@ -212,11 +251,15 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAccountRoute: typeof AuthenticatedAccountRoute
   AuthenticatedAdminOrdersRoute: typeof AuthenticatedAdminOrdersRoute
+  AuthenticatedCheckoutSuccessRoute: typeof AuthenticatedCheckoutSuccessRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAccountRoute: AuthenticatedAccountRoute,
   AuthenticatedAdminOrdersRoute: AuthenticatedAdminOrdersRoute,
+  AuthenticatedCheckoutSuccessRoute: AuthenticatedCheckoutSuccessRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =

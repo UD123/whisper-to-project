@@ -1,4 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { supabase } from "@/integrations/supabase/client";
 import { useState } from "react";
 import { Check, Loader2 } from "lucide-react";
 import { LanguageProvider, useI18n } from "@/i18n/LanguageProvider";
@@ -86,15 +87,25 @@ function PricingLayout() {
 
 function TierCard({ tier }: { tier: PricingTier }) {
   const { openCheckout } = usePaddleCheckout();
+  const navigate = useNavigate();
   const [busy, setBusy] = useState(false);
 
   const buy = async () => {
     if (!tier.priceId) return;
     setBusy(true);
     try {
+      // Purchases are tied to an account so licenses show on My Licenses.
+      const { data } = await supabase.auth.getUser();
+      if (!data.user) {
+        toast.info("Please sign in or create an account to buy a license.");
+        navigate({ to: "/auth", search: { redirect: "/pricing" } });
+        return;
+      }
       await openCheckout({
         priceId: tier.priceId,
         quantity: 1,
+        customerEmail: data.user.email ?? undefined,
+        customData: { userId: data.user.id },
         successUrl: `${window.location.origin}/checkout/success`,
       });
     } catch (e) {
