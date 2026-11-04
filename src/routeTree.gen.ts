@@ -16,7 +16,6 @@ import { Route as DownloadRouteImport } from './routes/download'
 import { Route as GuideRouteImport } from './routes/guide'
 import { Route as ManualRouteImport } from './routes/manual'
 import { Route as PricingRouteImport } from './routes/pricing'
-import { Route as CheckoutSuccessRouteImport } from './routes/checkout/success'
 import { Route as AuthenticatedAdminOrdersRouteImport } from './routes/_authenticated/admin/orders'
 import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
 
@@ -54,11 +53,6 @@ const PricingRoute = PricingRouteImport.update({
   path: '/pricing',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CheckoutSuccessRoute = CheckoutSuccessRouteImport.update({
-  id: '/checkout/success',
-  path: '/checkout/success',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AuthenticatedAdminOrdersRoute =
   AuthenticatedAdminOrdersRouteImport.update({
     id: '/admin/orders',
@@ -79,7 +73,6 @@ export interface FileRoutesByFullPath {
   '/guide': typeof GuideRoute
   '/manual': typeof ManualRoute
   '/pricing': typeof PricingRoute
-  '/checkout/success': typeof CheckoutSuccessRoute
   '/admin/orders': typeof AuthenticatedAdminOrdersRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
@@ -90,7 +83,6 @@ export interface FileRoutesByTo {
   '/guide': typeof GuideRoute
   '/manual': typeof ManualRoute
   '/pricing': typeof PricingRoute
-  '/checkout/success': typeof CheckoutSuccessRoute
   '/admin/orders': typeof AuthenticatedAdminOrdersRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
@@ -103,7 +95,6 @@ export interface FileRoutesById {
   '/guide': typeof GuideRoute
   '/manual': typeof ManualRoute
   '/pricing': typeof PricingRoute
-  '/checkout/success': typeof CheckoutSuccessRoute
   '/_authenticated/admin/orders': typeof AuthenticatedAdminOrdersRoute
   '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
@@ -116,7 +107,6 @@ export interface FileRouteTypes {
     | '/guide'
     | '/manual'
     | '/pricing'
-    | '/checkout/success'
     | '/admin/orders'
     | '/api/public/payments/webhook'
   fileRoutesByTo: FileRoutesByTo
@@ -127,7 +117,6 @@ export interface FileRouteTypes {
     | '/guide'
     | '/manual'
     | '/pricing'
-    | '/checkout/success'
     | '/admin/orders'
     | '/api/public/payments/webhook'
   id:
@@ -139,7 +128,6 @@ export interface FileRouteTypes {
     | '/guide'
     | '/manual'
     | '/pricing'
-    | '/checkout/success'
     | '/_authenticated/admin/orders'
     | '/api/public/payments/webhook'
   fileRoutesById: FileRoutesById
@@ -152,7 +140,6 @@ export interface RootRouteChildren {
   GuideRoute: typeof GuideRoute
   ManualRoute: typeof ManualRoute
   PricingRoute: typeof PricingRoute
-  CheckoutSuccessRoute: typeof CheckoutSuccessRoute
   ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
 }
 
@@ -207,13 +194,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PricingRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/checkout/success': {
-      id: '/checkout/success'
-      path: '/checkout/success'
-      fullPath: '/checkout/success'
-      preLoaderRoute: typeof CheckoutSuccessRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/_authenticated/admin/orders': {
       id: '/_authenticated/admin/orders'
       path: '/admin/orders'
@@ -250,7 +230,6 @@ const rootRouteChildren: RootRouteChildren = {
   GuideRoute: GuideRoute,
   ManualRoute: ManualRoute,
   PricingRoute: PricingRoute,
-  CheckoutSuccessRoute: CheckoutSuccessRoute,
   ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,
 }
 export const routeTree = rootRouteImport
