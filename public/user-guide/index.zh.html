@@ -683,3 +683,102 @@ with socket.create_connection(("127.0.0.1", 5005)) as s:
 </main>
 </div>
 <div class="lightbox" id="lightbox" role="dialog" aria-label="放大截图"><img alt=""></div>
+
+<script>
+(function () {
+  var content = document.getElementById('content');
+  var toc = document.getElementById('toc');
+  var headings = Array.prototype.slice.call(content.querySelectorAll('h2[id], h3[id]'));
+
+  // build the contents tree and the heading anchors
+  var current = null;
+  headings.forEach(function (h) {
+    var a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent;
+    var li = document.createElement('li');
+    li.appendChild(a);
+    li.dataset.target = h.id;
+    if (h.tagName === 'H2') {
+      toc.appendChild(li);
+      current = document.createElement('ul');
+      li.appendChild(current);
+    } else if (current) {
+      current.appendChild(li);
+    }
+    var anchor = document.createElement('a');
+    anchor.href = '#' + h.id; anchor.className = 'anchor'; anchor.textContent = '#';
+    anchor.setAttribute('aria-label', '链接到本节');
+    h.appendChild(anchor);
+  });
+  var links = Array.prototype.slice.call(toc.querySelectorAll('a'));
+
+  // highlight the section in view
+  var byId = {};
+  links.forEach(function (a) { byId[a.getAttribute('href').slice(1)] = a; });
+  function onScroll() {
+    var y = window.scrollY + 80, active = headings[0];
+    headings.forEach(function (h) { if (h.offsetTop <= y) active = h; });
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (active && byId[active.id]) byId[active.id].classList.add('active');
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // section text for search: everything from a heading to the next heading
+  var sectionText = {};
+  headings.forEach(function (h, i) {
+    var text = h.textContent, n = h.nextElementSibling;
+    while (n && !(n.matches && n.matches('h2[id], h3[id]'))) { text += ' ' + n.textContent; n = n.nextElementSibling; }
+    sectionText[h.id] = text.toLowerCase();
+  });
+  var search = document.getElementById('search'), info = document.getElementById('search-info');
+  search.addEventListener('input', function () {
+    var q = search.value.trim().toLowerCase(), hits = 0;
+    toc.querySelectorAll('li').forEach(function (li) {
+      var own = sectionText[li.dataset.target] || '';
+      var child = Array.prototype.some.call(li.querySelectorAll('li'), function (c) {
+        return (sectionText[c.dataset.target] || '').indexOf(q) >= 0;
+      });
+      var match = !q || own.indexOf(q) >= 0 || child;
+      li.classList.toggle('hidden', !match);
+      if (q && own.indexOf(q) >= 0) hits++;
+    });
+    info.textContent = q ? (hits ? '匹配到 ' + hits + ' 个章节' : '无匹配') : '';
+  });
+  search.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') {
+      var first = toc.querySelector('li:not(.hidden) > a');
+      if (first) { location.hash = first.getAttribute('href'); }
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === '/' && document.activeElement !== search) { e.preventDefault(); search.focus(); }
+    if (e.key === 'Escape') { lightbox.classList.remove('open'); }
+  });
+
+  // theme: remembered per browser when possible
+  var root = document.documentElement;
+  try { var saved = localStorage.getItem('pose6d-docs-theme'); if (saved) root.dataset.theme = saved; } catch (e) {}
+  document.getElementById('theme-btn').addEventListener('click', function () {
+    var dark = root.dataset.theme ? root.dataset.theme === 'dark'
+                                  : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    root.dataset.theme = dark ? 'light' : 'dark';
+    try { localStorage.setItem('pose6d-docs-theme', root.dataset.theme); } catch (e) {}
+  });
+
+  // enlarge screenshots
+  var lightbox = document.getElementById('lightbox'), lbImg = lightbox.querySelector('img');
+  content.querySelectorAll('figure img').forEach(function (img) {
+    img.addEventListener('click', function () { lbImg.src = img.src; lbImg.alt = img.alt; lightbox.classList.add('open'); });
+  });
+  lightbox.addEventListener('click', function () { lightbox.classList.remove('open'); });
+
+  // mobile contents drawer
+  var sidebar = document.getElementById('sidebar');
+  document.getElementById('menu-btn').addEventListener('click', function () { sidebar.classList.toggle('open'); });
+  toc.addEventListener('click', function (e) { if (e.target.tagName === 'A') sidebar.classList.remove('open'); });
+})();
+</script>
+</body>
+</html>
