@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { Loader2 } from "lucide-react";
@@ -17,7 +18,7 @@ function money(cents: number, currency: string) {
 /** Lists the signed-in user's licenses. `waitForNew` polls until an order appears (after checkout). */
 export function LicenseList({ waitForNew = false }: { waitForNew?: boolean }) {
   const fetchLicenses = useServerFn(listMyLicenses);
-  const startedAt = useStartTime();
+  const [startedAt] = useState(() => Date.now());
   const { data, isLoading, error } = useQuery({
     queryKey: ["my-licenses"],
     queryFn: () => fetchLicenses(),
@@ -68,10 +69,3 @@ export function LicenseList({ waitForNew = false }: { waitForNew?: boolean }) {
     </div>
   );
 }
-
-function useStartTime() {
-  // Stable for the component's lifetime.
-  const [t] = useStateOnce(() => Date.now());
-  return t;
-}
-import { useState as useStateOnce } from "react";
