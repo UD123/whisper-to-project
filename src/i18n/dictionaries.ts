@@ -359,6 +359,21 @@ export const en = {
       button: "Download for Linux",
       note: "Direct download from GitHub releases.",
     },
+    objects: {
+      eyebrow: "Object Library",
+      title: "Test Objects",
+      desc: "Download ready-made object files to test and evaluate Pose6D on your own setup.",
+      items: [
+        {
+          name: "Bricks",
+          desc: "Standard brick object file for pose estimation testing, teaching and validation.",
+          file: "bricks-15.zip",
+          button: "Download Bricks",
+          href: "https://github.com/RobotAI-Global/pose6d-deploy/releases/download/v01.15-object-bricks/bricks-15.zip",
+          note: "Direct download from GitHub releases.",
+        },
+      ],
+    },
     manual: {
       eyebrow: "Documentation",
       title: "User Guide",
@@ -699,6 +714,21 @@ export const zh: Dict = {
       file: "Pose6D-1815",
       button: "下载 Linux 版",
       note: "直接下载自 GitHub releases。",
+    },
+    objects: {
+      eyebrow: "物体库",
+      title: "测试物体",
+      desc: "下载现成的物体文件，在您自己的设备上测试与评估 Pose6D。",
+      items: [
+        {
+          name: "砖块 Bricks",
+          desc: "标准砖块物体文件，用于位姿估计测试、示教与验证。",
+          file: "bricks-15.zip",
+          button: "下载砖块",
+          href: "https://github.com/RobotAI-Global/pose6d-deploy/releases/download/v01.15-object-bricks/bricks-15.zip",
+          note: "直接下载自 GitHub releases。",
+        },
+      ],
     },
     manual: {
       eyebrow: "文档",
