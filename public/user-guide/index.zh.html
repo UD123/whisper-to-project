@@ -200,3 +200,72 @@ pip install -r requirements.txt</code></pre>
   labels\              ← 预留
   robots\              ← 预留</code></pre>
 <p>与具体物体无关的应用级状态保存在 <code>pose6d</code> 文件夹的 <code>pose6d_config.json</code> 中：上次选择的物体、默认相机类型、通信地址。它是本机私有的，首次运行时创建，不会随发行包提供。</p>
+
+<!-- ============================================================ -->
+<h2 id="concepts">概念与术语</h2>
+<div class="table-wrap"><table>
+<tr><th>术语</th><th>含义</th></tr>
+<tr><td>Object（物体）</td><td class="wrap">机器人应当抓取的一类零件，例如一个木块。以一个物体文件夹的形式保存。</td></tr>
+<tr><td>Keypoint / target point（关键点 / 目标点）</td><td class="wrap">物体上一个有名称、有辨识度的点（角点、边中点），其在物体自身坐标系中的 3D 坐标已知，单位为毫米。<code>bricks-15</code> 有 13 个：顶面角点 <code>t1–t4</code>、底面角点 <code>b1–b4</code>、边中点 <code>c12 c23 c34 c14</code>，以及顶面中心 <code>tc</code>。</td></tr>
+<tr><td>Object Id（实例编号）</td><td class="wrap">同一张图像中可能出现同一物体的多个副本。标注时每个副本获得自己的编号（1、2、3 …），检测时按实例各输出一条结果。</td></tr>
+<tr><td>Label（标签）</td><td class="wrap">某个关键点在一张图像上的像素位置，保存在 <code>&lt;image&gt;.json</code> 中。</td></tr>
+<tr><td>Model（模型）</td><td class="wrap">训练好的关键点网络，<code>models\keypoint_group_model_NNNN.pth</code>（NNNN = 轮次）。编号最大的那个用于检测和继续训练。</td></tr>
+<tr><td>Pose（位姿）</td><td class="wrap">物体相对相机的位置：<b>tvec</b> = 平移 (x, y, z)，单位毫米；<b>rvec</b> = 旋转，用 Rodrigues 旋转向量表示，单位为弧度（轴 × 角度）。由检测到的关键点及其 3D 坐标经 PnP 计算得到。</td></tr>
+<tr><td>Quality（质量分）</td><td class="wrap">0–1 的分数，表示检测到的关键点与物体模型的吻合程度。越接近 1 吻合越好；示例物体的良好检测约为 0.97–0.99。</td></tr>
+<tr><td>Intrinsics（内参）</td><td class="wrap">相机镜头参数（焦距、图像中心、畸变），由相机标定得到。缺少正确内参就无法得到正确位姿。</td></tr>
+<tr><td>Hand-eye calibration（手眼标定）</td><td class="wrap">确定相机相对于机器人法兰的位置（相机装在机械臂上），从而把位姿换算到机器人坐标系。</td></tr>
+</table></div>
+
+<!-- ============================================================ -->
+<h2 id="workflow">📈 Workflow（工作流）</h2>
+<p>整个流程的检查清单。左列显示七个步骤（绿色 = 已完成，蓝色 = 当前步骤）；右侧显示当前步骤的说明，某些步骤还带有自己的控件。用底部的 <b>Previous Step</b> / <b>Next Step</b> 前后移动。第 4 步和第 7 步没有自己的控件，请使用 Validation 和 Results 选项卡。</p>
+
+<h3 id="wf-init">第 1 步 · Initialize Project（初始化项目）</h3>
+<figure><img src="img/workflow-1-init.png" alt="工作流第 1 步：Current Object 路径，以及 Select Object、Select Multiple、Create New 按钮"></figure>
+<div class="table-wrap"><table>
+<tr><th>控件</th><th>作用</th></tr>
+<tr><td>Current Object</td><td class="wrap">当前物体文件夹的路径。所有选项卡都作用于该物体。启动时从上次会话恢复。</td></tr>
+<tr><td><b>Select Object …</b></td><td class="wrap">文件夹选择器。选择一个已有的物体文件夹；它成为所有选项卡的当前物体。</td></tr>
+<tr><td><b>Create New …</b></td><td class="wrap">打开<i>Create New Object</i>对话框（见下），并创建一个新的物体文件夹。</td></tr>
+<tr><td><b>Select Multiple …</b></td><td class="wrap">原本用于同时处理多个物体。目前打开的是同一个<i>Create New Object</i>对话框（见<a href="#known-limitations">已知限制</a>）。</td></tr>
+</table></div>
+<figure class="small"><img src="img/dialog-new-object.png" alt="Create New Object 对话框，含 Parent Folder 与 Object Name">
+<figcaption>Create New Object：<b>Parent Folder</b>（默认 <code>data\objects</code>，可用 <b>Browse…</b> 修改）与 <b>Object Name</b>。</figcaption></figure>
+<p>点击 <b>OK</b> 会创建 <code>&lt;parent&gt;\&lt;name&gt;\</code>，包含标准子文件夹和一个默认的
+<code>object_config.json</code>，并把它设为当前物体。</p>
+<div class="callout warn"><b>新物体以占位几何开始</b>新物体得到的是一组 9 点立方体关键点（<code>A1–A8</code>、<code>TC</code>），并不是你的真实物体。请在<a href="#object-teaching">Object Teaching</a>中重命名这些点并填入真实坐标（双击某个目标点）。若要改变点的<i>数量</i>或 <b>Show Shape</b> 使用的面，请在开始标注前到 <a href="#settings">Settings</a> 选项卡编辑 <code>point_names</code> / <code>point_coord</code> / <code>point_faces</code>。</div>
+
+<h3 id="wf-camera">第 2 步 · Setup &amp; Calibrate Camera（设置并标定相机）</h3>
+<figure><img src="img/workflow-2-camera.png" alt="工作流第 2 步：Camera Type 下拉框"></figure>
+<div class="table-wrap"><table>
+<tr><th>控件</th><th>作用</th></tr>
+<tr><td>Camera Type</td><td class="wrap"><code>pose6d_config.json</code> 中的默认相机类型（<code>camera_type</code>）。实际打开哪台相机是在<a href="#camera-setup">Camera Setup</a>中按物体设置的，两者可以不同。</td></tr>
+</table></div>
+
+<h3 id="wf-object">第 3 步 · Teaching Object Model（示教物体模型）</h3>
+<figure><img src="img/workflow-3-object.png" alt="工作流第 3 步：Object 与 Object Type 下拉框"></figure>
+<div class="table-wrap"><table>
+<tr><th>控件</th><th>作用</th></tr>
+<tr><td>Object</td><td class="wrap">物体目录下的所有有效物体文件夹。选择其中一个即把它设为当前物体（与 <b>Select Object</b> 相同）。</td></tr>
+<tr><td>Object Type</td><td class="wrap">物体模型类型：<code>CHESSBOARD</code>、<code>BOX</code>、<code>KEYPOINT</code>、<code>POSE</code>、<code>SKELETON</code>。会立即写入物体的 <code>object_config.json</code>。<code>bricks-15</code> 这类训练好的关键点物体使用 <code>POSE</code>；只有该类型会输出供机器人使用的 6D 位姿。</td></tr>
+</table></div>
+
+<h3 id="wf-robot">第 5 步 · Camera Robot Calibration（相机-机器人标定）</h3>
+<figure><img src="img/workflow-5-robot.png" alt="工作流第 5 步：Robot Type 与 Camera Position 下拉框"></figure>
+<div class="table-wrap"><table>
+<tr><th>控件</th><th>取值</th><th>作用</th></tr>
+<tr><td>Robot Type</td><td class="wrap"><code>UR KUKA TM ABB FANUC YASKAWA DENSO DOBOT OTHER</code></td><td class="wrap">机器人品牌，作为 <code>robot_type</code> 保存在 <code>pose6d_config.json</code></td></tr>
+<tr><td>Camera Position</td><td class="wrap"><code>Moving (On Arm)</code> · <code>Static</code></td><td class="wrap">相机装在机械臂上还是固定在工作单元中，作为 <code>camera_position</code> 保存</td></tr>
+</table></div>
+<p>标定本身在 <a href="#robot-setup">Robot Setup</a> 中完成。</p>
+
+<h3 id="wf-comm">第 6 步 · Robot Communication（机器人通信）</h3>
+<figure><img src="img/workflow-6-comm.png" alt="工作流第 6 步：IP、端口与协议输入框，以及 Test Connection 按钮"></figure>
+<div class="table-wrap"><table>
+<tr><th>控件</th><th>默认值</th><th>作用</th></tr>
+<tr><td>This computer IP / Port</td><td><code>0.0.0.0</code> / <code>5000</code></td><td class="wrap">本机地址，保存为 <code>local_ip</code> / <code>local_port</code></td></tr>
+<tr><td>Destination IP / Port</td><td><code>127.0.0.1</code> / <code>5000</code></td><td class="wrap">机器人控制器地址，保存为 <code>remote_ip</code> / <code>remote_port</code></td></tr>
+<tr><td>Protocol</td><td><code>TCP-IP</code></td><td class="wrap"><code>TCP-IP</code> 或 <code>MODBUS</code></td></tr>
+<tr><td><b>Test Connection</b></td><td></td><td class="wrap">先保存这些字段，然后用 2 秒尝试与目标建立 TCP 连接。按钮变为 <b>Connection OK</b>（绿色）或 <b>Connection Failed</b>（红色）。MODBUS 测试尚未实现，始终报告失败。</td></tr>
+</table></div>
+<div class="callout"><b>说明</b>这些地址描述的是机器人控制器。把检测结果发送给机器人的位姿服务器是在 <a href="#communication">Communication</a> 选项卡或 <a href="#val-output">Validation → Output</a> 中启动的，它有自己的地址（默认 <code>127.0.0.1:5005</code>）。</div>
