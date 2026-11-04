@@ -30,6 +30,7 @@ export type Database = {
           product_id: string | null
           quantity: number
           raw: Json | null
+          revoked_at: string | null
           status: string
           updated_at: string
           user_id: string | null
@@ -49,6 +50,7 @@ export type Database = {
           product_id?: string | null
           quantity?: number
           raw?: Json | null
+          revoked_at?: string | null
           status?: string
           updated_at?: string
           user_id?: string | null
@@ -68,6 +70,7 @@ export type Database = {
           product_id?: string | null
           quantity?: number
           raw?: Json | null
+          revoked_at?: string | null
           status?: string
           updated_at?: string
           user_id?: string | null

@@ -38,8 +38,11 @@ async function handleTransaction(data: any, env: PaddleEnv, status: string) {
 
   const item = data?.items?.[0];
   const priceId: string | null = item?.price?.importMeta?.externalId ?? item?.price?.id ?? null;
+  // Transaction events carry no product object; derive the stable product id
+  // from the human-readable price id (e.g. pose6d_demo_onetime -> pose6d_demo).
   const productId: string | null =
-    item?.product?.importMeta?.externalId ?? item?.price?.productId ?? null;
+    item?.product?.importMeta?.externalId ??
+    (priceId && !priceId.startsWith("pri_") ? priceId.replace(/_onetime$/, "") : null);
   const quantity: number = item?.quantity ?? 1;
 
   const totals = data?.details?.totals;
@@ -73,6 +76,18 @@ async function handleTransaction(data: any, env: PaddleEnv, status: string) {
   if (error) console.error("Failed to store order", error);
 }
 
+// Refund approved -> mark the order refunded and revoke its license.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+async function handleAdjustment(data: any, env: PaddleEnv) {
+  if (data?.action !== "refund" || data?.status !== "approved" || !data?.transactionId) return;
+  const { error } = await getSupabase()
+    .from("orders")
+    .update({ status: "refunded", revoked_at: new Date().toISOString(), updated_at: new Date().toISOString() })
+    .eq("paddle_transaction_id", data.transactionId)
+    .eq("environment", env);
+  if (error) console.error("Failed to mark refund", error);
+}
+
 async function handleWebhook(req: Request, env: PaddleEnv) {
   const event = await verifyWebhook(req, env);
 
@@ -82,6 +97,9 @@ async function handleWebhook(req: Request, env: PaddleEnv) {
       break;
     case EventName.TransactionPaymentFailed:
       await handleTransaction(event.data, env, "payment_failed");
+      break;
+    case EventName.AdjustmentUpdated:
+      await handleAdjustment(event.data, env);
       break;
     default:
       console.log("Unhandled event:", event.eventType);

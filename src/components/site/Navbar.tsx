@@ -62,6 +62,13 @@ export function Navbar({
             ))}
           </div>
 
+          <Link
+            to="/account"
+            className="hidden whitespace-nowrap rounded-md border border-border bg-card px-3 py-1.5 text-sm font-medium text-muted-foreground hover:text-foreground sm:inline-flex"
+          >
+            {t.nav.account}
+          </Link>
+
           <LanguageSwitcher />
 
           <button

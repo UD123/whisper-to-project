@@ -38,8 +38,8 @@ const en: PricingDict = {
     {
       id: "demo",
       name: "Demo",
-      price: "$1",
-      unit: "one-time evaluation",
+      price: "Free",
+      unit: "registration only",
       desc: "Full runtime with a sample object model for bench evaluation.",
       features: [
         "Pose6D runtime (Windows / Linux)",
@@ -48,7 +48,7 @@ const en: PricingDict = {
         "Full documentation and setup guide",
         "Evaluation use only",
       ],
-      cta: "Buy Demo license",
+      cta: "Get free Demo license",
       priceId: "pose6d_demo_onetime",
     },
     {
@@ -104,7 +104,7 @@ const en: PricingDict = {
   success: {
     eyebrow: "Order confirmed",
     title: "Thank you for your purchase",
-    body: "Your payment was received. The license key and activation instructions are on their way to the email address used at checkout. If it does not arrive within one business day, contact info@robotai.info.",
+    body: "Your payment was received. Your license key is shown below and is always available on your My Licenses page. Questions? Contact info@robotai.info.",
     back: "Back to pricing",
   },
 };
@@ -118,8 +118,8 @@ const zh: PricingDict = {
     {
       id: "demo",
       name: "评测版",
-      price: "$1",
-      unit: "一次性评测",
+      price: "免费",
+      unit: "仅需注册",
       desc: "完整运行时与示例物体模型，用于台架评测。",
       features: [
         "Pose6D 运行时（Windows / Linux）",
@@ -128,7 +128,7 @@ const zh: PricingDict = {
         "完整文档与安装指南",
         "仅限评测用途",
       ],
-      cta: "购买评测许可",
+      cta: "免费获取评测许可",
       priceId: "pose6d_demo_onetime",
     },
     {
@@ -184,7 +184,7 @@ const zh: PricingDict = {
   success: {
     eyebrow: "订单已确认",
     title: "感谢您的购买",
-    body: "我们已收到您的付款。许可密钥与激活说明将发送至结账时使用的邮箱。若一个工作日内未收到，请联系 info@robotai.info。",
+    body: "我们已收到您的付款。您的许可密钥显示在下方，也可随时在“我的许可”页面查看。如有疑问，请联系 info@robotai.info。",
     back: "返回价格页",
   },
 };

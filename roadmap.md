@@ -1,26 +1,6 @@
-# Roadmap — /guide improvements + JAKA logo
-
-All done:
-
-- [x] Solid (non-transparent) navbar on /guide
-- [x] Poster frames for 9 guide videos + dark placeholder
-- [x] Stripped audio from usb-quickstart.mp4, re-uploaded asset
-- [x] Full-height sticky sidebar + mobile TOC chips (<1024px)
-- [x] Compact step cards (less whitespace)
-- [x] Renamed "ROUTE" eyebrow → "11 STEPS"
-- [x] Placeholder download chips: usb_test.zip + POC installer ("Link on request")
-- [x] Documents section verified — checkerboard PDF + user guide present
-- [x] JAKA Robotics logo added to Ecosystem (grayscale → color on hover)
-- [x] Build + Playwright verification (9 videos with posters, no console errors)
-
-Still needed from the user: real POC installer download link.
-- [x] usb_test.zip download button → GitHub release link provided.
-
-Current task:
-
-- [x] Replace every video in “Detected objects — examples” with the 10 uploaded detection images
-- [x] Verify the image-only gallery on desktop and mobile
-- [x] Replace “AgriTech / Special Applications” media with a silent forward-and-reverse loop made from the source file’s first 25 seconds
-
-- [x] Add Industrial Fast-Tracking Applications section with gantry tracking clip from Drive file 1eAVGhZBTN
-- [x] Replace CAM_09 with the new 8.4-second Fast Tracking source clip
+# Roadmap
+- [x] Require sign-in to buy; link purchases to accounts
+- [x] License key on Thank-you page and My Licenses page
+- [x] One license per purchase
+- [x] Refunds mark order refunded and revoke key
+- [ ] Demo license free ($0), registration only, no payment
