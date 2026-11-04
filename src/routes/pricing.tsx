@@ -8,6 +8,8 @@ import { Navbar } from "@/components/site/Navbar";
 import { Footer } from "@/components/site/Footer";
 import { PaymentTestModeBanner } from "@/components/PaymentTestModeBanner";
 import { usePaddleCheckout } from "@/hooks/usePaddleCheckout";
+import { useServerFn } from "@tanstack/react-start";
+import { claimDemoLicense } from "@/utils/payments.functions";
 import { toast } from "sonner";
 
 const title = "Pose6D Licensing & Pricing | RobotAI";
@@ -88,6 +90,7 @@ function PricingLayout() {
 function TierCard({ tier }: { tier: PricingTier }) {
   const { openCheckout } = usePaddleCheckout();
   const navigate = useNavigate();
+  const claimDemo = useServerFn(claimDemoLicense);
   const [busy, setBusy] = useState(false);
 
   const buy = async () => {
@@ -99,6 +102,12 @@ function TierCard({ tier }: { tier: PricingTier }) {
       if (!data.user) {
         toast.info("Please sign in or create an account to buy a license.");
         navigate({ to: "/auth", search: { redirect: "/pricing" } });
+        return;
+      }
+      if (tier.id === "demo") {
+        const r = await claimDemo();
+        toast.success(r.alreadyClaimed ? "You already have a Demo license." : "Your free Demo license is ready.");
+        navigate({ to: "/account" });
         return;
       }
       await openCheckout({
