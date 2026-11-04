@@ -512,3 +512,89 @@ with socket.create_connection(("127.0.0.1", 5005)) as s:
     for obj_id, obj in result["objects"].items():
         if obj["success"] and obj["quality"] > 0.9:
             print(obj_id, obj["tvec"], obj["rvec"])</code></pre>
+
+<!-- ============================================================ -->
+<h2 id="settings">⚙️ Settings（设置）</h2>
+<p>以表单方式编辑当前物体的 <code>object_config.json</code>。顶部显示物体路径；切换物体时表单会重新加载。</p>
+<figure><img src="img/settings.png" alt="Settings 选项卡：Application 与 Object Parameters 两个区块的表单字段"></figure>
+<div class="table-wrap"><table>
+<tr><th>字段类型</th><th>如何编辑</th></tr>
+<tr><td>数值 / 文本</td><td class="wrap">直接输入。true/false 值用复选框。</td></tr>
+<tr><td>短列表或矩阵</td><td class="wrap">每个值一个输入框（例如 <code>pose</code>、<code>point_coord</code>、<code>intrinsic_matrix</code>）。</td></tr>
+<tr><td>名称列表</td><td class="wrap">用逗号分隔，例如 <code>t1, t2, t3</code>。</td></tr>
+<tr><td>嵌套列表</td><td class="wrap">原始 JSON，例如 <code>[["t1","t2","t3","t4"],["b1","b2","b3","b4"]]</code>。鼠标悬停可看提示。</td></tr>
+</table></div>
+<p><b>Save Configuration</b> 会先检查数值，只有全部检查通过才保存：</p>
+<ul>
+<li><code>point_names</code> 与 <code>point_coord</code> 条目数相同，且每个坐标都是 <code>[x, y, z]</code>；</li>
+<li><code>point_faces</code> 中的每个名称都存在于 <code>point_names</code> 中；</li>
+<li>每个 <code>resolution</code> 都是 <code>[width, height]</code>；</li>
+<li><code>intrinsic_matrix</code> 为 3×3。</li>
+</ul>
+
+<h3 id="config-reference">object_config.json 参考</h3>
+<h4>object_parameters</h4>
+<div class="table-wrap"><table>
+<tr><th>键</th><th>示例</th><th>含义</th></tr>
+<tr><td><code>name</code></td><td><code>bricks-15</code></td><td class="wrap">物体名称（即文件夹名）</td></tr>
+<tr><td><code>type</code></td><td><code>pose</code></td><td class="wrap">物体模型类型，见<a href="#wf-object">Object Type</a></td></tr>
+<tr><td><code>point_names</code></td><td><code>t1 … tc</code></td><td class="wrap">关键点名称，按网络学习的顺序排列</td></tr>
+<tr><td><code>point_coord</code></td><td><code>[[0,0,40], [0,70,40], …]</code></td><td class="wrap">每个关键点的 3D 位置（毫米），顺序与 <code>point_names</code> 一致。它定义了物体坐标系：位姿轴画在 (0, 0, 0)。</td></tr>
+<tr><td><code>point_faces</code></td><td><code>[["t1","t2","t3","t4"], …]</code></td><td class="wrap">Show Shape 绘制的闭合轮廓</td></tr>
+<tr><td><code>resolution</code></td><td><code>[1920, 1080]</code></td><td class="wrap">训练图像的图像尺寸</td></tr>
+<tr><td><code>id</code>、<code>pose</code>、<code>image_path</code></td><td></td><td class="wrap">记录用途；检测不需要</td></tr>
+</table></div>
+<h4>camera_parameters</h4>
+<div class="table-wrap"><table>
+<tr><th>键</th><th>示例</th><th>含义</th></tr>
+<tr><td><code>camera_type</code></td><td><code>WEBCAM0</code></td><td class="wrap">相机驱动，见<a href="#cam-settings">Camera Type</a></td></tr>
+<tr><td><code>cameraid</code></td><td><code>0</code></td><td class="wrap">普通摄像头的设备索引。若该索引打不开，会使用第一个可用的相机（0–3）。</td></tr>
+<tr><td><code>resolution</code></td><td><code>[640, 480]</code></td><td class="wrap">向相机请求的采集尺寸</td></tr>
+<tr><td><code>mode</code></td><td><code>rgb</code></td><td class="wrap">显示的数据流：<code>rgb</code>、<code>irl</code>/<code>irr</code>（左/右红外）、<code>dep</code>（深度）、<code>rgd</code>、<code>lrd</code>、<code>rgbd</code></td></tr>
+<tr><td><code>intrinsic_matrix</code></td><td><code>[[2700,0,960],[0,2700,540],[0,0,1]]</code></td><td class="wrap">以像素为单位的焦距与图像中心。会被相机标定替换。</td></tr>
+<tr><td><code>intrinsic_distortion</code></td><td><code>[[0,0,0,0,0]]</code></td><td class="wrap">镜头畸变 k1 k2 p1 p2 k3</td></tr>
+<tr><td><code>exposure</code>、<code>gain</code>、<code>focus</code>、<code>format</code>、<code>crop_box</code>、<code>rotation_type</code></td><td></td><td class="wrap">保存的相机设置；曝光由 Camera Setup 设置</td></tr>
+</table></div>
+<h4>detection_parameters</h4>
+<div class="table-wrap"><table>
+<tr><th>键</th><th>默认值</th><th>含义</th></tr>
+<tr><td><code>image_scale</code></td><td><code>0.5</code></td><td class="wrap">训练与检测时，图像进入网络前应用的缩放</td></tr>
+<tr><td><code>train_split</code></td><td><code>0.95</code></td><td class="wrap">用于训练的标注图像比例</td></tr>
+<tr><td><code>n_epochs</code></td><td><code>100</code></td><td class="wrap">训练轮次（需自行添加该键才能修改）</td></tr>
+<tr><td><code>lr</code></td><td><code>0.0001</code></td><td class="wrap">学习率（需自行添加该键才能修改）</td></tr>
+<tr><td><code>net_name</code>、<code>net_path</code>、<code>gain</code>、<code>augment_type</code>、<code>resolution</code></td><td></td><td class="wrap">为兼容性保留；关键点模型不使用</td></tr>
+</table></div>
+<p><code>application</code> 与 <code>measurement_parameters</code> 为兼容性保留，不影响检测。
+相机标定还会在顶层添加 <code>camera_matrix</code> 与 <code>camera_distortion</code>。</p>
+
+<!-- ============================================================ -->
+<h2 id="results">📊 Results &amp; Logs（结果与日志）</h2>
+<figure><img src="img/results.png" alt="Results and Logs 选项卡：结果为空的列表"></figure>
+<p>这是一个用于存放标定与运行结果的占位列表，目前只显示 <i>System initialized…</i>。应用日志：从源码运行时在控制台窗口中，部署版中在 <code>logs\pose6d.log</code>（见<a href="#source-vs-deployed">源码模式与部署模式</a>）。</p>
+
+<!-- ============================================================ -->
+<h2 id="license">🔑 License（许可证）</h2>
+<figure><img src="img/license.png" alt="License 选项卡：机器码、许可证状态、Activate / Renew License 按钮"></figure>
+<p>pose6d 使用锁定到本机的离线许可证。无需网络连接。</p>
+<div class="table-wrap"><table>
+<tr><th>项目</th><th>含义</th></tr>
+<tr><td>Machine id（机器码）</td><td class="wrap">标识本机。许可证只在签发时指定的机器上有效。</td></tr>
+<tr><td>Status（状态）</td><td class="wrap"><i>Licensed - expires: &lt;日期或 never&gt;</i>，或说明为何无效：未激活、格式/签名无效、机器不符、已过期、检测到系统时钟回拨</td></tr>
+<tr><td>Features（功能位）</td><td class="wrap">已授权功能的位掩码，见下表</td></tr>
+<tr><td><b>Activate / Renew License…</b></td><td class="wrap">打开激活对话框</td></tr>
+</table></div>
+<figure class="small"><img src="img/dialog-license.png" alt="许可证激活对话框：请求码与启用码输入区"></figure>
+<ol class="steps">
+<li>在 <b>1. Your request code</b> 下，点击 <b>Copy to Clipboard</b> 或 <b>Save Request File (.req)…</b>，把它发给你的供应商。</li>
+<li>把你收到的启用码粘贴到 <b>2.</b> 下，或点击 <b>Load Enable File (.lic)…</b>。</li>
+<li>点击 <b>Activate</b>。许可证保存为启动 pose6d 时所在文件夹中的 <code>pose6d_license.lic</code>（对 exe 而言，也会到 <code>pose6d.exe</code> 旁边查找）。</li>
+</ol>
+<div class="table-wrap"><table>
+<tr><th>功能位</th><th>功能</th></tr>
+<tr><td><code>0x0001</code></td><td>检测显示</td></tr>
+<tr><td><code>0x0002</code></td><td>训练</td></tr>
+<tr><td><code>0x0004</code></td><td class="wrap">机器人通信。没有它时，通信可工作 1 小时宽限期，之后 Communication 选项卡被禁用。</td></tr>
+<tr><td><code>0x0008</code></td><td>标注</td></tr>
+</table></div>
+<div class="callout warn"><b>不要把电脑时钟往回调</b>许可证会检测到时钟被回拨，并在本次运行中停止接受该许可证。</div>
+<p>供应商使用 <code>vendor_tools/issue_license.py</code> 离线签发许可证（见 <code>docs/getting-started/licensing.md</code>）。</p>
