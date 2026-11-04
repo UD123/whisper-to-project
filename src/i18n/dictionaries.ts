@@ -349,7 +349,6 @@ export const en = {
     windows: {
       title: "Windows",
       desc: "Windows 10/11 installer. Includes Pose6D Runtime, data acquisition utilities and camera drivers.",
-      file: "Pose6D-2509-cpu.exe",
       button: "Download for Windows",
       note: "Direct download from GitHub releases.",
     },
@@ -363,10 +362,9 @@ export const en = {
     manual: {
       eyebrow: "Documentation",
       title: "User Guide",
-      desc: "Download the full Pose6D user guide for the POC release.",
-      file: "Pose6D-User-Guide.pdf",
-      button: "Download full manual (PDF)",
-      note: "Version 0919 · served from this site.",
+      desc: "Read the complete Pose6D user guide in your browser.",
+      button: "Open the Manual",
+      note: "Setup, teaching, training and validation instructions.",
     },
   },
   footer: {
@@ -692,7 +690,6 @@ export const zh: Dict = {
     windows: {
       title: "Windows",
       desc: "Windows 10/11 安装程序，包含 Pose6D 运行时、数据采集工具及相机驱动。",
-      file: "Pose6D-2509-cpu.exe",
       button: "下载 Windows 版",
       note: "直接下载自 GitHub releases。",
     },
@@ -706,10 +703,9 @@ export const zh: Dict = {
     manual: {
       eyebrow: "文档",
       title: "用户手册",
-      desc: "下载 POC 版本的完整 Pose6D 用户手册。",
-      file: "Pose6D-User-Guide.pdf",
-      button: "下载完整手册（PDF）",
-      note: "版本 0919 · 由本站直接提供。",
+      desc: "在浏览器中阅读完整的 Pose6D 用户手册。",
+      button: "打开手册",
+      note: "安装、示教、训练与验证说明。",
     },
   },
   footer: {

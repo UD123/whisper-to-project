@@ -1,5 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { Monitor, Terminal, Download, AlertCircle, FileText } from "lucide-react";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { Monitor, Terminal, Download, AlertCircle, BookOpen, ArrowRight } from "lucide-react";
 import { LanguageProvider, useT } from "@/i18n/LanguageProvider";
 import { Navbar } from "@/components/site/Navbar";
 import { Footer } from "@/components/site/Footer";
@@ -8,7 +8,7 @@ const title = "Pose6D Downloads — Windows & Linux | RobotAI";
 const description = "Download Pose6D for Windows or Linux. Runtime, calibration tools and camera drivers for industrial 6DOF pose estimation.";
 
 const WINDOWS_URL =
-  "https://github.com/RobotAI-Global/pose6d-deploy/releases/download/v25.09-windows-cpu/Pose6D-2509-cpu.exe";
+  "https://github.com/RobotAI-Global/pose6d-deploy/releases/download/v01.08-robot-vision/pose6d_0108.exe";
 const TEMP_LINUX_URL =
   "https://github.com/RobotAI-Global/pose6d-deploy/releases/download/v18.15-linux-cpu/Pose6D-1815";
 
@@ -75,7 +75,6 @@ function DownloadContent() {
           icon={<Monitor className="h-6 w-6" />}
           platform={d.windows.title}
           desc={d.windows.desc}
-          file={d.windows.file}
           button={d.windows.button}
           href={WINDOWS_URL}
           note={d.windows.note}
@@ -101,22 +100,20 @@ function DownloadContent() {
         <div className="mt-6 flex flex-col rounded-xl border border-border bg-card p-6 md:flex-row md:items-center md:justify-between md:gap-6">
           <div className="flex items-start gap-4">
             <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border bg-background text-primary">
-              <FileText className="h-6 w-6" />
+              <BookOpen className="h-6 w-6" />
             </span>
             <div>
-              <h3 className="font-semibold tracking-tight">{d.manual.file}</h3>
+              <h3 className="font-semibold tracking-tight">{t.nav.manual}</h3>
               <p className="mt-1 text-sm text-muted-foreground">{d.manual.note}</p>
             </div>
           </div>
-          <a
-            href="https://github.com/RobotAI-Global/pose6d-deploy/releases/download/v19.09-user-guide-poc-windows/Pose6D-User.Guide.for.POC.-.0919.pdf"
-            download
-            rel="noopener noreferrer"
+          <Link
+            to="/manual"
             className="mt-5 inline-flex items-center justify-center gap-2 rounded-md bg-foreground px-5 py-3 text-sm font-medium text-background transition-opacity hover:opacity-90 md:mt-0"
           >
-            <Download className="h-4 w-4" />
             {d.manual.button}
-          </a>
+            <ArrowRight className="h-4 w-4" />
+          </Link>
         </div>
       </section>
     </div>
@@ -135,7 +132,7 @@ function PlatformCard({
   icon: React.ReactNode;
   platform: string;
   desc: string;
-  file: string;
+  file?: string;
   button: string;
   href: string;
   note: string;
@@ -151,10 +148,12 @@ function PlatformCard({
 
       <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{desc}</p>
 
-      <div className="mt-6 rounded-lg border border-border bg-background px-4 py-3">
-        <span className="mono-label text-muted-foreground">File</span>
-        <p className="mt-1 font-mono text-sm break-all">{file}</p>
-      </div>
+      {file && (
+        <div className="mt-6 rounded-lg border border-border bg-background px-4 py-3">
+          <span className="mono-label text-muted-foreground">File</span>
+          <p className="mt-1 font-mono text-sm break-all">{file}</p>
+        </div>
+      )}
 
       <div className="mt-auto flex flex-col gap-3 pt-8">
         <a
