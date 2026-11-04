@@ -269,3 +269,40 @@ pip install -r requirements.txt</code></pre>
 <tr><td><b>Test Connection</b></td><td></td><td class="wrap">先保存这些字段，然后用 2 秒尝试与目标建立 TCP 连接。按钮变为 <b>Connection OK</b>（绿色）或 <b>Connection Failed</b>（红色）。MODBUS 测试尚未实现，始终报告失败。</td></tr>
 </table></div>
 <div class="callout"><b>说明</b>这些地址描述的是机器人控制器。把检测结果发送给机器人的位姿服务器是在 <a href="#communication">Communication</a> 选项卡或 <a href="#val-output">Validation → Output</a> 中启动的，它有自己的地址（默认 <code>127.0.0.1:5005</code>）。</div>
+
+<!-- ============================================================ -->
+<h2 id="camera-setup">📷 Camera Setup（相机设置）</h2>
+<p>连接相机、查看实时图像、采集用于标注的图像，并标定相机镜头。</p>
+<figure><img src="img/camera-setup.png" alt="Camera Setup 选项卡：相机设置、标定面板，以及桌上一堆木块的实时图像"></figure>
+
+<h3 id="cam-settings">Camera Settings（相机设置）</h3>
+<div class="table-wrap"><table>
+<tr><th>控件</th><th>取值</th><th>作用 / 建议</th></tr>
+<tr><td>Camera Type</td><td class="wrap"><code>REALSENSE WEBCAM0 WEBCAM1 BASLER IDS FLIR DALSA GENICAM OTHER</code></td><td class="wrap">要使用的相机驱动。RealSense、普通摄像头和 Basler 有自己的驱动；其余项目目前通过通用摄像头（OpenCV）驱动打开。按物体保存在 <code>camera_parameters.camera_type</code>。</td></tr>
+<tr><td>Resolution（分辨率）</td><td><code>1280x720</code> · <code>640x480</code> · <code>640x360</code></td><td class="wrap">请求的采集尺寸。越高细节越多但检测越慢。更改后要重新标定相机，因为内参与分辨率有关。</td></tr>
+<tr><td>Exposure（曝光）</td><td class="wrap"><code>330 100 200 500 1000 2000 5000</code>，或直接输入数值</td><td class="wrap">以相机自身单位表示的曝光，连接后立即生效。运动部件发虚时调低；光线暗的工作单元中调高。</td></tr>
+<tr><td><b>💡 Projector: ON/OFF</b></td><td></td><td class="wrap">RealSense 的红外点阵投射器。如果你标注的图像中能看到点阵图案，请把它关掉。</td></tr>
+<tr><td>Saved Image Format（保存图像格式）</td><td><code>RGB Left Right Depth RGD LRD All</code></td><td class="wrap"><b>Save Image</b> 写入哪（几）个数据流。标注请使用 <code>RGB</code>。Left/Right/Depth 需要 RealSense 相机。</td></tr>
+<tr><td><b>📂 Load Init File</b></td><td></td><td class="wrap">打开一个 <code>.ini</code> 设置文件的对话框。加载功能尚未实现。</td></tr>
+</table></div>
+
+<h3 id="cam-capture">采集图像</h3>
+<ol class="steps">
+<li>先选择物体（<a href="#wf-init">工作流第 1 步</a>）。图像会保存到该物体的文件夹中。</li>
+<li>设置 Camera Type、Resolution 和 Exposure，然后点击 <b>🟢 Connect Camera</b>。实时图像出现在右侧，按钮变红（<b>🔴 Disconnect Camera</b>）。</li>
+<li>对每个视角点击 <b>🖼️ Save Image</b>。在两次拍摄之间移动物体和相机：不同的位置、角度、光照以及部分遮挡，能得到更鲁棒的模型。</li>
+</ol>
+<p>图像保存为 <code>&lt;format&gt;_YYYYMMDD_HHMMSS.png</code>（例如 <code>rgb_20261028_141502.png</code>），位于物体的 <code>images\</code> 文件夹；如果你在标定面板中用 <b>Select Image Folder</b> 选择过文件夹，则保存到那里。</p>
+<div class="callout"><b>需要多少图像？</b>示例物体 <code>bricks-15</code> 由 14 张标注图像训练得到，每张图像中有多个木块。建议从 10–20 张差异较大的图像开始，在检测薄弱的地方再补充。</div>
+
+<h3 id="cam-calibration">Camera Calibration（相机标定）</h3>
+<p>用打印出来的棋盘格照片（<code>doc\checkerboard_pattern.pdf</code>）计算相机内参。</p>
+<div class="table-wrap"><table>
+<tr><th>控件</th><th>取值</th><th>含义 / 建议</th></tr>
+<tr><td>Calibration Pattern（标定图案）</td><td class="wrap"><code>6x9 7x10 4x11 5x5</code>，或输入 <code>NxM</code></td><td class="wrap">棋盘格的<b>内角点</b>数量（列 × 行），不是方格数量。</td></tr>
+<tr><td>Square size (mm)（方格边长）</td><td class="wrap"><code>10 20 30 50 100 200 300</code>，或输入数值</td><td class="wrap">打印出来的一个方格的边长，按实际打印尺寸测量。它决定标定的尺度。</td></tr>
+<tr><td><b>📁 Select Image Folder</b></td><td></td><td class="wrap">存放棋盘格照片的文件夹；这些照片会列在 <b>Images</b> 下。点击其中一张可查看。</td></tr>
+<tr><td><b>🛠️ Calibrate</b></td><td></td><td class="wrap">对文件夹中的每一张图像运行标定。</td></tr>
+</table></div>
+<div class="callout ok"><b>预期结果</b>出现 <i>Calibration Complete</i> 提示。相机矩阵与畸变会写入物体的 <code>object_config.json</code> 以及检测读取的 <code>cameras\calibration.json</code>。</div>
+<p>拍摄 15–25 张照片，让棋盘格占据图像的不同区域并以不同角度倾斜。图案或方格边长无效时会显示 <i>Bad Pattern</i> / <i>Bad Square Size</i>；可用图像太少时显示 <i>Calibration Failed</i>。</p>
