@@ -4,3 +4,4 @@
 - [x] One license per purchase
 - [x] Refunds mark order refunded and revoke key
 - [ ] Demo license free ($0), registration only, no payment
+- [ ] Replace My Licenses with a top-right Profile entry and editable personal information alongside licenses
