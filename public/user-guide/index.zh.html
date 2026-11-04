@@ -306,3 +306,70 @@ pip install -r requirements.txt</code></pre>
 </table></div>
 <div class="callout ok"><b>预期结果</b>出现 <i>Calibration Complete</i> 提示。相机矩阵与畸变会写入物体的 <code>object_config.json</code> 以及检测读取的 <code>cameras\calibration.json</code>。</div>
 <p>拍摄 15–25 张照片，让棋盘格占据图像的不同区域并以不同角度倾斜。图案或方格边长无效时会显示 <i>Bad Pattern</i> / <i>Bad Square Size</i>；可用图像太少时显示 <i>Calibration Failed</i>。</p>
+
+<!-- ============================================================ -->
+<h2 id="object-teaching">🖊️ Object Teaching（物体示教）</h2>
+<p>在你的图像上标出每个关键点的位置，用叠加层检查标注，然后训练模型。</p>
+<figure><img src="img/teaching-labels.png" alt="Object Teaching 选项卡：一张图像上六个木块已用不同颜色标注关键点，右侧是带坐标的目标点列表"></figure>
+
+<h3 id="teach-controls">控件</h3>
+<div class="table-wrap"><table>
+<tr><th>控件</th><th>作用</th></tr>
+<tr><td><b>🖱️ Select Object</b></td><td class="wrap">切换到另一个物体文件夹。若该文件夹没有有效的 <code>object_config.json</code>，会显示 <i>Invalid Object</i>。</td></tr>
+<tr><td>Object Id</td><td class="wrap">你正在标注的实例编号 1–20。每个实例用自己的颜色绘制。图像中物体的每一个可见副本都要用不同编号标注。</td></tr>
+<tr><td><b>❌ Delete Object</b></td><td class="wrap">从当前图像中移除所选 Object Id 的全部点。</td></tr>
+<tr><td>Target Points（目标点）</td><td class="wrap">物体的关键点及其 3D 坐标（毫米）。当前选中的点就是下一次点击要放置的点。<b>双击</b>某个点可重命名或修改其 X/Y/Z。这会改变所有图像使用的物体模型，而不是这张图像上的标注。</td></tr>
+<tr><td><b>🗑️ Clear Points</b></td><td class="wrap">移除当前图像中的全部点（在点击 <b>Save Points</b> 之前不会保存）。</td></tr>
+<tr><td><b>💾 Save Points</b></td><td class="wrap">把点写入图像旁边的 <code>&lt;image&gt;.json</code>，并把该图像标成绿色。</td></tr>
+<tr><td><b>➖ Delete Point</b></td><td class="wrap">从物体模型中删除选中的 Target Point。见<a href="#target-points">添加与删除目标点</a>。</td></tr>
+<tr><td><b>➕ Add Point</b></td><td class="wrap">向物体模型添加一个新的 Target Point。见<a href="#target-points">添加与删除目标点</a>。</td></tr>
+<tr><td><b>📁 Select Image Folder</b></td><td class="wrap">其图像出现在 Images 列表中的文件夹（默认：物体的 <code>images\</code>）。</td></tr>
+<tr><td>Images（图像）</td><td class="wrap">点击加载。已标注（有保存的 <code>.json</code>）的图像以<b>绿色</b>显示。</td></tr>
+<tr><td><b>📐 Show Axis</b></td><td class="wrap">根据标注计算每个实例的位姿，并绘制其坐标轴（X 红、Y 绿、Z 蓝）。</td></tr>
+<tr><td><b>🔷 Show Shape</b></td><td class="wrap">同上，但把物体的面（<code>point_faces</code>）绘制成轮廓。</td></tr>
+<tr><td><b>🚀 Train Model</b></td><td class="wrap">开始或停止训练。见<a href="#training">训练</a>。</td></tr>
+</table></div>
+
+<h3 id="labeling">标注一张图像</h3>
+<ol class="steps">
+<li>选择一个 <b>Object Id</b>（从 1 开始），并在 <b>Images</b> 列表中点击一张图像。</li>
+<li>点击 <b>Target Points</b> 中的一行，或者直接开始：第一个点已预选。</li>
+<li>在图像上<b>左键点击</b>该关键点的位置。出现十字与标签，选中项自动移到下一个点，因此你可以按顺序把整个物体点完。</li>
+<li>在某个点附近<b>右键点击</b>可删除它。</li>
+<li>对图像中物体的其他每个副本，换下一个 Object Id 重复以上操作。</li>
+<li>点击 <b>💾 Save Points</b>。</li>
+</ol>
+<p>只标注你确实能看到的点；被挡住的角点就留空。加载一张绿色图像会显示它已保存的点，便于你修正后再次保存。</p>
+
+<h3 id="target-points">添加与删除目标点</h3>
+<p>Target Points 列表就是物体模型：关键点名称及其 3D 坐标（毫米）。<b>Add Point</b> 和 <b>Delete Point</b> 会修改该模型，并立即写入物体的 <code>object_config.json</code>（<code>point_names</code>、<code>point_coord</code>）。不需要 <b>Save Points</b>。请先选择一个物体。</p>
+<figure class="small"><img src="img/dialog-add-point.png" alt="添加目标点对话框：建议名称 P14 与 X、Y、Z 坐标输入框（毫米）"><figcaption>➕ Add Point：输入名称以及该点在物体上的位置（毫米）。</figcaption></figure>
+<div class="table-wrap"><table>
+<tr><th>按钮</th><th>作用</th></tr>
+<tr><td><b>➕ Add Point</b></td><td class="wrap">打开一个对话框，其中带有建议的可用名称（在 <code>A1</code>…<code>A8</code> 之后为 <code>A9</code>，否则为 <code>P&lt;n&gt;</code>）以及毫米单位的 X/Y/Z。<b>OK</b> 会把该点添加到列表<b>末尾</b>，因此已有各点的顺序保持不变。名称为空或已被使用会被拒绝。新点会被选中，你可以立即开始标注它。</td></tr>
+<tr><td><b>➖ Delete Point</b></td><td class="wrap">在你确认后删除列表中选中的点。它同时会从 <code>point_faces</code> 中移除（剩余少于 3 个点的面会被丢弃），并从当前图像以及图像文件夹中每个 <code>&lt;image&gt;.json</code> 的标注中移除。</td></tr>
+</table></div>
+<div class="callout warn"><b>修改点后要重新训练。</b>添加或删除一个点会改变关键点数量，因此在修改之前训练好的模型不再与物体匹配。请在图像上标注新点，然后重新训练。删除操作无法撤销。如果可能还需要旧标注，请先复制物体文件夹。</div>
+
+<h3 id="teach-overlays">用叠加层检查标注</h3>
+<p>标注完成后打开 <b>Show Axis</b> 或 <b>Show Shape</b>。如果坐标轴正好落在物体角点上、轮廓与边缘吻合，说明标注、3D 坐标和相机标定三者是一致的。</p>
+<figure><img src="img/teaching-axis.png" alt="已标注图像，每个木块上画有一位姿轴"><figcaption>Show Axis：每个已标注实例一条位姿轴。</figcaption></figure>
+<figure><img src="img/teaching-shape.png" alt="已标注图像，每个木块上画出面的轮廓"><figcaption>Show Shape：<code>point_faces</code> 中定义的面，用计算出的位姿投影得到。</figcaption></figure>
+<div class="callout warn"><b>某个实例没有画出来？</b>一个实例至少需要 4 个已标注的点。当重投影误差超过 5 像素时，叠加层也会被跳过（日志中给出警告），这通常意味着某个点标错、3D 坐标有误，或相机标定缺失/错误。</div>
+
+<h3 id="training">训练</h3>
+<figure><img src="img/teaching-training.png" alt="图像上方的训练进度条：第 120 轮 / 共 500 轮，24%，显示 loss 与误差下降"><figcaption>训练进行时，图像上方的进度条显示轮次、百分比、当前 loss 以及误差下降幅度。</figcaption></figure>
+<ol class="steps">
+<li>选中已标注的物体，点击 <b>🚀 Train Model</b>。</li>
+<li>若该物体还没有模型，确认 <i>No Model Found → start training?</i>。若已有模型，<i>Model Exists → retrain it?</i> 会从最新的权重继续，而不是从头开始。</li>
+<li>训练在后台进行，应用仍可正常使用。按钮显示 <b>🛑 Stop Training</b>。</li>
+<li>若要提前结束，再次点击它。系统会询问是否保存当前轮次的模型（<i>Save Partial Model</i>）。</li>
+</ol>
+<div class="table-wrap"><table>
+<tr><th>设置</th><th>位置</th><th>默认值</th><th>含义</th></tr>
+<tr><td>Epochs（轮次）</td><td><code>detection_parameters.n_epochs</code></td><td>100</td><td class="wrap">对训练图像遍历的遍数，用于新训练以及每次继续训练</td></tr>
+<tr><td>Learning rate（学习率）</td><td><code>detection_parameters.lr</code></td><td>0.0001</td><td class="wrap">优化器的步长。除非训练发散，否则不要改。</td></tr>
+<tr><td>Image scale（图像缩放）</td><td><code>detection_parameters.image_scale</code></td><td>0.5</td><td class="wrap">图像进入网络前按此比例缩放。越小越快，但会丢失细小细节。</td></tr>
+<tr><td>Train split（训练划分）</td><td><code>detection_parameters.train_split</code></td><td>0.95</td><td class="wrap">用于训练的标注图像比例，其余用于验证。</td></tr>
+</table></div>
+<p>新的 <code>object_config.json</code> 中没有 <code>n_epochs</code> 和 <code>lr</code>；要修改请把它们添加到 <code>detection_parameters</code>（Settings 选项卡或文本编辑器）。权重写入 <code>models\keypoint_group_model_NNNN.pth</code>。</p>
