@@ -598,3 +598,88 @@ with socket.create_connection(("127.0.0.1", 5005)) as s:
 </table></div>
 <div class="callout warn"><b>不要把电脑时钟往回调</b>许可证会检测到时钟被回拨，并在本次运行中停止接受该许可证。</div>
 <p>供应商使用 <code>vendor_tools/issue_license.py</code> 离线签发许可证（见 <code>docs/getting-started/licensing.md</code>）。</p>
+
+<!-- ============================================================ -->
+<h2 id="examples">完整示例</h2>
+
+<h3 id="ex-new-object">1 · 从零示教一个新物体</h3>
+<ol class="steps">
+<li><b>Workflow → Create New…</b>：为物体命名，例如 <code>bracket-01</code>。</li>
+<li><b>Settings</b>：用真实关键点替换占位立方体：<code>point_names</code>、<code>point_coord</code>（毫米，从你选定作为原点的某个角点量起）以及 <code>point_faces</code>。然后 <b>Save Configuration</b>。</li>
+<li><b>Camera Setup</b>：连接相机，并用 15–25 张棋盘格图像标定它。</li>
+<li><b>Camera Setup</b>：用 <b>Save Image</b> 采集 15–20 个差异较大的视角，图中可有一个或多个零件。</li>
+<li><b>Object Teaching</b>：标注每一个可见的零件（每个零件一个 Object Id），每张图像 <b>Save Points</b>，并用 <b>Show Axis</b> 检查。</li>
+<li><b>Object Teaching → Train Model</b>。训练结束后，在 <b>Validation</b> 中先用 Source = Directory 对同一批图像测试，再用 Source = Camera 测试。</li>
+<li>在检测薄弱的地方，针对那些情况补拍并标注更多图像，然后再次点击 <b>Train Model</b>（继续训练会从最近的权重接着进行）。</li>
+</ol>
+
+<h3 id="ex-folder">2 · 用文件夹对检测做长时间拷机测试</h3>
+<p>Validation → Source = <code>Directory</code>，Detector 开启，Show Axis 开启 → <b>Detect…</b> → 选择文件夹。图像会反复播放直到你按下 Stop。用它在不接相机的情况下，观察很多轮中检测是否稳定、有没有漏检。</p>
+
+<h3 id="ex-robot">3 · 把位姿发送给机器人</h3>
+<ol class="steps">
+<li><b>Validation</b>：Source = Camera，Output = <code>TCP/IP Stream</code>，<b>Detect…</b>。服务器在 <code>127.0.0.1:5005</code> 启动。</li>
+<li>若机器人在另一台机器上：停止检测，在 <b>Communication</b> 中设置服务器地址（本机的网络 IP），点击 <b>Server Start</b>，然后重新开始检测。</li>
+<li>用内置客户端检查：<b>Communication → Client Start</b>，Command = <code>get results</code>，<b>Repeat every 1000 ms</b>。结果会出现在下方监视窗口。</li>
+<li>在机器人程序中，在它准备好抓取时发送 <code>get results</code>（见<a href="#protocol">协议参考</a>），并跳过 <code>success: false</code> 或 <code>quality</code> 偏低的物体。</li>
+</ol>
+
+<h3 id="ex-handeye">4 · 手眼标定</h3>
+<ol class="steps">
+<li>把棋盘格固定在工作单元中。让机器人（相机装在法兰上）移动到 10–15 个不同位姿，从不同角度观察棋盘格。</li>
+<li>在每个位姿保存一张图像到 <code>data\robot_calibration\</code>，并把它的文件名与机器人位姿写入 <code>camera_robot_calibration.json</code>。</li>
+<li><b>Robot Setup</b>：选择与你控制器上报旋转方式匹配的 <b>Robot Model</b>，检查几张图像（位姿输入框会显示读到的数值），然后 <b>Calibrate System</b>。</li>
+<li>在控制台读取结果。相机 RMS 误差小于 1 像素说明图像质量良好。</li>
+</ol>
+
+<!-- ============================================================ -->
+<h2 id="troubleshooting">故障排查</h2>
+<div class="table-wrap"><table>
+<tr><th>现象</th><th>可能原因 → 处理办法</th></tr>
+<tr><td class="wrap">相机能连接但图像一直全黑 / "Failed to acquire an image"</td><td class="wrap">某些 Windows 相机驱动能打开相机，但通过默认后端从不送帧。pose6d 会检测这种情况并自动改用 DirectShow 重试；若仍失败，请关闭其他正在使用相机的程序，并换一个 <code>cameraid</code>。</td></tr>
+<tr><td class="wrap">什么都检测不到</td><td class="wrap">Detector 关闭；选错物体；物体部分在图像之外；模型训练图像太少或差异太大。打开 Show Heatmap（源码模式）看看模型到底能不能找到关键点。</td></tr>
+<tr><td class="wrap">有些实例没有画出轴</td><td class="wrap">这些实例找到的关键点少于 4 个（日志：<i>Object N has K keypoints (need &gt;= 4)</i>）。补充相似视角或带遮挡的训练图像。</td></tr>
+<tr><td class="wrap">轴画出来了但位置不对</td><td class="wrap">相机未标定，或是在另一分辨率下标定的；<code>point_coord</code> 有误。请重新标定，并在 Object Teaching 中用 Show Shape 检查。</td></tr>
+<tr><td class="wrap">Object Teaching 中 Show Axis 什么都不画</td><td class="wrap">已标注点少于 4 个，或重投影误差超过 5 像素：某个点用错了名称标注，或 3D 坐标有误。</td></tr>
+<tr><td class="wrap">服务器无法启动（<i>port in use?</i>）</td><td class="wrap">另一个程序或第二个 pose6d 正在使用该端口。换一个端口或关闭另一个程序。</td></tr>
+<tr><td class="wrap">客户端每次收到相同的 <code>frame_id</code></td><td class="wrap">检测没有运行，或 Output 不是 TCP/IP Stream。</td></tr>
+<tr><td class="wrap">Communication 选项卡变灰不可用</td><td class="wrap">许可证不含机器人通信功能，且 1 小时宽限期已过。请激活带功能位 <code>0x0004</code> 的许可证。</td></tr>
+<tr><td class="wrap">Settings：<i>Validation Error</i></td><td class="wrap">提示会列出未通过的规则（见<a href="#settings">Settings</a>），最常见的是 <code>point_names</code> 与 <code>point_coord</code> 条目数不一致。</td></tr>
+<tr><td class="wrap">训练非常慢</td><td class="wrap">没有安装 CUDA 版 PyTorch，训练跑在 CPU 上。请安装 CUDA 版本，或降低 <code>image_scale</code>。</td></tr>
+</table></div>
+
+<!-- ============================================================ -->
+<h2 id="appendix-files">附录 A · pose6d 写入的文件</h2>
+<div class="table-wrap"><table>
+<tr><th>文件</th><th>由谁写入</th><th>内容</th></tr>
+<tr><td><code>&lt;object&gt;\object_config.json</code></td><td class="wrap">Create New、Settings、Object Type、相机标定、点编辑</td><td class="wrap">物体定义与设置</td></tr>
+<tr><td><code>&lt;object&gt;\images\&lt;format&gt;_&lt;time&gt;.png</code></td><td>Camera Setup → Save Image</td><td class="wrap">采集的图像</td></tr>
+<tr><td><code>&lt;object&gt;\images\&lt;image&gt;.json</code></td><td>Object Teaching → Save Points</td><td class="wrap"><code>{"points": [{"label", "object_id", "image_x", "image_y"}, …]}</code></td></tr>
+<tr><td><code>&lt;object&gt;\models\keypoint_group_model_NNNN.pth</code></td><td>训练</td><td class="wrap">第 NNNN 轮之后的模型权重</td></tr>
+<tr><td><code>&lt;object&gt;\cameras\calibration.json</code></td><td>Camera Setup → Calibrate</td><td class="wrap"><code>camera_matrix</code>、<code>dist_coeffs</code></td></tr>
+<tr><td><code>pose6d_config.json</code></td><td>多数选项卡</td><td class="wrap">会话状态：上次的物体、相机/机器人/通信默认值</td></tr>
+<tr><td><code>pose6d_license.lic</code></td><td>许可证激活</td><td class="wrap">启用码</td></tr>
+<tr><td><code>logs\pose6d.log</code></td><td>部署版应用</td><td class="wrap">应用日志，5 MB 轮转</td></tr>
+</table></div>
+
+<h2 id="known-limitations">附录 B · 已知限制</h2>
+<p>当前版本（v01.06）中，与控件字面含义不一致的行为：</p>
+<div class="table-wrap"><table>
+<tr><th>位置</th><th>限制</th></tr>
+<tr><td>Validation → Text Size</td><td class="wrap">修改它会把<b>相机曝光</b>设为输入的数值，而不是改变文字大小。</td></tr>
+<tr><td>Validation → Coordinates</td><td class="wrap">无效果；位姿始终为相机坐标系。</td></tr>
+<tr><td>Validation → Output</td><td class="wrap">MP4 File、ROS Topic 与 MQTT 尚未实现。Source 的 Video Stream 尚未实现。</td></tr>
+<tr><td>Robot Setup</td><td class="wrap">Calibration Method 被忽略；手眼结果只打印到控制台，不会保存。</td></tr>
+<tr><td>Workflow → Select Multiple</td><td class="wrap">打开的是 Create New Object 对话框。</td></tr>
+<tr><td>Workflow → Camera Type</td><td class="wrap">设置的是会话默认值；实际使用的相机来自物体（Camera Setup）。</td></tr>
+<tr><td>Workflow → Test Connection</td><td class="wrap">不测试 MODBUS，始终报告失败。</td></tr>
+<tr><td>Camera Setup → Load Init File</td><td class="wrap">只打开一个文件对话框。</td></tr>
+<tr><td>Object Teaching</td><td class="wrap">无法在该选项卡中添加或删除关键点；请在 Settings 中编辑 <code>point_names</code> / <code>point_coord</code>。</td></tr>
+<tr><td>Results &amp; Logs</td><td class="wrap">占位；选项卡标题显示为 "Results _Logs"。</td></tr>
+</table></div>
+
+<p class="meta" style="margin-top:40px">截图均取自真实应用，使用 <code>python docs/html/tools/capture_screenshots.py</code>，配合随包提供的示例物体 <code>data/objects/bricks-15</code>。</p>
+</div>
+</main>
+</div>
+<div class="lightbox" id="lightbox" role="dialog" aria-label="放大截图"><img alt=""></div>
