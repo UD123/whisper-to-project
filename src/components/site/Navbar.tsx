@@ -1,11 +1,12 @@
 import { Link } from "@tanstack/react-router";
-import { Menu, X } from "lucide-react";
+import { Menu, X, UserRound } from "lucide-react";
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
 import { LogoMark } from "./Logo";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { useT } from "@/i18n/LanguageProvider";
 
-type Section = "product" | "docs" | "manual" | "download" | "pricing";
+type Section = "product" | "docs" | "manual" | "download" | "pricing" | "account";
 
 /** `hashBase` is "/" on sub-pages so in-page anchors point back to the landing page. */
 export function Navbar({
@@ -62,16 +63,22 @@ export function Navbar({
             ))}
           </div>
 
-          <Link
-            to="/account"
-            className="hidden whitespace-nowrap rounded-md border border-border bg-card px-3 py-1.5 text-sm font-medium text-muted-foreground hover:text-foreground sm:inline-flex"
-          >
-            {t.nav.account}
-          </Link>
-
           <LanguageSwitcher />
 
-          <button
+          <Button
+            asChild
+            variant={section === "account" ? "secondary" : "outline"}
+            className="gap-2 px-2 sm:px-3"
+          >
+            <Link to="/account" aria-label={t.nav.account} title={t.nav.account} aria-current={section === "account" ? "page" : undefined}>
+              <UserRound className="h-4 w-4" />
+              <span className="hidden md:inline">{t.nav.account}</span>
+            </Link>
+          </Button>
+
+          <Button
+              variant="outline"
+              size="icon"
               type="button"
               aria-label="Menu"
               aria-expanded={open}
@@ -79,7 +86,7 @@ export function Navbar({
               className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border bg-card sm:hidden"
             >
               {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
-            </button>
+            </Button>
         </div>
       </div>
 

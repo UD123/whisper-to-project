@@ -8,6 +8,20 @@
       "when": 1793783314322,
       "tag": "0000_orders_owner_access_refunds",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1793784798617,
+      "tag": "0001_create_user_profiles",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1793784972031,
+      "tag": "0002_restore_authenticated_role_policy_checks",
+      "breakpoints": true
     }
   ]
 }

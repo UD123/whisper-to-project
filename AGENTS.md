@@ -8,3 +8,6 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Keep the customer Profile screen at `/account` with personal information and licenses; preserve existing checkout and sign-in destinations.
+- Store personal profile fields in owner-scoped `public.profiles`, accessed through authenticated server functions; keep profile data separate from roles and order history.

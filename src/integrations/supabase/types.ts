@@ -77,6 +77,30 @@ export type Database = {
         }
         Relationships: []
       }
+      profiles: {
+        Row: {
+          company: string
+          full_name: string
+          phone: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          company?: string
+          full_name?: string
+          phone?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          company?: string
+          full_name?: string
+          phone?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       site_media: {
         Row: {
           id: string
