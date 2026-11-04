@@ -373,3 +373,71 @@ pip install -r requirements.txt</code></pre>
 <tr><td>Train split（训练划分）</td><td><code>detection_parameters.train_split</code></td><td>0.95</td><td class="wrap">用于训练的标注图像比例，其余用于验证。</td></tr>
 </table></div>
 <p>新的 <code>object_config.json</code> 中没有 <code>n_epochs</code> 和 <code>lr</code>；要修改请把它们添加到 <code>detection_parameters</code>（Settings 选项卡或文本编辑器）。权重写入 <code>models\keypoint_group_model_NNNN.pth</code>。</p>
+
+<!-- ============================================================ -->
+<h2 id="validation">🔍 Validation（验证）</h2>
+<p>运行训练好的模型并显示检测到的位姿。它还可以把每一条结果发送给机器人。</p>
+<figure><img src="img/validation-shape.png" alt="Validation 选项卡：六个木块上同时画出位姿轴与面轮廓"><figcaption>Detector 开启，同时打开 Show Axis 与 Show Shape。</figcaption></figure>
+
+<h3 id="val-config">Configuration（配置）</h3>
+<div class="table-wrap"><table>
+<tr><th>控件</th><th>取值</th><th>作用</th></tr>
+<tr><td>Source（来源）</td><td class="wrap"><code>Camera Image Directory Video File Video Stream</code></td><td class="wrap">图像来自哪里。见下表。</td></tr>
+<tr><td>Objects（物体）</td><td class="wrap">物体目录中的各个物体</td><td class="wrap">要检测的物体（及其模型）。选择其中一个即把它加载进来。</td></tr>
+<tr><td id="val-output">Output（输出）</td><td class="wrap"><code>Screen MP4 File TCP/IP Stream ROS Topic MQTT</code></td><td class="wrap"><code>Screen</code>：仅显示。<code>TCP/IP Stream</code>：还会计算每一帧的位姿并发送给机器人服务器，必要时自动启动服务器（见<a href="#communication">通信</a>）。MP4 File、ROS Topic 与 MQTT 尚未实现，行为与 Screen 相同。</td></tr>
+</table></div>
+<div class="table-wrap"><table>
+<tr><th>来源</th><th>点击 🟢 Detect… 之后的行为</th></tr>
+<tr><td>Camera</td><td class="wrap">连接该物体的相机（或复用 Camera Setup 的连接），在实时图像上持续检测，直到 <b>🔴 Stop Detection</b>。</td></tr>
+<tr><td>Image</td><td class="wrap">要求选择一个图像文件，检测一次并显示结果。</td></tr>
+<tr><td>Directory</td><td class="wrap">要求选择一个文件夹，按名称顺序遍历其中所有图像（<code>.png .jpg .jpeg .bmp</code>），<b>反复循环直到你按下 Stop</b>。若其中没有可读文件则自行停止。</td></tr>
+<tr><td>Video File</td><td class="wrap">要求选择一个 <code>.mp4</code> / <code>.avi</code>，按其帧率播放并对每一帧检测，直到结束或停止。</td></tr>
+<tr><td>Video Stream</td><td class="wrap">尚未实现。</td></tr>
+</table></div>
+
+<h3 id="val-display">Display Info（显示信息）</h3>
+<div class="table-wrap"><table>
+<tr><th>控件</th><th>作用</th></tr>
+<tr><td><b>💡 Detector: ON/OFF</b></td><td class="wrap">屏幕检测的总开关。关闭时只看到原始图像。（TCP/IP 输出仍会检测。）</td></tr>
+<tr><td><b>📐 Show Axis</b></td><td class="wrap">每个检测实例一条位姿轴：X 红、Y 绿、Z 蓝，画在物体原点。</td></tr>
+<tr><td><b>🔷 Show Shape</b></td><td class="wrap">用检测到的位姿投影出的物体面轮廓（<code>point_faces</code>）。</td></tr>
+<tr><td><b>🌡️ Show Heatmap</b></td><td class="wrap">网络原始输出：模型认为每个关键点在哪里。用于诊断检测薄弱的情况。部署版应用中隐藏。</td></tr>
+<tr><td><b>🔗 Show Joints</b></td><td class="wrap">检测到的关键点以及它们如何被归并成实例。部署版应用中隐藏。</td></tr>
+<tr><td><b>+ Cross: ON/OFF</b></td><td class="wrap">图像中心的十字准线，用于对准相机。</td></tr>
+<tr><td>Coordinates（坐标系）</td><td class="wrap"><code>Camera</code> · <code>Object</code> · <code>Robot</code>。显示位姿所用的坐标系。目前尚未生效：位姿始终为相机坐标系。</td></tr>
+<tr><td>Text Size（文字大小）</td><td class="wrap"><code>10</code> · <code>20</code> · <code>50</code>。见<a href="#known-limitations">已知限制</a>：该字段目前改变的是相机曝光。</td></tr>
+</table></div>
+<div class="callout"><b>如何解读结果</b>每个检测到的实例都有自己的轴和/或轮廓。检测到的关键点少于 4 个的实例不会得到位姿。如果什么都没画出来：检查 Detector 是否开启、是否选对了物体，以及物体是否可见、有没有被图像边缘裁掉。</div>
+
+<h3 id="val-tcpip">把结果发送给机器人</h3>
+<figure><img src="img/validation-tcpip.png" alt="Validation 选项卡，Output 设为 TCP/IP Stream"></figure>
+<p>把 <b>Output 设为 TCP/IP Stream</b> 并启动检测。对每一帧，模型只运行<b>一次</b>，同一结果既画在屏幕上，也存入机器人服务器。机器人每次询问（<code>get results</code>）都会收到最新结果。你停止检测或把输出切回其他选项后，服务器仍会继续运行；请在 <a href="#communication">Communication</a> 选项卡中停止它。</p>
+
+<!-- ============================================================ -->
+<h2 id="robot-setup">📐 Robot Setup（机器人设置）</h2>
+<p>手眼标定：用已知机器人位姿下拍摄的棋盘格图像，找出相机在机器人法兰上的位置。</p>
+<figure><img src="img/robot-setup.png" alt="Robot Setup 选项卡：一张棋盘格图像以及该图像对应的机器人位姿"></figure>
+<div class="table-wrap"><table>
+<tr><th>控件</th><th>作用</th></tr>
+<tr><td><b>🟢 Connect Camera</b></td><td class="wrap">相机实时画面；启用 <b>Save Image</b>。</td></tr>
+<tr><td><b>Save Image</b></td><td class="wrap">把当前帧保存为 <code>capture_N.jpg</code>（保存在启动 pose6d 时所在的文件夹），并加入列表。</td></tr>
+<tr><td>Calibration Method（标定方法）</td><td class="wrap"><code>Intrinsic</code> · <code>Extrinsic</code> · <code>Hand-Eye</code>。目前不起作用：<b>Calibrate System</b> 始终执行手眼标定。</td></tr>
+<tr><td>Robot Model（机器人模型）</td><td class="wrap">如何解读机器人位姿中的三个旋转值。<code>UR-Euler</code>：欧拉角，R = Rz·Ry·Rx（若任一数值大于 2π 则按度，否则按弧度）。其余（<code>UR-RVEC</code>、KUKA、DENSO、ABB、TM、NEURA、DOBOT）：弧度单位的旋转向量。</td></tr>
+<tr><td>Image Files（图像文件）</td><td class="wrap"><code>data\robot_calibration\</code> 中的图像。选择其中一张会显示它，并从数据集文件填入 <b>Robot Pose</b>。</td></tr>
+<tr><td>Robot Pose tX tY tZ / rX rY rZ</td><td class="wrap">拍摄所选图像时机器人法兰的位姿（平移为毫米，旋转按 Robot Model 解读）。仅供显示。</td></tr>
+<tr><td><b>✨ Calibrate System</b></td><td class="wrap">对整个数据集运行标定（OpenCV <code>calibrateHandEye</code>，Tsai 方法）。</td></tr>
+</table></div>
+
+<h3 id="handeye-dataset">标定数据集</h3>
+<p>图像与 <code>camera_robot_calibration.json</code> 必须位于 <code>data\robot_calibration\</code>：</p>
+<pre><code>{
+  "chessBoardSize": [9, 6],          // 内角点（列，行）
+  "chessBoardSquareSize": 10.0,      // 毫米
+  "viewInfo": [
+    { "imageName": "calib_robot_0001.jpg",
+      "robotPose": [142.72, 356.93, -74.27, 0.5825, 3.0991, 0.0186] },   // x y z（毫米），r1 r2 r3
+    ...
+  ]
+}</code></pre>
+<p>至少需要 3 张能检测到棋盘格的图像；10–15 个视角、且彼此之间有较大的旋转变化，才能得到稳定的结果。</p>
+<div class="callout warn"><b>结果在哪里？</b>标定结果（使用的样本数、相机 RMS 误差、相机矩阵、畸变，以及相机到夹爪的旋转 <code>R_cam2gripper</code> / 平移 <code>t_cam2gripper</code>）目前只打印在控制台窗口中，既不在选项卡里显示，也不会保存。</div>
