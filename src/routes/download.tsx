@@ -103,7 +103,7 @@ function DownloadContent() {
               <BookOpen className="h-6 w-6" />
             </span>
             <div>
-              <h3 className="font-semibold tracking-tight">{d.nav.manual}</h3>
+              <h3 className="font-semibold tracking-tight">{t.nav.manual}</h3>
               <p className="mt-1 text-sm text-muted-foreground">{d.manual.note}</p>
             </div>
           </div>
