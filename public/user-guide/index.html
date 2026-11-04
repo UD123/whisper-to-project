@@ -211,7 +211,7 @@ If that folder is not writable: <code>%LOCALAPPDATA%\pose6d\logs</code>.</td></t
   results\             ← benchmark / evaluation output
   labels\              ← reserved
   robots\              ← reserved</code></pre>
-<p>Application-wide state that is not tied to an object is kept in <code>main_app_config.json</code> in the
+<p>Application-wide state that is not tied to an object is kept in <code>pose6d_config.json</code> in the
 <code>pose6d</code> folder: the last selected object, the default camera type, communication addresses. It is
 machine-local, created on first run, and never shipped.</p>
 
@@ -267,7 +267,7 @@ its keypoints, not your real object. Rename points and set their real coordinate
 <figure><img src="img/workflow-2-camera.png" alt="Workflow step 2 with a Camera Type dropdown"></figure>
 <div class="table-wrap"><table>
 <tr><th>Control</th><th>What it does</th></tr>
-<tr><td>Camera Type</td><td class="wrap">Default camera type in <code>main_app_config.json</code> (<code>camera_type</code>). The camera that is actually opened is set per object
+<tr><td>Camera Type</td><td class="wrap">Default camera type in <code>pose6d_config.json</code> (<code>camera_type</code>). The camera that is actually opened is set per object
 in <a href="#camera-setup">Camera Setup</a>, so the two can differ.</td></tr>
 </table></div>
 
@@ -285,7 +285,7 @@ produces 6D poses for the robot.</td></tr>
 <figure><img src="img/workflow-5-robot.png" alt="Workflow step 5 with Robot Type and Camera Position dropdowns"></figure>
 <div class="table-wrap"><table>
 <tr><th>Control</th><th>Values</th><th>What it does</th></tr>
-<tr><td>Robot Type</td><td class="wrap"><code>UR KUKA TM ABB FANUC YASKAWA DENSO DOBOT OTHER</code></td><td class="wrap">Robot brand, stored as <code>robot_type</code> in <code>main_app_config.json</code></td></tr>
+<tr><td>Robot Type</td><td class="wrap"><code>UR KUKA TM ABB FANUC YASKAWA DENSO DOBOT OTHER</code></td><td class="wrap">Robot brand, stored as <code>robot_type</code> in <code>pose6d_config.json</code></td></tr>
 <tr><td>Camera Position</td><td class="wrap"><code>Moving (On Arm)</code> · <code>Static</code></td><td class="wrap">Camera mounted on the robot arm or fixed in the cell, stored as <code>camera_position</code></td></tr>
 </table></div>
 <p>The calibration itself runs in <a href="#robot-setup">Robot Setup</a>.</p>
@@ -361,10 +361,12 @@ pattern or square size shows <i>Bad Pattern</i> / <i>Bad Square Size</i>; too fe
 <tr><td><b>❌ Delete Object</b></td><td class="wrap">Removes all points of the selected Object Id from the current image.</td></tr>
 <tr><td>Target Points</td><td class="wrap">The object's keypoints with their 3D coordinates in mm. The selected point is the one the next click places.
 <b>Double-click</b> a point to rename it or change its X/Y/Z. That changes the object model for all images, not the label on this image.</td></tr>
-<tr><td><b>📁 Select Image Folder</b></td><td class="wrap">Folder whose images appear in the Images list (default: the object's <code>images\</code>).</td></tr>
-<tr><td>Images</td><td class="wrap">Click to load. Labeled images (with a saved <code>.json</code>) are shown in <b>green</b>.</td></tr>
 <tr><td><b>🗑️ Clear Points</b></td><td class="wrap">Removes all points from the current image (not saved until <b>Save Points</b>).</td></tr>
 <tr><td><b>💾 Save Points</b></td><td class="wrap">Writes the points to <code>&lt;image&gt;.json</code> next to the image and turns the image green.</td></tr>
+<tr><td><b>➖ Delete Point</b></td><td class="wrap">Deletes the selected Target Point from the object model. See <a href="#target-points">Adding and deleting target points</a>.</td></tr>
+<tr><td><b>➕ Add Point</b></td><td class="wrap">Adds a new Target Point to the object model. See <a href="#target-points">Adding and deleting target points</a>.</td></tr>
+<tr><td><b>📁 Select Image Folder</b></td><td class="wrap">Folder whose images appear in the Images list (default: the object's <code>images\</code>).</td></tr>
+<tr><td>Images</td><td class="wrap">Click to load. Labeled images (with a saved <code>.json</code>) are shown in <b>green</b>.</td></tr>
 <tr><td><b>📐 Show Axis</b></td><td class="wrap">Computes each instance's pose from the labels and draws its coordinate axis (X red, Y green, Z blue).</td></tr>
 <tr><td><b>🔷 Show Shape</b></td><td class="wrap">Same, but draws the object's faces (<code>point_faces</code>) as outlines.</td></tr>
 <tr><td><b>🚀 Train Model</b></td><td class="wrap">Starts or stops training. See <a href="#training">Training</a>.</td></tr>
@@ -381,6 +383,24 @@ pattern or square size shows <i>Bad Pattern</i> / <i>Bad Square Size</i>; too fe
 </ol>
 <p>Label only points you can actually see; hidden corners are left out. Loading a green image shows its saved points so
 you can fix them and save again.</p>
+
+<h3 id="target-points">Adding and deleting target points</h3>
+<p>The Target Points list is the object model: the keypoint names and their 3D coordinates in mm. <b>Add Point</b> and
+<b>Delete Point</b> change that model and save it straight into the object's <code>object_config.json</code>
+(<code>point_names</code>, <code>point_coord</code>). No <b>Save Points</b> is needed. Select an object first.</p>
+<figure class="small"><img src="img/dialog-add-point.png" alt="Add target point dialog with a suggested label name P14 and X, Y, Z coordinate fields in mm"><figcaption>➕ Add Point: enter the name and the point's position on the object in mm.</figcaption></figure>
+<div class="table-wrap"><table>
+<tr><th>Button</th><th>What it does</th></tr>
+<tr><td><b>➕ Add Point</b></td><td class="wrap">Opens a dialog with a suggested free name (<code>A9</code> after <code>A1</code>…<code>A8</code>,
+otherwise <code>P&lt;n&gt;</code>) and X/Y/Z in mm. <b>OK</b> adds the point at the <b>end</b> of the list, so the existing points keep their order.
+An empty or already used name is refused. The new point is selected, so you can start labeling it right away.</td></tr>
+<tr><td><b>➖ Delete Point</b></td><td class="wrap">Deletes the point selected in the list, after you confirm. It is also removed from
+<code>point_faces</code> (a face left with fewer than 3 points is dropped) and from the labels of the current image and of every
+<code>&lt;image&gt;.json</code> in the image folder.</td></tr>
+</table></div>
+<div class="callout warn"><b>Retrain after changing the points.</b>Adding or deleting a point changes the number of keypoints, so a model trained
+before the change no longer matches the object. Label the new point on your images, then train again. Deleting cannot be undone. Copy the object
+folder first if you may need the old labels.</div>
 
 <h3 id="teach-overlays">Checking labels with overlays</h3>
 <p>Turn on <b>Show Axis</b> or <b>Show Shape</b> after labeling. If the axes sit on the object corners and the outlines
@@ -708,7 +728,7 @@ backend. pose6d tests for this and retries with DirectShow automatically; if it 
 <tr><td><code>&lt;object&gt;\images\&lt;image&gt;.json</code></td><td>Object Teaching → Save Points</td><td class="wrap"><code>{"points": [{"label", "object_id", "image_x", "image_y"}, …]}</code></td></tr>
 <tr><td><code>&lt;object&gt;\models\keypoint_group_model_NNNN.pth</code></td><td>Training</td><td class="wrap">Model checkpoint after epoch NNNN</td></tr>
 <tr><td><code>&lt;object&gt;\cameras\calibration.json</code></td><td>Camera Setup → Calibrate</td><td class="wrap"><code>camera_matrix</code>, <code>dist_coeffs</code></td></tr>
-<tr><td><code>main_app_config.json</code></td><td>Most tabs</td><td class="wrap">Session: last object, camera/robot/communication defaults</td></tr>
+<tr><td><code>pose6d_config.json</code></td><td>Most tabs</td><td class="wrap">Session: last object, camera/robot/communication defaults</td></tr>
 <tr><td><code>pose6d_license.lic</code></td><td>License activation</td><td class="wrap">Enable code</td></tr>
 <tr><td><code>logs\pose6d.log</code></td><td>Deployed app</td><td class="wrap">Application log, rotated at 5 MB</td></tr>
 </table></div>
