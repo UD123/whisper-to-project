@@ -104,7 +104,7 @@ function TierCard({ tier }: { tier: PricingTier }) {
       await openCheckout({
         priceId: tier.priceId,
         quantity: 1,
-        customerEmail: data.user.email ?? undefined,
+        ...(data.user.email ? { customerEmail: data.user.email } : {}),
         customData: { userId: data.user.id },
         successUrl: `${window.location.origin}/checkout/success`,
       });

@@ -5,8 +5,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/auth")({
-  validateSearch: (s: Record<string, unknown>): { redirect?: string } => {
-    const r = typeof s.redirect === "string" ? s.redirect : undefined;
+  validateSearch: (s: Record<string, unknown>): { redirect?: string | undefined } => {
+    const r = typeof s["redirect"] === "string" ? s["redirect"] : undefined;
     // Only allow same-origin relative paths.
     return { redirect: r && r.startsWith("/") && !r.startsWith("//") ? r : undefined };
   },
