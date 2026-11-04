@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Navbar } from "@/components/site/Navbar";
-import { useI18n } from "@/i18n/LanguageProvider";
+import { LanguageProvider, useI18n } from "@/i18n/LanguageProvider";
 
 export const Route = createFileRoute("/manual")({
   head: () => ({
@@ -17,6 +17,14 @@ export const Route = createFileRoute("/manual")({
 });
 
 function ManualPage() {
+  return (
+    <LanguageProvider>
+      <ManualLayout />
+    </LanguageProvider>
+  );
+}
+
+function ManualLayout() {
   const { lang } = useI18n();
   const zh = lang === "zh";
   const src = zh ? "/user-guide/index.zh.html" : "/user-guide/index.html";
