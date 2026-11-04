@@ -441,3 +441,74 @@ pip install -r requirements.txt</code></pre>
 }</code></pre>
 <p>至少需要 3 张能检测到棋盘格的图像；10–15 个视角、且彼此之间有较大的旋转变化，才能得到稳定的结果。</p>
 <div class="callout warn"><b>结果在哪里？</b>标定结果（使用的样本数、相机 RMS 误差、相机矩阵、畸变，以及相机到夹爪的旋转 <code>R_cam2gripper</code> / 平移 <code>t_cam2gripper</code>）目前只打印在控制台窗口中，既不在选项卡里显示，也不会保存。</div>
+
+<!-- ============================================================ -->
+<h2 id="communication">📡 Communication（通信）</h2>
+<p>运行机器人所连接的位姿服务器，以及一个表现得像机器人的测试客户端。两个监视窗口都会显示服务器收到和发出的每一个数据包。</p>
+<figure><img src="img/communication.png" alt="Communication 选项卡：服务器运行中、客户端已连接，请求与响应监视窗口中显示检测结果"></figure>
+
+<h3 id="comm-server">Robot Server（机器人服务器）</h3>
+<div class="table-wrap"><table>
+<tr><th>控件</th><th>默认值</th><th>作用</th></tr>
+<tr><td>Protocol（协议）</td><td><code>TCP/IP</code></td><td class="wrap">目前只有 TCP/IP 可用。</td></tr>
+<tr><td>Server IP Address（服务器地址）</td><td><code>127.0.0.1</code></td><td class="wrap">服务器监听的地址。当机器人是另一台机器时，使用本机的网络地址（或用 <code>0.0.0.0</code> 监听全部）。</td></tr>
+<tr><td>Server Port（服务器端口）</td><td><code>5005</code></td><td class="wrap">TCP 端口，1–65535。</td></tr>
+<tr><td><b>▶ Server Start / ⏹ Server Stop</b></td><td></td><td class="wrap">启动或停止服务器。服务器也可能已被 Validation（Output = TCP/IP Stream）启动；按钮反映其真实状态。</td></tr>
+<tr><td>Status line（状态行）</td><td></td><td class="wrap">监听地址、已应答的请求数、最新帧号以及检测到的物体数量。</td></tr>
+</table></div>
+<div class="callout"><b>只有检测运行时服务器才有结果</b>结果是在 Validation 选项卡以 <b>Output = TCP/IP Stream</b> 进行检测时发布的。否则客户端会得到上一次的结果，或得到 <code>"success": false, "message": "No results yet"</code>。</div>
+
+<h3 id="comm-client">Client（客户端）</h3>
+<div class="table-wrap"><table>
+<tr><th>控件</th><th>作用</th></tr>
+<tr><td>Server IP Address / Port</td><td class="wrap">要连接的服务：本应用的服务器，或任何其他 pose6d 服务器。</td></tr>
+<tr><td><b>▶ Client Start / ⏹ Client Stop</b></td><td class="wrap">连接（3 秒超时）或断开。</td></tr>
+<tr><td>Command（命令）</td><td class="wrap"><code>get results</code> 或 <code>ping</code>。</td></tr>
+<tr><td><b>📤 Send Command</b></td><td class="wrap">发送一次该命令。</td></tr>
+<tr><td>Repeat every [ms]（重复间隔）</td><td class="wrap">按该周期反复发送命令（最小 50 毫秒）。当模型在 GUI 线程上运行时，实际速率最多为每个检测帧一次请求。</td></tr>
+<tr><td><b>Clear Monitors</b></td><td class="wrap">清空两个监视窗口（每个最多保留 3000 行）。</td></tr>
+</table></div>
+
+<h3 id="protocol">协议参考</h3>
+<p>每条消息都是<b>4 字节大端长度</b>，其后是那么多字节的 <b>UTF-8 JSON</b>。客户端发送请求，服务器在同一连接上应答，次数不限。</p>
+<div class="table-wrap"><table>
+<tr><th>请求</th><th>响应中的 <code>result</code></th></tr>
+<tr><td><code>{"command": "get results", "params": {}}</code></td><td class="wrap">最近一次检测，见下文</td></tr>
+<tr><td><code>{"command": "ping", "params": {}}</code></td><td class="wrap"><code>{"success": true, "message": "pong"}</code></td></tr>
+<tr><td>其他任何内容</td><td class="wrap"><code>{"success": false, "message": "Unknown command: …"}</code></td></tr>
+</table></div>
+<pre><code>{ "status": "ok", "command": "get results",
+  "result": {
+    "success": true,
+    "frame_id": 128,                    // 每处理一帧加 1
+    "timestamp": 1793190045.698,        // 该帧被处理时的时间（自 1970 年起的秒数）
+    "objects": {
+      "1": { "success": true,
+             "rvec": [2.2796, -0.6202, -0.0567],   // 旋转向量，弧度
+             "tvec": [-206.12, 118.24, 1553.01],   // 平移，毫米，相机坐标系
+             "quality": 0.9798 },
+      "2": { "success": false, "rvec": null, "tvec": null, "quality": 0.0 }
+    } } }</code></pre>
+<div class="table-wrap"><table>
+<tr><th>字段</th><th>含义</th></tr>
+<tr><td><code>status</code></td><td class="wrap"><code>ok</code>；若服务器处理请求失败，则为 <code>error</code> 并带 <code>message</code></td></tr>
+<tr><td><code>frame_id</code></td><td class="wrap">两次应答中编号相同，说明期间没有处理新帧</td></tr>
+<tr><td><code>objects</code></td><td class="wrap">每个检测实例一项，以实例编号为键</td></tr>
+<tr><td><code>success</code>（物体级）</td><td class="wrap">当找到的关键点太少、无法计算位姿时为 <code>false</code>；跳过该条目</td></tr>
+<tr><td><code>rvec</code> / <code>tvec</code></td><td class="wrap">物体在相机坐标系中的位姿（见<a href="#concepts">概念与术语</a>）。要用机器人坐标，需结合手眼标定结果换算。</td></tr>
+<tr><td><code>quality</code></td><td class="wrap">0–1 的吻合度；在机器人程序中应剔除低值（例如低于 0.9）</td></tr>
+</table></div>
+<p>机器人侧一个最小的 Python 客户端：</p>
+<pre><code>import json, socket, struct
+
+def request(sock, command):
+    payload = json.dumps({"command": command, "params": {}}).encode()
+    sock.sendall(struct.pack(">I", len(payload)) + payload)
+    size = struct.unpack(">I", sock.recv(4, socket.MSG_WAITALL))[0]
+    return json.loads(sock.recv(size, socket.MSG_WAITALL))
+
+with socket.create_connection(("127.0.0.1", 5005)) as s:
+    result = request(s, "get results")["result"]
+    for obj_id, obj in result["objects"].items():
+        if obj["success"] and obj["quality"] > 0.9:
+            print(obj_id, obj["tvec"], obj["rvec"])</code></pre>
