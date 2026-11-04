@@ -1,0 +1,784 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>pose6d 用户手册</title>
+<link rel="icon" href="img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: oklch(0.966 0.0027 264.54); --panel: #ffffff; --text: oklch(0.21 0.0338 264.36);
+  --muted: oklch(0.52 0.02 264.36); --border: oklch(0.921 0.0042 264.54);
+  --accent: oklch(0.5305 0.2515 263.9); --accent-soft: color-mix(in oklab, oklch(0.5305 0.2515 263.9) 9%, white);
+  --code-bg: oklch(0.945 0.006 264.54); --note: oklch(0.5305 0.2515 263.9); --warn: #b26a00;
+  --warn-soft: #fff4e0; --ok: #2e7d32; --ok-soft: #e7f4e8; --shadow: 0 1px 3px rgba(0,0,0,.08);
+}
+:root[data-theme="dark"] {
+  --bg: #15181d; --panel: #1d2128; --text: #e3e6eb; --muted: #9aa3b0; --border: #2e343e;
+  --accent: #7aa8f5; --accent-soft: #1e2d40; --code-bg: #252a33; --note: #7aa8f5; --warn: #f0b45a;
+  --warn-soft: #3a2f1c; --ok: #6cc070; --ok-soft: #1f3322; --shadow: 0 1px 3px rgba(0,0,0,.4);
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 16px; }
+body { margin: 0; background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased;
+  font: 15px/1.6 "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+code, pre, kbd { font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; }
+code { background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+pre { background: var(--code-bg); padding: 12px 14px; border-radius: 8px; overflow-x: auto; line-height: 1.45; }
+pre code { background: none; padding: 0; }
+kbd { border: 1px solid var(--border); border-bottom-width: 2px; border-radius: 4px; padding: 0 5px; background: var(--panel); }
+
+/* layout */
+.layout { display: flex; min-height: 100vh; }
+.sidebar { position: sticky; top: 0; height: 100vh; width: 290px; flex: 0 0 290px; overflow-y: auto;
+  background: var(--panel); border-right: 1px solid var(--border); padding: 18px 14px 40px; }
+.brand { display: flex; align-items: center; gap: 10px; margin: 0 4px 14px; }
+.brand img { width: 34px; height: 34px; }
+.brand b { font-size: 17px; display: block; }
+.brand span { font-size: 12px; color: var(--muted); }
+.search { width: 100%; padding: 8px 10px; border: 1px solid var(--border); border-radius: 8px;
+  background: var(--bg); color: var(--text); font: inherit; margin-bottom: 6px; }
+.search-info { font-size: 12px; color: var(--muted); min-height: 18px; margin: 0 4px 8px; }
+.toc { list-style: none; margin: 0; padding: 0; font-size: 14px; }
+.toc ul { list-style: none; margin: 0; padding: 0 0 0 14px; }
+.toc a { display: block; padding: 3px 8px; border-radius: 6px; color: var(--text); }
+.toc ul a { color: var(--muted); font-size: 13px; }
+.toc a:hover { background: var(--accent-soft); text-decoration: none; }
+.toc a.active { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+.toc li.hidden { display: none; }
+.theme-btn { margin-top: 18px; width: 100%; padding: 7px; border: 1px solid var(--border); border-radius: 8px;
+  background: var(--bg); color: var(--text); cursor: pointer; font: inherit; font-size: 13px; }
+main { flex: 1; min-width: 0; padding: 28px 40px 80px; }
+.content { max-width: 1040px; margin: 0 auto; }
+.menu-btn { display: none; }
+
+/* text */
+h1 { font-size: 34px; line-height: 1.1; margin: 0 0 6px; font-weight: 600; letter-spacing: -0.03em; }
+h2 { font-size: 26px; margin: 52px 0 12px; padding-top: 8px; border-top: 1px solid var(--border); font-weight: 600; letter-spacing: -0.02em; }
+h3 { font-size: 18px; margin: 30px 0 8px; font-weight: 600; letter-spacing: -0.01em; }
+h4 { font-size: 15px; margin: 20px 0 6px; font-weight: 600; }
+h2 .anchor, h3 .anchor { opacity: 0; margin-left: 6px; font-weight: 400; }
+h2:hover .anchor, h3:hover .anchor { opacity: .6; }
+.lead { font-size: 17px; color: var(--muted); margin: 0 0 18px; }
+.meta { font-size: 13px; color: var(--muted); margin-bottom: 22px; }
+
+/* tables */
+.table-wrap { overflow-x: auto; margin: 12px 0 18px; border: 1px solid var(--border); border-radius: 8px; background: var(--panel); }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th, td { text-align: left; vertical-align: top; padding: 8px 12px; border-bottom: 1px solid var(--border); }
+th { background: var(--code-bg); font-weight: 600; white-space: nowrap; }
+tr:last-child td { border-bottom: none; }
+td:first-child { white-space: nowrap; }
+td.wrap { white-space: normal; }
+
+/* callouts */
+.callout { border-left: 4px solid var(--note); background: var(--accent-soft); padding: 10px 14px; border-radius: 0 8px 8px 0; margin: 14px 0; }
+.callout.warn { border-color: var(--warn); background: var(--warn-soft); }
+.callout.ok { border-color: var(--ok); background: var(--ok-soft); }
+.callout > b:first-child { display: block; margin-bottom: 2px; }
+
+/* figures */
+figure { margin: 16px 0 22px; }
+figure img { width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 8px;
+  box-shadow: var(--shadow); cursor: zoom-in; background: #2b2b2b; }
+figure.small img { max-width: 620px; }
+figcaption { font-size: 13px; color: var(--muted); margin-top: 6px; }
+.lightbox { position: fixed; inset: 0; background: rgba(0,0,0,.85); display: none; align-items: center;
+  justify-content: center; z-index: 50; cursor: zoom-out; padding: 20px; }
+.lightbox.open { display: flex; }
+.lightbox img { max-width: 100%; max-height: 100%; border-radius: 6px; }
+
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; margin: 14px 0; }
+.card { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; }
+.card b { display: block; margin-bottom: 4px; }
+.card span { font-size: 13px; color: var(--muted); }
+.steps { counter-reset: s; padding-left: 0; list-style: none; }
+.steps > li { counter-increment: s; position: relative; padding-left: 36px; margin: 8px 0; }
+.steps > li::before { content: counter(s); position: absolute; left: 0; top: 1px; width: 24px; height: 24px;
+  border-radius: 50%; background: var(--accent); color: #fff; font-size: 13px; font-weight: 600;
+  display: flex; align-items: center; justify-content: center; }
+mark { background: #ffe36e; color: #000; border-radius: 2px; }
+
+@media (max-width: 900px) {
+  .layout { display: block; }
+  .sidebar { position: fixed; z-index: 40; left: 0; top: 0; transform: translateX(-100%); transition: transform .2s; box-shadow: var(--shadow); }
+  .sidebar.open { transform: none; }
+  main { padding: 16px 16px 60px; }
+  .menu-btn { display: inline-block; position: sticky; top: 8px; z-index: 30; margin-bottom: 10px; padding: 6px 12px;
+    border: 1px solid var(--border); border-radius: 8px; background: var(--panel); color: var(--text); font: inherit; }
+  h1 { font-size: 26px; }
+  td:first-child { white-space: normal; }
+}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav class="sidebar" id="sidebar" aria-label="目录">
+  <div class="brand"><img src="img/favicon.png" alt=""><div><b>pose6d</b><span>用户手册 · v01.06</span></div></div>
+  <input class="search" id="search" type="search" placeholder="搜索手册…  ( / )" aria-label="搜索">
+  <div class="search-info" id="search-info"></div>
+  <ul class="toc" id="toc"></ul>
+  <button class="theme-btn" id="theme-btn" type="button">切换浅色 / 深色</button>
+</nav>
+
+<main>
+<button class="menu-btn" id="menu-btn" type="button">☰ 目录</button>
+<div class="content" id="content">
+
+<h1>pose6d — 用户手册</h1>
+<p class="lead"><b>pose6d</b> 在相机图像中找到物体，并报告其完整的 6D 位姿（位置与姿态），以便机械臂抓取。你通过在少量图像上标注来"教"它一个新物体，它会训练一个关键点检测网络，此后就能实时检测该物体的每一个实例，并通过 TCP/IP 把位姿发送给机器人。</p>
+<p class="meta">本手册说明<b>桌面应用中的每一个控件</b>：它做什么、数值保存在哪里、合理的默认值是什么、何时应当修改。同时记录了配置文件、机器人通信协议以及应用写入的文件。界面控件名称保留英文，与软件实际显示一致。</p>
+
+<figure>
+  <img src="img/validation-axis.png" alt="验证选项卡：六个木块，每个原点处画有红/绿/蓝位姿轴">
+  <figcaption>验证选项卡检测示例物体 <code>bricks-15</code> 的六个实例。每条红/绿/蓝轴就是一个估计出的 6D 位姿。</figcaption>
+</figure>
+
+<!-- ============================================================ -->
+<h2 id="getting-started">快速上手</h2>
+
+<h3 id="launching">启动应用</h3>
+<p>同一个应用可以以三种方式运行：</p>
+<div class="table-wrap"><table>
+<tr><th>方式</th><th>命令</th><th>用途</th></tr>
+<tr><td>从源码运行</td><td class="wrap">在 <code>pose6d</code> 文件夹中执行 <code>python main_app.py</code>，并激活项目环境（开发电脑上为 <code>C:\Work\Envs\qtgui</code>）</td><td class="wrap">开发、标注、训练</td></tr>
+<tr><td>部署版 exe</td><td class="wrap"><code>pose6d.exe</code>（由 <code>main_app_deploy.py</code> 构建；入口为 <code>main_app_wrapper.py</code>）</td><td class="wrap">机器人旁边的生产电脑</td></tr>
+<tr><td>Web 界面</td><td class="wrap"><code>python -m webapp</code>，然后打开 <code>http://127.0.0.1:5000/</code></td><td class="wrap">快速检测测试与远程查看。不支持标注或训练。</td></tr>
+</table></div>
+
+<p>从源码安装（Windows）：</p>
+<pre><code>python -m venv C:\Work\Envs\qtgui
+C:\Work\Envs\qtgui\Scripts\activate.bat
+pip install torch torchvision            # 或使用 CUDA 版本：--index-url https://download.pytorch.org/whl/cu118
+pip install -r requirements.txt</code></pre>
+<div class="callout"><b>说明</b><code>pyrealsense2</code> 只有 Intel RealSense 相机才需要（已测试型号为 D435 / D455 / D580）。普通 USB 网络摄像头无需它即可工作。</div>
+
+<h3 id="source-vs-deployed">源码模式与部署模式</h3>
+<p>应用启动时会判断自己是从源码运行还是部署版运行（<code>pose6d.exe</code>，或 <code>pose6d_deploy</code> 中经 Cython 编译的模块），行为略有不同：</p>
+<div class="table-wrap"><table>
+<tr><th>行为</th><th>源码</th><th>部署版</th></tr>
+<tr><td>启动时许可证检查</td><td>跳过</td><td class="wrap">检查。见<a href="#license">许可证</a>。</td></tr>
+<tr><td>控制台日志</td><td>全部（DEBUG 及以上）</td><td>仅警告与错误</td></tr>
+<tr><td>日志文件</td><td>无</td><td class="wrap">exe 旁边的 <code>logs\pose6d.log</code>（INFO 及以上，5 MB × 4 个文件）。若该文件夹不可写：<code>%LOCALAPPDATA%\pose6d\logs</code>。</td></tr>
+<tr><td>验证调试叠加层</td><td>显示</td><td class="wrap"><b>Show Heatmap</b> 与 <b>Show Joints</b> 被隐藏</td></tr>
+</table></div>
+<p>两个环境变量可以覆盖这一判断，用于测试或技术支持：</p>
+<div class="table-wrap"><table>
+<tr><th>变量</th><th>取值</th><th>作用</th></tr>
+<tr><td><code>POSE6D_DEPLOY_MODE</code></td><td><code>frozen</code> · <code>cython</code> · <code>source</code></td><td class="wrap">强制指定模式，而不是自动检测</td></tr>
+<tr><td><code>POSE6D_LOG_DIR</code></td><td>文件夹路径</td><td class="wrap">把部署版日志文件写到该处</td></tr>
+</table></div>
+
+<h3 id="layout">布局与导航</h3>
+<p>主窗口是一排选项卡，顺序与正常工作流程一致：</p>
+<div class="table-wrap"><table>
+<tr><th>选项卡</th><th>用途</th></tr>
+<tr><td><a href="#workflow">📈 Workflow（工作流）</a></td><td class="wrap">分步总览；创建或选择物体，相机/机器人/通信的基本设置</td></tr>
+<tr><td><a href="#camera-setup">📷 Camera Setup（相机设置）</a></td><td class="wrap">连接相机、采集图像、标定相机镜头（内参）</td></tr>
+<tr><td><a href="#object-teaching">🖊️ Object Teaching（物体示教）</a></td><td class="wrap">在图像上标注关键点并训练检测模型</td></tr>
+<tr><td><a href="#validation">🔍 Validation（验证）</a></td><td class="wrap">在相机、图像、文件夹或视频上运行训练好的模型；把结果发送给机器人</td></tr>
+<tr><td><a href="#robot-setup">📐 Robot Setup（机器人设置）</a></td><td class="wrap">相机与机器人之间的手眼标定</td></tr>
+<tr><td><a href="#communication">📡 Communication（通信）</a></td><td class="wrap">机器人服务器与测试客户端，实时监视每一个数据包</td></tr>
+<tr><td><a href="#settings">⚙️ Settings（设置）</a></td><td class="wrap">以表单方式编辑当前物体的 <code>object_config.json</code></td></tr>
+<tr><td><a href="#results">📊 Results &amp; Logs（结果与日志）</a></td><td class="wrap">结果列表（目前为占位）</td></tr>
+<tr><td><a href="#license">🔑 License（许可证）</a></td><td class="wrap">许可证状态与激活</td></tr>
+</table></div>
+
+<h3 id="data-folders">数据存放位置</h3>
+<p>属于一个物体的全部内容都放在一个<b>物体文件夹</b>中，默认位于 <code>data\objects\</code> 下：</p>
+<pre><code>data\objects\bricks-15\
+  object_config.json   ← 物体设置：关键点、相机、检测（见<a href="#config-reference">参考</a>）
+  images\              ← 采集的图像，每张已标注图像旁有一个 &lt;image&gt;.json 标签文件
+  models\              ← 训练得到的权重 keypoint_group_model_NNNN.pth
+  cameras\             ← calibration.json（相机内参）
+  results\             ← 基准 / 评估输出
+  labels\              ← 预留
+  robots\              ← 预留</code></pre>
+<p>与具体物体无关的应用级状态保存在 <code>pose6d</code> 文件夹的 <code>pose6d_config.json</code> 中：上次选择的物体、默认相机类型、通信地址。它是本机私有的，首次运行时创建，不会随发行包提供。</p>
+
+<!-- ============================================================ -->
+<h2 id="concepts">概念与术语</h2>
+<div class="table-wrap"><table>
+<tr><th>术语</th><th>含义</th></tr>
+<tr><td>Object（物体）</td><td class="wrap">机器人应当抓取的一类零件，例如一个木块。以一个物体文件夹的形式保存。</td></tr>
+<tr><td>Keypoint / target point（关键点 / 目标点）</td><td class="wrap">物体上一个有名称、有辨识度的点（角点、边中点），其在物体自身坐标系中的 3D 坐标已知，单位为毫米。<code>bricks-15</code> 有 13 个：顶面角点 <code>t1–t4</code>、底面角点 <code>b1–b4</code>、边中点 <code>c12 c23 c34 c14</code>，以及顶面中心 <code>tc</code>。</td></tr>
+<tr><td>Object Id（实例编号）</td><td class="wrap">同一张图像中可能出现同一物体的多个副本。标注时每个副本获得自己的编号（1、2、3 …），检测时按实例各输出一条结果。</td></tr>
+<tr><td>Label（标签）</td><td class="wrap">某个关键点在一张图像上的像素位置，保存在 <code>&lt;image&gt;.json</code> 中。</td></tr>
+<tr><td>Model（模型）</td><td class="wrap">训练好的关键点网络，<code>models\keypoint_group_model_NNNN.pth</code>（NNNN = 轮次）。编号最大的那个用于检测和继续训练。</td></tr>
+<tr><td>Pose（位姿）</td><td class="wrap">物体相对相机的位置：<b>tvec</b> = 平移 (x, y, z)，单位毫米；<b>rvec</b> = 旋转，用 Rodrigues 旋转向量表示，单位为弧度（轴 × 角度）。由检测到的关键点及其 3D 坐标经 PnP 计算得到。</td></tr>
+<tr><td>Quality（质量分）</td><td class="wrap">0–1 的分数，表示检测到的关键点与物体模型的吻合程度。越接近 1 吻合越好；示例物体的良好检测约为 0.97–0.99。</td></tr>
+<tr><td>Intrinsics（内参）</td><td class="wrap">相机镜头参数（焦距、图像中心、畸变），由相机标定得到。缺少正确内参就无法得到正确位姿。</td></tr>
+<tr><td>Hand-eye calibration（手眼标定）</td><td class="wrap">确定相机相对于机器人法兰的位置（相机装在机械臂上），从而把位姿换算到机器人坐标系。</td></tr>
+</table></div>
+
+<!-- ============================================================ -->
+<h2 id="workflow">📈 Workflow（工作流）</h2>
+<p>整个流程的检查清单。左列显示七个步骤（绿色 = 已完成，蓝色 = 当前步骤）；右侧显示当前步骤的说明，某些步骤还带有自己的控件。用底部的 <b>Previous Step</b> / <b>Next Step</b> 前后移动。第 4 步和第 7 步没有自己的控件，请使用 Validation 和 Results 选项卡。</p>
+
+<h3 id="wf-init">第 1 步 · Initialize Project（初始化项目）</h3>
+<figure><img src="img/workflow-1-init.png" alt="工作流第 1 步：Current Object 路径，以及 Select Object、Select Multiple、Create New 按钮"></figure>
+<div class="table-wrap"><table>
+<tr><th>控件</th><th>作用</th></tr>
+<tr><td>Current Object</td><td class="wrap">当前物体文件夹的路径。所有选项卡都作用于该物体。启动时从上次会话恢复。</td></tr>
+<tr><td><b>Select Object …</b></td><td class="wrap">文件夹选择器。选择一个已有的物体文件夹；它成为所有选项卡的当前物体。</td></tr>
+<tr><td><b>Create New …</b></td><td class="wrap">打开<i>Create New Object</i>对话框（见下），并创建一个新的物体文件夹。</td></tr>
+<tr><td><b>Select Multiple …</b></td><td class="wrap">原本用于同时处理多个物体。目前打开的是同一个<i>Create New Object</i>对话框（见<a href="#known-limitations">已知限制</a>）。</td></tr>
+</table></div>
+<figure class="small"><img src="img/dialog-new-object.png" alt="Create New Object 对话框，含 Parent Folder 与 Object Name">
+<figcaption>Create New Object：<b>Parent Folder</b>（默认 <code>data\objects</code>，可用 <b>Browse…</b> 修改）与 <b>Object Name</b>。</figcaption></figure>
+<p>点击 <b>OK</b> 会创建 <code>&lt;parent&gt;\&lt;name&gt;\</code>，包含标准子文件夹和一个默认的
+<code>object_config.json</code>，并把它设为当前物体。</p>
+<div class="callout warn"><b>新物体以占位几何开始</b>新物体得到的是一组 9 点立方体关键点（<code>A1–A8</code>、<code>TC</code>），并不是你的真实物体。请在<a href="#object-teaching">Object Teaching</a>中重命名这些点并填入真实坐标（双击某个目标点）。若要改变点的<i>数量</i>或 <b>Show Shape</b> 使用的面，请在开始标注前到 <a href="#settings">Settings</a> 选项卡编辑 <code>point_names</code> / <code>point_coord</code> / <code>point_faces</code>。</div>
+
+<h3 id="wf-camera">第 2 步 · Setup &amp; Calibrate Camera（设置并标定相机）</h3>
+<figure><img src="img/workflow-2-camera.png" alt="工作流第 2 步：Camera Type 下拉框"></figure>
+<div class="table-wrap"><table>
+<tr><th>控件</th><th>作用</th></tr>
+<tr><td>Camera Type</td><td class="wrap"><code>pose6d_config.json</code> 中的默认相机类型（<code>camera_type</code>）。实际打开哪台相机是在<a href="#camera-setup">Camera Setup</a>中按物体设置的，两者可以不同。</td></tr>
+</table></div>
+
+<h3 id="wf-object">第 3 步 · Teaching Object Model（示教物体模型）</h3>
+<figure><img src="img/workflow-3-object.png" alt="工作流第 3 步：Object 与 Object Type 下拉框"></figure>
+<div class="table-wrap"><table>
+<tr><th>控件</th><th>作用</th></tr>
+<tr><td>Object</td><td class="wrap">物体目录下的所有有效物体文件夹。选择其中一个即把它设为当前物体（与 <b>Select Object</b> 相同）。</td></tr>
+<tr><td>Object Type</td><td class="wrap">物体模型类型：<code>CHESSBOARD</code>、<code>BOX</code>、<code>KEYPOINT</code>、<code>POSE</code>、<code>SKELETON</code>。会立即写入物体的 <code>object_config.json</code>。<code>bricks-15</code> 这类训练好的关键点物体使用 <code>POSE</code>；只有该类型会输出供机器人使用的 6D 位姿。</td></tr>
+</table></div>
+
+<h3 id="wf-robot">第 5 步 · Camera Robot Calibration（相机-机器人标定）</h3>
+<figure><img src="img/workflow-5-robot.png" alt="工作流第 5 步：Robot Type 与 Camera Position 下拉框"></figure>
+<div class="table-wrap"><table>
+<tr><th>控件</th><th>取值</th><th>作用</th></tr>
+<tr><td>Robot Type</td><td class="wrap"><code>UR KUKA TM ABB FANUC YASKAWA DENSO DOBOT OTHER</code></td><td class="wrap">机器人品牌，作为 <code>robot_type</code> 保存在 <code>pose6d_config.json</code></td></tr>
+<tr><td>Camera Position</td><td class="wrap"><code>Moving (On Arm)</code> · <code>Static</code></td><td class="wrap">相机装在机械臂上还是固定在工作单元中，作为 <code>camera_position</code> 保存</td></tr>
+</table></div>
+<p>标定本身在 <a href="#robot-setup">Robot Setup</a> 中完成。</p>
+
+<h3 id="wf-comm">第 6 步 · Robot Communication（机器人通信）</h3>
+<figure><img src="img/workflow-6-comm.png" alt="工作流第 6 步：IP、端口与协议输入框，以及 Test Connection 按钮"></figure>
+<div class="table-wrap"><table>
+<tr><th>控件</th><th>默认值</th><th>作用</th></tr>
+<tr><td>This computer IP / Port</td><td><code>0.0.0.0</code> / <code>5000</code></td><td class="wrap">本机地址，保存为 <code>local_ip</code> / <code>local_port</code></td></tr>
+<tr><td>Destination IP / Port</td><td><code>127.0.0.1</code> / <code>5000</code></td><td class="wrap">机器人控制器地址，保存为 <code>remote_ip</code> / <code>remote_port</code></td></tr>
+<tr><td>Protocol</td><td><code>TCP-IP</code></td><td class="wrap"><code>TCP-IP</code> 或 <code>MODBUS</code></td></tr>
+<tr><td><b>Test Connection</b></td><td></td><td class="wrap">先保存这些字段，然后用 2 秒尝试与目标建立 TCP 连接。按钮变为 <b>Connection OK</b>（绿色）或 <b>Connection Failed</b>（红色）。MODBUS 测试尚未实现，始终报告失败。</td></tr>
+</table></div>
+<div class="callout"><b>说明</b>这些地址描述的是机器人控制器。把检测结果发送给机器人的位姿服务器是在 <a href="#communication">Communication</a> 选项卡或 <a href="#val-output">Validation → Output</a> 中启动的，它有自己的地址（默认 <code>127.0.0.1:5005</code>）。</div>
+
+<!-- ============================================================ -->
+<h2 id="camera-setup">📷 Camera Setup（相机设置）</h2>
+<p>连接相机、查看实时图像、采集用于标注的图像，并标定相机镜头。</p>
+<figure><img src="img/camera-setup.png" alt="Camera Setup 选项卡：相机设置、标定面板，以及桌上一堆木块的实时图像"></figure>
+
+<h3 id="cam-settings">Camera Settings（相机设置）</h3>
+<div class="table-wrap"><table>
+<tr><th>控件</th><th>取值</th><th>作用 / 建议</th></tr>
+<tr><td>Camera Type</td><td class="wrap"><code>REALSENSE WEBCAM0 WEBCAM1 BASLER IDS FLIR DALSA GENICAM OTHER</code></td><td class="wrap">要使用的相机驱动。RealSense、普通摄像头和 Basler 有自己的驱动；其余项目目前通过通用摄像头（OpenCV）驱动打开。按物体保存在 <code>camera_parameters.camera_type</code>。</td></tr>
+<tr><td>Resolution（分辨率）</td><td><code>1280x720</code> · <code>640x480</code> · <code>640x360</code></td><td class="wrap">请求的采集尺寸。越高细节越多但检测越慢。更改后要重新标定相机，因为内参与分辨率有关。</td></tr>
+<tr><td>Exposure（曝光）</td><td class="wrap"><code>330 100 200 500 1000 2000 5000</code>，或直接输入数值</td><td class="wrap">以相机自身单位表示的曝光，连接后立即生效。运动部件发虚时调低；光线暗的工作单元中调高。</td></tr>
+<tr><td><b>💡 Projector: ON/OFF</b></td><td></td><td class="wrap">RealSense 的红外点阵投射器。如果你标注的图像中能看到点阵图案，请把它关掉。</td></tr>
+<tr><td>Saved Image Format（保存图像格式）</td><td><code>RGB Left Right Depth RGD LRD All</code></td><td class="wrap"><b>Save Image</b> 写入哪（几）个数据流。标注请使用 <code>RGB</code>。Left/Right/Depth 需要 RealSense 相机。</td></tr>
+<tr><td><b>📂 Load Init File</b></td><td></td><td class="wrap">打开一个 <code>.ini</code> 设置文件的对话框。加载功能尚未实现。</td></tr>
+</table></div>
+
+<h3 id="cam-capture">采集图像</h3>
+<ol class="steps">
+<li>先选择物体（<a href="#wf-init">工作流第 1 步</a>）。图像会保存到该物体的文件夹中。</li>
+<li>设置 Camera Type、Resolution 和 Exposure，然后点击 <b>🟢 Connect Camera</b>。实时图像出现在右侧，按钮变红（<b>🔴 Disconnect Camera</b>）。</li>
+<li>对每个视角点击 <b>🖼️ Save Image</b>。在两次拍摄之间移动物体和相机：不同的位置、角度、光照以及部分遮挡，能得到更鲁棒的模型。</li>
+</ol>
+<p>图像保存为 <code>&lt;format&gt;_YYYYMMDD_HHMMSS.png</code>（例如 <code>rgb_20261028_141502.png</code>），位于物体的 <code>images\</code> 文件夹；如果你在标定面板中用 <b>Select Image Folder</b> 选择过文件夹，则保存到那里。</p>
+<div class="callout"><b>需要多少图像？</b>示例物体 <code>bricks-15</code> 由 14 张标注图像训练得到，每张图像中有多个木块。建议从 10–20 张差异较大的图像开始，在检测薄弱的地方再补充。</div>
+
+<h3 id="cam-calibration">Camera Calibration（相机标定）</h3>
+<p>用打印出来的棋盘格照片（<code>doc\checkerboard_pattern.pdf</code>）计算相机内参。</p>
+<div class="table-wrap"><table>
+<tr><th>控件</th><th>取值</th><th>含义 / 建议</th></tr>
+<tr><td>Calibration Pattern（标定图案）</td><td class="wrap"><code>6x9 7x10 4x11 5x5</code>，或输入 <code>NxM</code></td><td class="wrap">棋盘格的<b>内角点</b>数量（列 × 行），不是方格数量。</td></tr>
+<tr><td>Square size (mm)（方格边长）</td><td class="wrap"><code>10 20 30 50 100 200 300</code>，或输入数值</td><td class="wrap">打印出来的一个方格的边长，按实际打印尺寸测量。它决定标定的尺度。</td></tr>
+<tr><td><b>📁 Select Image Folder</b></td><td></td><td class="wrap">存放棋盘格照片的文件夹；这些照片会列在 <b>Images</b> 下。点击其中一张可查看。</td></tr>
+<tr><td><b>🛠️ Calibrate</b></td><td></td><td class="wrap">对文件夹中的每一张图像运行标定。</td></tr>
+</table></div>
+<div class="callout ok"><b>预期结果</b>出现 <i>Calibration Complete</i> 提示。相机矩阵与畸变会写入物体的 <code>object_config.json</code> 以及检测读取的 <code>cameras\calibration.json</code>。</div>
+<p>拍摄 15–25 张照片，让棋盘格占据图像的不同区域并以不同角度倾斜。图案或方格边长无效时会显示 <i>Bad Pattern</i> / <i>Bad Square Size</i>；可用图像太少时显示 <i>Calibration Failed</i>。</p>
+
+<!-- ============================================================ -->
+<h2 id="object-teaching">🖊️ Object Teaching（物体示教）</h2>
+<p>在你的图像上标出每个关键点的位置，用叠加层检查标注，然后训练模型。</p>
+<figure><img src="img/teaching-labels.png" alt="Object Teaching 选项卡：一张图像上六个木块已用不同颜色标注关键点，右侧是带坐标的目标点列表"></figure>
+
+<h3 id="teach-controls">控件</h3>
+<div class="table-wrap"><table>
+<tr><th>控件</th><th>作用</th></tr>
+<tr><td><b>🖱️ Select Object</b></td><td class="wrap">切换到另一个物体文件夹。若该文件夹没有有效的 <code>object_config.json</code>，会显示 <i>Invalid Object</i>。</td></tr>
+<tr><td>Object Id</td><td class="wrap">你正在标注的实例编号 1–20。每个实例用自己的颜色绘制。图像中物体的每一个可见副本都要用不同编号标注。</td></tr>
+<tr><td><b>❌ Delete Object</b></td><td class="wrap">从当前图像中移除所选 Object Id 的全部点。</td></tr>
+<tr><td>Target Points（目标点）</td><td class="wrap">物体的关键点及其 3D 坐标（毫米）。当前选中的点就是下一次点击要放置的点。<b>双击</b>某个点可重命名或修改其 X/Y/Z。这会改变所有图像使用的物体模型，而不是这张图像上的标注。</td></tr>
+<tr><td><b>🗑️ Clear Points</b></td><td class="wrap">移除当前图像中的全部点（在点击 <b>Save Points</b> 之前不会保存）。</td></tr>
+<tr><td><b>💾 Save Points</b></td><td class="wrap">把点写入图像旁边的 <code>&lt;image&gt;.json</code>，并把该图像标成绿色。</td></tr>
+<tr><td><b>➖ Delete Point</b></td><td class="wrap">从物体模型中删除选中的 Target Point。见<a href="#target-points">添加与删除目标点</a>。</td></tr>
+<tr><td><b>➕ Add Point</b></td><td class="wrap">向物体模型添加一个新的 Target Point。见<a href="#target-points">添加与删除目标点</a>。</td></tr>
+<tr><td><b>📁 Select Image Folder</b></td><td class="wrap">其图像出现在 Images 列表中的文件夹（默认：物体的 <code>images\</code>）。</td></tr>
+<tr><td>Images（图像）</td><td class="wrap">点击加载。已标注（有保存的 <code>.json</code>）的图像以<b>绿色</b>显示。</td></tr>
+<tr><td><b>📐 Show Axis</b></td><td class="wrap">根据标注计算每个实例的位姿，并绘制其坐标轴（X 红、Y 绿、Z 蓝）。</td></tr>
+<tr><td><b>🔷 Show Shape</b></td><td class="wrap">同上，但把物体的面（<code>point_faces</code>）绘制成轮廓。</td></tr>
+<tr><td><b>🚀 Train Model</b></td><td class="wrap">开始或停止训练。见<a href="#training">训练</a>。</td></tr>
+</table></div>
+
+<h3 id="labeling">标注一张图像</h3>
+<ol class="steps">
+<li>选择一个 <b>Object Id</b>（从 1 开始），并在 <b>Images</b> 列表中点击一张图像。</li>
+<li>点击 <b>Target Points</b> 中的一行，或者直接开始：第一个点已预选。</li>
+<li>在图像上<b>左键点击</b>该关键点的位置。出现十字与标签，选中项自动移到下一个点，因此你可以按顺序把整个物体点完。</li>
+<li>在某个点附近<b>右键点击</b>可删除它。</li>
+<li>对图像中物体的其他每个副本，换下一个 Object Id 重复以上操作。</li>
+<li>点击 <b>💾 Save Points</b>。</li>
+</ol>
+<p>只标注你确实能看到的点；被挡住的角点就留空。加载一张绿色图像会显示它已保存的点，便于你修正后再次保存。</p>
+
+<h3 id="target-points">添加与删除目标点</h3>
+<p>Target Points 列表就是物体模型：关键点名称及其 3D 坐标（毫米）。<b>Add Point</b> 和 <b>Delete Point</b> 会修改该模型，并立即写入物体的 <code>object_config.json</code>（<code>point_names</code>、<code>point_coord</code>）。不需要 <b>Save Points</b>。请先选择一个物体。</p>
+<figure class="small"><img src="img/dialog-add-point.png" alt="添加目标点对话框：建议名称 P14 与 X、Y、Z 坐标输入框（毫米）"><figcaption>➕ Add Point：输入名称以及该点在物体上的位置（毫米）。</figcaption></figure>
+<div class="table-wrap"><table>
+<tr><th>按钮</th><th>作用</th></tr>
+<tr><td><b>➕ Add Point</b></td><td class="wrap">打开一个对话框，其中带有建议的可用名称（在 <code>A1</code>…<code>A8</code> 之后为 <code>A9</code>，否则为 <code>P&lt;n&gt;</code>）以及毫米单位的 X/Y/Z。<b>OK</b> 会把该点添加到列表<b>末尾</b>，因此已有各点的顺序保持不变。名称为空或已被使用会被拒绝。新点会被选中，你可以立即开始标注它。</td></tr>
+<tr><td><b>➖ Delete Point</b></td><td class="wrap">在你确认后删除列表中选中的点。它同时会从 <code>point_faces</code> 中移除（剩余少于 3 个点的面会被丢弃），并从当前图像以及图像文件夹中每个 <code>&lt;image&gt;.json</code> 的标注中移除。</td></tr>
+</table></div>
+<div class="callout warn"><b>修改点后要重新训练。</b>添加或删除一个点会改变关键点数量，因此在修改之前训练好的模型不再与物体匹配。请在图像上标注新点，然后重新训练。删除操作无法撤销。如果可能还需要旧标注，请先复制物体文件夹。</div>
+
+<h3 id="teach-overlays">用叠加层检查标注</h3>
+<p>标注完成后打开 <b>Show Axis</b> 或 <b>Show Shape</b>。如果坐标轴正好落在物体角点上、轮廓与边缘吻合，说明标注、3D 坐标和相机标定三者是一致的。</p>
+<figure><img src="img/teaching-axis.png" alt="已标注图像，每个木块上画有一位姿轴"><figcaption>Show Axis：每个已标注实例一条位姿轴。</figcaption></figure>
+<figure><img src="img/teaching-shape.png" alt="已标注图像，每个木块上画出面的轮廓"><figcaption>Show Shape：<code>point_faces</code> 中定义的面，用计算出的位姿投影得到。</figcaption></figure>
+<div class="callout warn"><b>某个实例没有画出来？</b>一个实例至少需要 4 个已标注的点。当重投影误差超过 5 像素时，叠加层也会被跳过（日志中给出警告），这通常意味着某个点标错、3D 坐标有误，或相机标定缺失/错误。</div>
+
+<h3 id="training">训练</h3>
+<figure><img src="img/teaching-training.png" alt="图像上方的训练进度条：第 120 轮 / 共 500 轮，24%，显示 loss 与误差下降"><figcaption>训练进行时，图像上方的进度条显示轮次、百分比、当前 loss 以及误差下降幅度。</figcaption></figure>
+<ol class="steps">
+<li>选中已标注的物体，点击 <b>🚀 Train Model</b>。</li>
+<li>若该物体还没有模型，确认 <i>No Model Found → start training?</i>。若已有模型，<i>Model Exists → retrain it?</i> 会从最新的权重继续，而不是从头开始。</li>
+<li>训练在后台进行，应用仍可正常使用。按钮显示 <b>🛑 Stop Training</b>。</li>
+<li>若要提前结束，再次点击它。系统会询问是否保存当前轮次的模型（<i>Save Partial Model</i>）。</li>
+</ol>
+<div class="table-wrap"><table>
+<tr><th>设置</th><th>位置</th><th>默认值</th><th>含义</th></tr>
+<tr><td>Epochs（轮次）</td><td><code>detection_parameters.n_epochs</code></td><td>100</td><td class="wrap">对训练图像遍历的遍数，用于新训练以及每次继续训练</td></tr>
+<tr><td>Learning rate（学习率）</td><td><code>detection_parameters.lr</code></td><td>0.0001</td><td class="wrap">优化器的步长。除非训练发散，否则不要改。</td></tr>
+<tr><td>Image scale（图像缩放）</td><td><code>detection_parameters.image_scale</code></td><td>0.5</td><td class="wrap">图像进入网络前按此比例缩放。越小越快，但会丢失细小细节。</td></tr>
+<tr><td>Train split（训练划分）</td><td><code>detection_parameters.train_split</code></td><td>0.95</td><td class="wrap">用于训练的标注图像比例，其余用于验证。</td></tr>
+</table></div>
+<p>新的 <code>object_config.json</code> 中没有 <code>n_epochs</code> 和 <code>lr</code>；要修改请把它们添加到 <code>detection_parameters</code>（Settings 选项卡或文本编辑器）。权重写入 <code>models\keypoint_group_model_NNNN.pth</code>。</p>
+
+<!-- ============================================================ -->
+<h2 id="validation">🔍 Validation（验证）</h2>
+<p>运行训练好的模型并显示检测到的位姿。它还可以把每一条结果发送给机器人。</p>
+<figure><img src="img/validation-shape.png" alt="Validation 选项卡：六个木块上同时画出位姿轴与面轮廓"><figcaption>Detector 开启，同时打开 Show Axis 与 Show Shape。</figcaption></figure>
+
+<h3 id="val-config">Configuration（配置）</h3>
+<div class="table-wrap"><table>
+<tr><th>控件</th><th>取值</th><th>作用</th></tr>
+<tr><td>Source（来源）</td><td class="wrap"><code>Camera Image Directory Video File Video Stream</code></td><td class="wrap">图像来自哪里。见下表。</td></tr>
+<tr><td>Objects（物体）</td><td class="wrap">物体目录中的各个物体</td><td class="wrap">要检测的物体（及其模型）。选择其中一个即把它加载进来。</td></tr>
+<tr><td id="val-output">Output（输出）</td><td class="wrap"><code>Screen MP4 File TCP/IP Stream ROS Topic MQTT</code></td><td class="wrap"><code>Screen</code>：仅显示。<code>TCP/IP Stream</code>：还会计算每一帧的位姿并发送给机器人服务器，必要时自动启动服务器（见<a href="#communication">通信</a>）。MP4 File、ROS Topic 与 MQTT 尚未实现，行为与 Screen 相同。</td></tr>
+</table></div>
+<div class="table-wrap"><table>
+<tr><th>来源</th><th>点击 🟢 Detect… 之后的行为</th></tr>
+<tr><td>Camera</td><td class="wrap">连接该物体的相机（或复用 Camera Setup 的连接），在实时图像上持续检测，直到 <b>🔴 Stop Detection</b>。</td></tr>
+<tr><td>Image</td><td class="wrap">要求选择一个图像文件，检测一次并显示结果。</td></tr>
+<tr><td>Directory</td><td class="wrap">要求选择一个文件夹，按名称顺序遍历其中所有图像（<code>.png .jpg .jpeg .bmp</code>），<b>反复循环直到你按下 Stop</b>。若其中没有可读文件则自行停止。</td></tr>
+<tr><td>Video File</td><td class="wrap">要求选择一个 <code>.mp4</code> / <code>.avi</code>，按其帧率播放并对每一帧检测，直到结束或停止。</td></tr>
+<tr><td>Video Stream</td><td class="wrap">尚未实现。</td></tr>
+</table></div>
+
+<h3 id="val-display">Display Info（显示信息）</h3>
+<div class="table-wrap"><table>
+<tr><th>控件</th><th>作用</th></tr>
+<tr><td><b>💡 Detector: ON/OFF</b></td><td class="wrap">屏幕检测的总开关。关闭时只看到原始图像。（TCP/IP 输出仍会检测。）</td></tr>
+<tr><td><b>📐 Show Axis</b></td><td class="wrap">每个检测实例一条位姿轴：X 红、Y 绿、Z 蓝，画在物体原点。</td></tr>
+<tr><td><b>🔷 Show Shape</b></td><td class="wrap">用检测到的位姿投影出的物体面轮廓（<code>point_faces</code>）。</td></tr>
+<tr><td><b>🌡️ Show Heatmap</b></td><td class="wrap">网络原始输出：模型认为每个关键点在哪里。用于诊断检测薄弱的情况。部署版应用中隐藏。</td></tr>
+<tr><td><b>🔗 Show Joints</b></td><td class="wrap">检测到的关键点以及它们如何被归并成实例。部署版应用中隐藏。</td></tr>
+<tr><td><b>+ Cross: ON/OFF</b></td><td class="wrap">图像中心的十字准线，用于对准相机。</td></tr>
+<tr><td>Coordinates（坐标系）</td><td class="wrap"><code>Camera</code> · <code>Object</code> · <code>Robot</code>。显示位姿所用的坐标系。目前尚未生效：位姿始终为相机坐标系。</td></tr>
+<tr><td>Text Size（文字大小）</td><td class="wrap"><code>10</code> · <code>20</code> · <code>50</code>。见<a href="#known-limitations">已知限制</a>：该字段目前改变的是相机曝光。</td></tr>
+</table></div>
+<div class="callout"><b>如何解读结果</b>每个检测到的实例都有自己的轴和/或轮廓。检测到的关键点少于 4 个的实例不会得到位姿。如果什么都没画出来：检查 Detector 是否开启、是否选对了物体，以及物体是否可见、有没有被图像边缘裁掉。</div>
+
+<h3 id="val-tcpip">把结果发送给机器人</h3>
+<figure><img src="img/validation-tcpip.png" alt="Validation 选项卡，Output 设为 TCP/IP Stream"></figure>
+<p>把 <b>Output 设为 TCP/IP Stream</b> 并启动检测。对每一帧，模型只运行<b>一次</b>，同一结果既画在屏幕上，也存入机器人服务器。机器人每次询问（<code>get results</code>）都会收到最新结果。你停止检测或把输出切回其他选项后，服务器仍会继续运行；请在 <a href="#communication">Communication</a> 选项卡中停止它。</p>
+
+<!-- ============================================================ -->
+<h2 id="robot-setup">📐 Robot Setup（机器人设置）</h2>
+<p>手眼标定：用已知机器人位姿下拍摄的棋盘格图像，找出相机在机器人法兰上的位置。</p>
+<figure><img src="img/robot-setup.png" alt="Robot Setup 选项卡：一张棋盘格图像以及该图像对应的机器人位姿"></figure>
+<div class="table-wrap"><table>
+<tr><th>控件</th><th>作用</th></tr>
+<tr><td><b>🟢 Connect Camera</b></td><td class="wrap">相机实时画面；启用 <b>Save Image</b>。</td></tr>
+<tr><td><b>Save Image</b></td><td class="wrap">把当前帧保存为 <code>capture_N.jpg</code>（保存在启动 pose6d 时所在的文件夹），并加入列表。</td></tr>
+<tr><td>Calibration Method（标定方法）</td><td class="wrap"><code>Intrinsic</code> · <code>Extrinsic</code> · <code>Hand-Eye</code>。目前不起作用：<b>Calibrate System</b> 始终执行手眼标定。</td></tr>
+<tr><td>Robot Model（机器人模型）</td><td class="wrap">如何解读机器人位姿中的三个旋转值。<code>UR-Euler</code>：欧拉角，R = Rz·Ry·Rx（若任一数值大于 2π 则按度，否则按弧度）。其余（<code>UR-RVEC</code>、KUKA、DENSO、ABB、TM、NEURA、DOBOT）：弧度单位的旋转向量。</td></tr>
+<tr><td>Image Files（图像文件）</td><td class="wrap"><code>data\robot_calibration\</code> 中的图像。选择其中一张会显示它，并从数据集文件填入 <b>Robot Pose</b>。</td></tr>
+<tr><td>Robot Pose tX tY tZ / rX rY rZ</td><td class="wrap">拍摄所选图像时机器人法兰的位姿（平移为毫米，旋转按 Robot Model 解读）。仅供显示。</td></tr>
+<tr><td><b>✨ Calibrate System</b></td><td class="wrap">对整个数据集运行标定（OpenCV <code>calibrateHandEye</code>，Tsai 方法）。</td></tr>
+</table></div>
+
+<h3 id="handeye-dataset">标定数据集</h3>
+<p>图像与 <code>camera_robot_calibration.json</code> 必须位于 <code>data\robot_calibration\</code>：</p>
+<pre><code>{
+  "chessBoardSize": [9, 6],          // 内角点（列，行）
+  "chessBoardSquareSize": 10.0,      // 毫米
+  "viewInfo": [
+    { "imageName": "calib_robot_0001.jpg",
+      "robotPose": [142.72, 356.93, -74.27, 0.5825, 3.0991, 0.0186] },   // x y z（毫米），r1 r2 r3
+    ...
+  ]
+}</code></pre>
+<p>至少需要 3 张能检测到棋盘格的图像；10–15 个视角、且彼此之间有较大的旋转变化，才能得到稳定的结果。</p>
+<div class="callout warn"><b>结果在哪里？</b>标定结果（使用的样本数、相机 RMS 误差、相机矩阵、畸变，以及相机到夹爪的旋转 <code>R_cam2gripper</code> / 平移 <code>t_cam2gripper</code>）目前只打印在控制台窗口中，既不在选项卡里显示，也不会保存。</div>
+
+<!-- ============================================================ -->
+<h2 id="communication">📡 Communication（通信）</h2>
+<p>运行机器人所连接的位姿服务器，以及一个表现得像机器人的测试客户端。两个监视窗口都会显示服务器收到和发出的每一个数据包。</p>
+<figure><img src="img/communication.png" alt="Communication 选项卡：服务器运行中、客户端已连接，请求与响应监视窗口中显示检测结果"></figure>
+
+<h3 id="comm-server">Robot Server（机器人服务器）</h3>
+<div class="table-wrap"><table>
+<tr><th>控件</th><th>默认值</th><th>作用</th></tr>
+<tr><td>Protocol（协议）</td><td><code>TCP/IP</code></td><td class="wrap">目前只有 TCP/IP 可用。</td></tr>
+<tr><td>Server IP Address（服务器地址）</td><td><code>127.0.0.1</code></td><td class="wrap">服务器监听的地址。当机器人是另一台机器时，使用本机的网络地址（或用 <code>0.0.0.0</code> 监听全部）。</td></tr>
+<tr><td>Server Port（服务器端口）</td><td><code>5005</code></td><td class="wrap">TCP 端口，1–65535。</td></tr>
+<tr><td><b>▶ Server Start / ⏹ Server Stop</b></td><td></td><td class="wrap">启动或停止服务器。服务器也可能已被 Validation（Output = TCP/IP Stream）启动；按钮反映其真实状态。</td></tr>
+<tr><td>Status line（状态行）</td><td></td><td class="wrap">监听地址、已应答的请求数、最新帧号以及检测到的物体数量。</td></tr>
+</table></div>
+<div class="callout"><b>只有检测运行时服务器才有结果</b>结果是在 Validation 选项卡以 <b>Output = TCP/IP Stream</b> 进行检测时发布的。否则客户端会得到上一次的结果，或得到 <code>"success": false, "message": "No results yet"</code>。</div>
+
+<h3 id="comm-client">Client（客户端）</h3>
+<div class="table-wrap"><table>
+<tr><th>控件</th><th>作用</th></tr>
+<tr><td>Server IP Address / Port</td><td class="wrap">要连接的服务：本应用的服务器，或任何其他 pose6d 服务器。</td></tr>
+<tr><td><b>▶ Client Start / ⏹ Client Stop</b></td><td class="wrap">连接（3 秒超时）或断开。</td></tr>
+<tr><td>Command（命令）</td><td class="wrap"><code>get results</code> 或 <code>ping</code>。</td></tr>
+<tr><td><b>📤 Send Command</b></td><td class="wrap">发送一次该命令。</td></tr>
+<tr><td>Repeat every [ms]（重复间隔）</td><td class="wrap">按该周期反复发送命令（最小 50 毫秒）。当模型在 GUI 线程上运行时，实际速率最多为每个检测帧一次请求。</td></tr>
+<tr><td><b>Clear Monitors</b></td><td class="wrap">清空两个监视窗口（每个最多保留 3000 行）。</td></tr>
+</table></div>
+
+<h3 id="protocol">协议参考</h3>
+<p>每条消息都是<b>4 字节大端长度</b>，其后是那么多字节的 <b>UTF-8 JSON</b>。客户端发送请求，服务器在同一连接上应答，次数不限。</p>
+<div class="table-wrap"><table>
+<tr><th>请求</th><th>响应中的 <code>result</code></th></tr>
+<tr><td><code>{"command": "get results", "params": {}}</code></td><td class="wrap">最近一次检测，见下文</td></tr>
+<tr><td><code>{"command": "ping", "params": {}}</code></td><td class="wrap"><code>{"success": true, "message": "pong"}</code></td></tr>
+<tr><td>其他任何内容</td><td class="wrap"><code>{"success": false, "message": "Unknown command: …"}</code></td></tr>
+</table></div>
+<pre><code>{ "status": "ok", "command": "get results",
+  "result": {
+    "success": true,
+    "frame_id": 128,                    // 每处理一帧加 1
+    "timestamp": 1793190045.698,        // 该帧被处理时的时间（自 1970 年起的秒数）
+    "objects": {
+      "1": { "success": true,
+             "rvec": [2.2796, -0.6202, -0.0567],   // 旋转向量，弧度
+             "tvec": [-206.12, 118.24, 1553.01],   // 平移，毫米，相机坐标系
+             "quality": 0.9798 },
+      "2": { "success": false, "rvec": null, "tvec": null, "quality": 0.0 }
+    } } }</code></pre>
+<div class="table-wrap"><table>
+<tr><th>字段</th><th>含义</th></tr>
+<tr><td><code>status</code></td><td class="wrap"><code>ok</code>；若服务器处理请求失败，则为 <code>error</code> 并带 <code>message</code></td></tr>
+<tr><td><code>frame_id</code></td><td class="wrap">两次应答中编号相同，说明期间没有处理新帧</td></tr>
+<tr><td><code>objects</code></td><td class="wrap">每个检测实例一项，以实例编号为键</td></tr>
+<tr><td><code>success</code>（物体级）</td><td class="wrap">当找到的关键点太少、无法计算位姿时为 <code>false</code>；跳过该条目</td></tr>
+<tr><td><code>rvec</code> / <code>tvec</code></td><td class="wrap">物体在相机坐标系中的位姿（见<a href="#concepts">概念与术语</a>）。要用机器人坐标，需结合手眼标定结果换算。</td></tr>
+<tr><td><code>quality</code></td><td class="wrap">0–1 的吻合度；在机器人程序中应剔除低值（例如低于 0.9）</td></tr>
+</table></div>
+<p>机器人侧一个最小的 Python 客户端：</p>
+<pre><code>import json, socket, struct
+
+def request(sock, command):
+    payload = json.dumps({"command": command, "params": {}}).encode()
+    sock.sendall(struct.pack(">I", len(payload)) + payload)
+    size = struct.unpack(">I", sock.recv(4, socket.MSG_WAITALL))[0]
+    return json.loads(sock.recv(size, socket.MSG_WAITALL))
+
+with socket.create_connection(("127.0.0.1", 5005)) as s:
+    result = request(s, "get results")["result"]
+    for obj_id, obj in result["objects"].items():
+        if obj["success"] and obj["quality"] > 0.9:
+            print(obj_id, obj["tvec"], obj["rvec"])</code></pre>
+
+<!-- ============================================================ -->
+<h2 id="settings">⚙️ Settings（设置）</h2>
+<p>以表单方式编辑当前物体的 <code>object_config.json</code>。顶部显示物体路径；切换物体时表单会重新加载。</p>
+<figure><img src="img/settings.png" alt="Settings 选项卡：Application 与 Object Parameters 两个区块的表单字段"></figure>
+<div class="table-wrap"><table>
+<tr><th>字段类型</th><th>如何编辑</th></tr>
+<tr><td>数值 / 文本</td><td class="wrap">直接输入。true/false 值用复选框。</td></tr>
+<tr><td>短列表或矩阵</td><td class="wrap">每个值一个输入框（例如 <code>pose</code>、<code>point_coord</code>、<code>intrinsic_matrix</code>）。</td></tr>
+<tr><td>名称列表</td><td class="wrap">用逗号分隔，例如 <code>t1, t2, t3</code>。</td></tr>
+<tr><td>嵌套列表</td><td class="wrap">原始 JSON，例如 <code>[["t1","t2","t3","t4"],["b1","b2","b3","b4"]]</code>。鼠标悬停可看提示。</td></tr>
+</table></div>
+<p><b>Save Configuration</b> 会先检查数值，只有全部检查通过才保存：</p>
+<ul>
+<li><code>point_names</code> 与 <code>point_coord</code> 条目数相同，且每个坐标都是 <code>[x, y, z]</code>；</li>
+<li><code>point_faces</code> 中的每个名称都存在于 <code>point_names</code> 中；</li>
+<li>每个 <code>resolution</code> 都是 <code>[width, height]</code>；</li>
+<li><code>intrinsic_matrix</code> 为 3×3。</li>
+</ul>
+
+<h3 id="config-reference">object_config.json 参考</h3>
+<h4>object_parameters</h4>
+<div class="table-wrap"><table>
+<tr><th>键</th><th>示例</th><th>含义</th></tr>
+<tr><td><code>name</code></td><td><code>bricks-15</code></td><td class="wrap">物体名称（即文件夹名）</td></tr>
+<tr><td><code>type</code></td><td><code>pose</code></td><td class="wrap">物体模型类型，见<a href="#wf-object">Object Type</a></td></tr>
+<tr><td><code>point_names</code></td><td><code>t1 … tc</code></td><td class="wrap">关键点名称，按网络学习的顺序排列</td></tr>
+<tr><td><code>point_coord</code></td><td><code>[[0,0,40], [0,70,40], …]</code></td><td class="wrap">每个关键点的 3D 位置（毫米），顺序与 <code>point_names</code> 一致。它定义了物体坐标系：位姿轴画在 (0, 0, 0)。</td></tr>
+<tr><td><code>point_faces</code></td><td><code>[["t1","t2","t3","t4"], …]</code></td><td class="wrap">Show Shape 绘制的闭合轮廓</td></tr>
+<tr><td><code>resolution</code></td><td><code>[1920, 1080]</code></td><td class="wrap">训练图像的图像尺寸</td></tr>
+<tr><td><code>id</code>、<code>pose</code>、<code>image_path</code></td><td></td><td class="wrap">记录用途；检测不需要</td></tr>
+</table></div>
+<h4>camera_parameters</h4>
+<div class="table-wrap"><table>
+<tr><th>键</th><th>示例</th><th>含义</th></tr>
+<tr><td><code>camera_type</code></td><td><code>WEBCAM0</code></td><td class="wrap">相机驱动，见<a href="#cam-settings">Camera Type</a></td></tr>
+<tr><td><code>cameraid</code></td><td><code>0</code></td><td class="wrap">普通摄像头的设备索引。若该索引打不开，会使用第一个可用的相机（0–3）。</td></tr>
+<tr><td><code>resolution</code></td><td><code>[640, 480]</code></td><td class="wrap">向相机请求的采集尺寸</td></tr>
+<tr><td><code>mode</code></td><td><code>rgb</code></td><td class="wrap">显示的数据流：<code>rgb</code>、<code>irl</code>/<code>irr</code>（左/右红外）、<code>dep</code>（深度）、<code>rgd</code>、<code>lrd</code>、<code>rgbd</code></td></tr>
+<tr><td><code>intrinsic_matrix</code></td><td><code>[[2700,0,960],[0,2700,540],[0,0,1]]</code></td><td class="wrap">以像素为单位的焦距与图像中心。会被相机标定替换。</td></tr>
+<tr><td><code>intrinsic_distortion</code></td><td><code>[[0,0,0,0,0]]</code></td><td class="wrap">镜头畸变 k1 k2 p1 p2 k3</td></tr>
+<tr><td><code>exposure</code>、<code>gain</code>、<code>focus</code>、<code>format</code>、<code>crop_box</code>、<code>rotation_type</code></td><td></td><td class="wrap">保存的相机设置；曝光由 Camera Setup 设置</td></tr>
+</table></div>
+<h4>detection_parameters</h4>
+<div class="table-wrap"><table>
+<tr><th>键</th><th>默认值</th><th>含义</th></tr>
+<tr><td><code>image_scale</code></td><td><code>0.5</code></td><td class="wrap">训练与检测时，图像进入网络前应用的缩放</td></tr>
+<tr><td><code>train_split</code></td><td><code>0.95</code></td><td class="wrap">用于训练的标注图像比例</td></tr>
+<tr><td><code>n_epochs</code></td><td><code>100</code></td><td class="wrap">训练轮次（需自行添加该键才能修改）</td></tr>
+<tr><td><code>lr</code></td><td><code>0.0001</code></td><td class="wrap">学习率（需自行添加该键才能修改）</td></tr>
+<tr><td><code>net_name</code>、<code>net_path</code>、<code>gain</code>、<code>augment_type</code>、<code>resolution</code></td><td></td><td class="wrap">为兼容性保留；关键点模型不使用</td></tr>
+</table></div>
+<p><code>application</code> 与 <code>measurement_parameters</code> 为兼容性保留，不影响检测。
+相机标定还会在顶层添加 <code>camera_matrix</code> 与 <code>camera_distortion</code>。</p>
+
+<!-- ============================================================ -->
+<h2 id="results">📊 Results &amp; Logs（结果与日志）</h2>
+<figure><img src="img/results.png" alt="Results and Logs 选项卡：结果为空的列表"></figure>
+<p>这是一个用于存放标定与运行结果的占位列表，目前只显示 <i>System initialized…</i>。应用日志：从源码运行时在控制台窗口中，部署版中在 <code>logs\pose6d.log</code>（见<a href="#source-vs-deployed">源码模式与部署模式</a>）。</p>
+
+<!-- ============================================================ -->
+<h2 id="license">🔑 License（许可证）</h2>
+<figure><img src="img/license.png" alt="License 选项卡：机器码、许可证状态、Activate / Renew License 按钮"></figure>
+<p>pose6d 使用锁定到本机的离线许可证。无需网络连接。</p>
+<div class="table-wrap"><table>
+<tr><th>项目</th><th>含义</th></tr>
+<tr><td>Machine id（机器码）</td><td class="wrap">标识本机。许可证只在签发时指定的机器上有效。</td></tr>
+<tr><td>Status（状态）</td><td class="wrap"><i>Licensed - expires: &lt;日期或 never&gt;</i>，或说明为何无效：未激活、格式/签名无效、机器不符、已过期、检测到系统时钟回拨</td></tr>
+<tr><td>Features（功能位）</td><td class="wrap">已授权功能的位掩码，见下表</td></tr>
+<tr><td><b>Activate / Renew License…</b></td><td class="wrap">打开激活对话框</td></tr>
+</table></div>
+<figure class="small"><img src="img/dialog-license.png" alt="许可证激活对话框：请求码与启用码输入区"></figure>
+<ol class="steps">
+<li>在 <b>1. Your request code</b> 下，点击 <b>Copy to Clipboard</b> 或 <b>Save Request File (.req)…</b>，把它发给你的供应商。</li>
+<li>把你收到的启用码粘贴到 <b>2.</b> 下，或点击 <b>Load Enable File (.lic)…</b>。</li>
+<li>点击 <b>Activate</b>。许可证保存为启动 pose6d 时所在文件夹中的 <code>pose6d_license.lic</code>（对 exe 而言，也会到 <code>pose6d.exe</code> 旁边查找）。</li>
+</ol>
+<div class="table-wrap"><table>
+<tr><th>功能位</th><th>功能</th></tr>
+<tr><td><code>0x0001</code></td><td>检测显示</td></tr>
+<tr><td><code>0x0002</code></td><td>训练</td></tr>
+<tr><td><code>0x0004</code></td><td class="wrap">机器人通信。没有它时，通信可工作 1 小时宽限期，之后 Communication 选项卡被禁用。</td></tr>
+<tr><td><code>0x0008</code></td><td>标注</td></tr>
+</table></div>
+<div class="callout warn"><b>不要把电脑时钟往回调</b>许可证会检测到时钟被回拨，并在本次运行中停止接受该许可证。</div>
+<p>供应商使用 <code>vendor_tools/issue_license.py</code> 离线签发许可证（见 <code>docs/getting-started/licensing.md</code>）。</p>
+
+<!-- ============================================================ -->
+<h2 id="examples">完整示例</h2>
+
+<h3 id="ex-new-object">1 · 从零示教一个新物体</h3>
+<ol class="steps">
+<li><b>Workflow → Create New…</b>：为物体命名，例如 <code>bracket-01</code>。</li>
+<li><b>Settings</b>：用真实关键点替换占位立方体：<code>point_names</code>、<code>point_coord</code>（毫米，从你选定作为原点的某个角点量起）以及 <code>point_faces</code>。然后 <b>Save Configuration</b>。</li>
+<li><b>Camera Setup</b>：连接相机，并用 15–25 张棋盘格图像标定它。</li>
+<li><b>Camera Setup</b>：用 <b>Save Image</b> 采集 15–20 个差异较大的视角，图中可有一个或多个零件。</li>
+<li><b>Object Teaching</b>：标注每一个可见的零件（每个零件一个 Object Id），每张图像 <b>Save Points</b>，并用 <b>Show Axis</b> 检查。</li>
+<li><b>Object Teaching → Train Model</b>。训练结束后，在 <b>Validation</b> 中先用 Source = Directory 对同一批图像测试，再用 Source = Camera 测试。</li>
+<li>在检测薄弱的地方，针对那些情况补拍并标注更多图像，然后再次点击 <b>Train Model</b>（继续训练会从最近的权重接着进行）。</li>
+</ol>
+
+<h3 id="ex-folder">2 · 用文件夹对检测做长时间拷机测试</h3>
+<p>Validation → Source = <code>Directory</code>，Detector 开启，Show Axis 开启 → <b>Detect…</b> → 选择文件夹。图像会反复播放直到你按下 Stop。用它在不接相机的情况下，观察很多轮中检测是否稳定、有没有漏检。</p>
+
+<h3 id="ex-robot">3 · 把位姿发送给机器人</h3>
+<ol class="steps">
+<li><b>Validation</b>：Source = Camera，Output = <code>TCP/IP Stream</code>，<b>Detect…</b>。服务器在 <code>127.0.0.1:5005</code> 启动。</li>
+<li>若机器人在另一台机器上：停止检测，在 <b>Communication</b> 中设置服务器地址（本机的网络 IP），点击 <b>Server Start</b>，然后重新开始检测。</li>
+<li>用内置客户端检查：<b>Communication → Client Start</b>，Command = <code>get results</code>，<b>Repeat every 1000 ms</b>。结果会出现在下方监视窗口。</li>
+<li>在机器人程序中，在它准备好抓取时发送 <code>get results</code>（见<a href="#protocol">协议参考</a>），并跳过 <code>success: false</code> 或 <code>quality</code> 偏低的物体。</li>
+</ol>
+
+<h3 id="ex-handeye">4 · 手眼标定</h3>
+<ol class="steps">
+<li>把棋盘格固定在工作单元中。让机器人（相机装在法兰上）移动到 10–15 个不同位姿，从不同角度观察棋盘格。</li>
+<li>在每个位姿保存一张图像到 <code>data\robot_calibration\</code>，并把它的文件名与机器人位姿写入 <code>camera_robot_calibration.json</code>。</li>
+<li><b>Robot Setup</b>：选择与你控制器上报旋转方式匹配的 <b>Robot Model</b>，检查几张图像（位姿输入框会显示读到的数值），然后 <b>Calibrate System</b>。</li>
+<li>在控制台读取结果。相机 RMS 误差小于 1 像素说明图像质量良好。</li>
+</ol>
+
+<!-- ============================================================ -->
+<h2 id="troubleshooting">故障排查</h2>
+<div class="table-wrap"><table>
+<tr><th>现象</th><th>可能原因 → 处理办法</th></tr>
+<tr><td class="wrap">相机能连接但图像一直全黑 / "Failed to acquire an image"</td><td class="wrap">某些 Windows 相机驱动能打开相机，但通过默认后端从不送帧。pose6d 会检测这种情况并自动改用 DirectShow 重试；若仍失败，请关闭其他正在使用相机的程序，并换一个 <code>cameraid</code>。</td></tr>
+<tr><td class="wrap">什么都检测不到</td><td class="wrap">Detector 关闭；选错物体；物体部分在图像之外；模型训练图像太少或差异太大。打开 Show Heatmap（源码模式）看看模型到底能不能找到关键点。</td></tr>
+<tr><td class="wrap">有些实例没有画出轴</td><td class="wrap">这些实例找到的关键点少于 4 个（日志：<i>Object N has K keypoints (need &gt;= 4)</i>）。补充相似视角或带遮挡的训练图像。</td></tr>
+<tr><td class="wrap">轴画出来了但位置不对</td><td class="wrap">相机未标定，或是在另一分辨率下标定的；<code>point_coord</code> 有误。请重新标定，并在 Object Teaching 中用 Show Shape 检查。</td></tr>
+<tr><td class="wrap">Object Teaching 中 Show Axis 什么都不画</td><td class="wrap">已标注点少于 4 个，或重投影误差超过 5 像素：某个点用错了名称标注，或 3D 坐标有误。</td></tr>
+<tr><td class="wrap">服务器无法启动（<i>port in use?</i>）</td><td class="wrap">另一个程序或第二个 pose6d 正在使用该端口。换一个端口或关闭另一个程序。</td></tr>
+<tr><td class="wrap">客户端每次收到相同的 <code>frame_id</code></td><td class="wrap">检测没有运行，或 Output 不是 TCP/IP Stream。</td></tr>
+<tr><td class="wrap">Communication 选项卡变灰不可用</td><td class="wrap">许可证不含机器人通信功能，且 1 小时宽限期已过。请激活带功能位 <code>0x0004</code> 的许可证。</td></tr>
+<tr><td class="wrap">Settings：<i>Validation Error</i></td><td class="wrap">提示会列出未通过的规则（见<a href="#settings">Settings</a>），最常见的是 <code>point_names</code> 与 <code>point_coord</code> 条目数不一致。</td></tr>
+<tr><td class="wrap">训练非常慢</td><td class="wrap">没有安装 CUDA 版 PyTorch，训练跑在 CPU 上。请安装 CUDA 版本，或降低 <code>image_scale</code>。</td></tr>
+</table></div>
+
+<!-- ============================================================ -->
+<h2 id="appendix-files">附录 A · pose6d 写入的文件</h2>
+<div class="table-wrap"><table>
+<tr><th>文件</th><th>由谁写入</th><th>内容</th></tr>
+<tr><td><code>&lt;object&gt;\object_config.json</code></td><td class="wrap">Create New、Settings、Object Type、相机标定、点编辑</td><td class="wrap">物体定义与设置</td></tr>
+<tr><td><code>&lt;object&gt;\images\&lt;format&gt;_&lt;time&gt;.png</code></td><td>Camera Setup → Save Image</td><td class="wrap">采集的图像</td></tr>
+<tr><td><code>&lt;object&gt;\images\&lt;image&gt;.json</code></td><td>Object Teaching → Save Points</td><td class="wrap"><code>{"points": [{"label", "object_id", "image_x", "image_y"}, …]}</code></td></tr>
+<tr><td><code>&lt;object&gt;\models\keypoint_group_model_NNNN.pth</code></td><td>训练</td><td class="wrap">第 NNNN 轮之后的模型权重</td></tr>
+<tr><td><code>&lt;object&gt;\cameras\calibration.json</code></td><td>Camera Setup → Calibrate</td><td class="wrap"><code>camera_matrix</code>、<code>dist_coeffs</code></td></tr>
+<tr><td><code>pose6d_config.json</code></td><td>多数选项卡</td><td class="wrap">会话状态：上次的物体、相机/机器人/通信默认值</td></tr>
+<tr><td><code>pose6d_license.lic</code></td><td>许可证激活</td><td class="wrap">启用码</td></tr>
+<tr><td><code>logs\pose6d.log</code></td><td>部署版应用</td><td class="wrap">应用日志，5 MB 轮转</td></tr>
+</table></div>
+
+<h2 id="known-limitations">附录 B · 已知限制</h2>
+<p>当前版本（v01.06）中，与控件字面含义不一致的行为：</p>
+<div class="table-wrap"><table>
+<tr><th>位置</th><th>限制</th></tr>
+<tr><td>Validation → Text Size</td><td class="wrap">修改它会把<b>相机曝光</b>设为输入的数值，而不是改变文字大小。</td></tr>
+<tr><td>Validation → Coordinates</td><td class="wrap">无效果；位姿始终为相机坐标系。</td></tr>
+<tr><td>Validation → Output</td><td class="wrap">MP4 File、ROS Topic 与 MQTT 尚未实现。Source 的 Video Stream 尚未实现。</td></tr>
+<tr><td>Robot Setup</td><td class="wrap">Calibration Method 被忽略；手眼结果只打印到控制台，不会保存。</td></tr>
+<tr><td>Workflow → Select Multiple</td><td class="wrap">打开的是 Create New Object 对话框。</td></tr>
+<tr><td>Workflow → Camera Type</td><td class="wrap">设置的是会话默认值；实际使用的相机来自物体（Camera Setup）。</td></tr>
+<tr><td>Workflow → Test Connection</td><td class="wrap">不测试 MODBUS，始终报告失败。</td></tr>
+<tr><td>Camera Setup → Load Init File</td><td class="wrap">只打开一个文件对话框。</td></tr>
+<tr><td>Object Teaching</td><td class="wrap">无法在该选项卡中添加或删除关键点；请在 Settings 中编辑 <code>point_names</code> / <code>point_coord</code>。</td></tr>
+<tr><td>Results &amp; Logs</td><td class="wrap">占位；选项卡标题显示为 "Results _Logs"。</td></tr>
+</table></div>
+
+<p class="meta" style="margin-top:40px">截图均取自真实应用，使用 <code>python docs/html/tools/capture_screenshots.py</code>，配合随包提供的示例物体 <code>data/objects/bricks-15</code>。</p>
+</div>
+</main>
+</div>
+<div class="lightbox" id="lightbox" role="dialog" aria-label="放大截图"><img alt=""></div>
+
+<script>
+(function () {
+  var content = document.getElementById('content');
+  var toc = document.getElementById('toc');
+  var headings = Array.prototype.slice.call(content.querySelectorAll('h2[id], h3[id]'));
+
+  // build the contents tree and the heading anchors
+  var current = null;
+  headings.forEach(function (h) {
+    var a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent;
+    var li = document.createElement('li');
+    li.appendChild(a);
+    li.dataset.target = h.id;
+    if (h.tagName === 'H2') {
+      toc.appendChild(li);
+      current = document.createElement('ul');
+      li.appendChild(current);
+    } else if (current) {
+      current.appendChild(li);
+    }
+    var anchor = document.createElement('a');
+    anchor.href = '#' + h.id; anchor.className = 'anchor'; anchor.textContent = '#';
+    anchor.setAttribute('aria-label', '链接到本节');
+    h.appendChild(anchor);
+  });
+  var links = Array.prototype.slice.call(toc.querySelectorAll('a'));
+
+  // highlight the section in view
+  var byId = {};
+  links.forEach(function (a) { byId[a.getAttribute('href').slice(1)] = a; });
+  function onScroll() {
+    var y = window.scrollY + 80, active = headings[0];
+    headings.forEach(function (h) { if (h.offsetTop <= y) active = h; });
+    links.forEach(function (a) { a.classList.remove('active'); });
+    if (active && byId[active.id]) byId[active.id].classList.add('active');
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // section text for search: everything from a heading to the next heading
+  var sectionText = {};
+  headings.forEach(function (h, i) {
+    var text = h.textContent, n = h.nextElementSibling;
+    while (n && !(n.matches && n.matches('h2[id], h3[id]'))) { text += ' ' + n.textContent; n = n.nextElementSibling; }
+    sectionText[h.id] = text.toLowerCase();
+  });
+  var search = document.getElementById('search'), info = document.getElementById('search-info');
+  search.addEventListener('input', function () {
+    var q = search.value.trim().toLowerCase(), hits = 0;
+    toc.querySelectorAll('li').forEach(function (li) {
+      var own = sectionText[li.dataset.target] || '';
+      var child = Array.prototype.some.call(li.querySelectorAll('li'), function (c) {
+        return (sectionText[c.dataset.target] || '').indexOf(q) >= 0;
+      });
+      var match = !q || own.indexOf(q) >= 0 || child;
+      li.classList.toggle('hidden', !match);
+      if (q && own.indexOf(q) >= 0) hits++;
+    });
+    info.textContent = q ? (hits ? '匹配到 ' + hits + ' 个章节' : '无匹配') : '';
+  });
+  search.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') {
+      var first = toc.querySelector('li:not(.hidden) > a');
+      if (first) { location.hash = first.getAttribute('href'); }
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === '/' && document.activeElement !== search) { e.preventDefault(); search.focus(); }
+    if (e.key === 'Escape') { lightbox.classList.remove('open'); }
+  });
+
+  // theme: remembered per browser when possible
+  var root = document.documentElement;
+  try { var saved = localStorage.getItem('pose6d-docs-theme'); if (saved) root.dataset.theme = saved; } catch (e) {}
+  document.getElementById('theme-btn').addEventListener('click', function () {
+    var dark = root.dataset.theme ? root.dataset.theme === 'dark'
+                                  : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    root.dataset.theme = dark ? 'light' : 'dark';
+    try { localStorage.setItem('pose6d-docs-theme', root.dataset.theme); } catch (e) {}
+  });
+
+  // enlarge screenshots
+  var lightbox = document.getElementById('lightbox'), lbImg = lightbox.querySelector('img');
+  content.querySelectorAll('figure img').forEach(function (img) {
+    img.addEventListener('click', function () { lbImg.src = img.src; lbImg.alt = img.alt; lightbox.classList.add('open'); });
+  });
+  lightbox.addEventListener('click', function () { lightbox.classList.remove('open'); });
+
+  // mobile contents drawer
+  var sidebar = document.getElementById('sidebar');
+  document.getElementById('menu-btn').addEventListener('click', function () { sidebar.classList.toggle('open'); });
+  toc.addEventListener('click', function (e) { if (e.target.tagName === 'A') sidebar.classList.remove('open'); });
+})();
+</script>
+</body>
+</html>
