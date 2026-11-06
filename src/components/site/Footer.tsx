@@ -52,11 +52,14 @@ export function Footer({ hashBase = "" }: { hashBase?: string }) {
               </Link>
               {t.footer.links.map((l) => (
                 <a
-                  key={l}
-                  href="#"
+                  key={l.label}
+                  href={l.href}
+                  {...(l.href.startsWith("http")
+                    ? { target: "_blank", rel: "noopener noreferrer" }
+                    : {})}
                   className="text-muted-foreground transition-colors hover:text-foreground"
                 >
-                  {l}
+                  {l.label}
                 </a>
               ))}
             </nav>

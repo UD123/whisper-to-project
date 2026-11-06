@@ -398,7 +398,12 @@ export const en = {
     tagline:
       "6DOF object pose estimation from standard 2D RGB cameras. Built for industrial automation teams.",
     presence: "RobotAI Ltd. | Global presence: Korea • Poland • China • Japan",
-    links: ["Usage Agreement", "Terms of Use", "Privacy Policy", "LinkedIn Profile"],
+    links: [
+      { label: "Usage Agreement", href: "#" },
+      { label: "Terms of Use", href: "#" },
+      { label: "Privacy Policy", href: "#" },
+      { label: "LinkedIn Profile", href: "https://www.linkedin.com/company/robotai/home/" },
+    ],
     rights: "© 2025-2026 RobotAI Ltd. All rights reserved.",
   },
 };
@@ -762,7 +767,12 @@ export const zh: Dict = {
     ctaSecondary: "在 YouTube 观看真实技术演示（@sensor3d）",
     tagline: "基于标准 2D RGB 相机的 6DOF 物体位姿估计，为工业自动化团队打造。",
     presence: "RobotAI Ltd. | 全球布局：韩国 • 波兰 • 中国 • 日本",
-    links: ["使用协议", "服务条款", "隐私政策", "LinkedIn 主页"],
+    links: [
+      { label: "使用协议", href: "#" },
+      { label: "服务条款", href: "#" },
+      { label: "隐私政策", href: "#" },
+      { label: "LinkedIn 主页", href: "https://www.linkedin.com/company/robotai/home/" },
+    ],
     rights: "© 2025-2026 RobotAI Ltd. 保留所有权利。",
   },
 };
