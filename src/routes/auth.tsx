@@ -31,6 +31,8 @@ function AuthPage() {
   const [password, setPassword] = useState("");
   const [mode, setMode] = useState<"signin" | "signup">("signin");
   const [busy, setBusy] = useState(false);
+  const [forgotOpen, setForgotOpen] = useState(false);
+  const [resetSent, setResetSent] = useState(false);
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -59,6 +61,92 @@ function AuthPage() {
     }
   };
 
+  const sendResetLink = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setBusy(true);
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/reset-password`,
+      });
+      if (error) {
+        toast.error(error.message);
+        return;
+      }
+      setResetSent(true);
+      toast.success("Reset link sent. Check your email.");
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const closeForgot = () => {
+    setForgotOpen(false);
+    setResetSent(false);
+  };
+
+  if (forgotOpen) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-background px-6">
+        <div className="w-full max-w-sm rounded-xl border border-border bg-card p-7">
+          <span className="mono-label text-primary">RobotAI</span>
+
+          {resetSent ? (
+            <>
+              <h1 className="mt-3 text-2xl font-semibold tracking-[-0.02em]">Check your email</h1>
+              <p className="mt-2 text-sm text-muted-foreground">
+                If {email} has a RobotAI account, a password reset link is on its way. The link works once and
+                expires soon.
+              </p>
+              <button
+                type="button"
+                onClick={closeForgot}
+                className="mono-label mt-6 inline-flex w-full items-center justify-center rounded-md border border-border px-4 py-2.5 text-foreground transition-colors hover:bg-accent"
+              >
+                Back to sign in
+              </button>
+            </>
+          ) : (
+            <form onSubmit={sendResetLink}>
+              <h1 className="mt-3 text-2xl font-semibold tracking-[-0.02em]">Reset your password</h1>
+              <p className="mt-2 text-sm text-muted-foreground">
+                Enter your account email and we'll send you a link to choose a new password.
+              </p>
+
+              <label className="mono-label mt-6 block text-muted-foreground" htmlFor="reset-email">
+                Email
+              </label>
+              <input
+                id="reset-email"
+                type="email"
+                required
+                autoComplete="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="mt-2 w-full rounded-md border border-border bg-background px-3 py-2 text-sm"
+              />
+
+              <button
+                type="submit"
+                disabled={busy}
+                className="mono-label mt-6 inline-flex w-full items-center justify-center gap-2 rounded-md bg-foreground px-4 py-2.5 text-background transition-opacity hover:opacity-90 disabled:opacity-60"
+              >
+                {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
+                Send reset link
+              </button>
+              <button
+                type="button"
+                onClick={closeForgot}
+                className="mt-4 w-full text-center text-sm text-muted-foreground hover:text-foreground"
+              >
+                Back to sign in
+              </button>
+            </form>
+          )}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-6">
       <form onSubmit={submit} className="w-full max-w-sm rounded-xl border border-border bg-card p-7">
@@ -73,6 +161,7 @@ function AuthPage() {
           id="email"
           type="email"
           required
+          autoComplete="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           className="mt-2 w-full rounded-md border border-border bg-background px-3 py-2 text-sm"
@@ -85,10 +174,20 @@ function AuthPage() {
           type="password"
           required
           minLength={6}
+          autoComplete={mode === "signin" ? "current-password" : "new-password"}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           className="mt-2 w-full rounded-md border border-border bg-background px-3 py-2 text-sm"
         />
+        {mode === "signin" ? (
+          <button
+            type="button"
+            onClick={() => setForgotOpen(true)}
+            className="mt-3 text-sm text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
+          >
+            Forgot your password?
+          </button>
+        ) : null}
         <button
           type="submit"
           disabled={busy}
