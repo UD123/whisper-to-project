@@ -11,7 +11,7 @@ describe("password recovery form", () => {
   test("rejects a new password that does not match its confirmation", () => {
     const result = passwordFormSchema.safeParse({ password: "secret123", confirm: "secret124" });
     assert.equal(result.success, false);
-    assert.equal(result.error.issues[0].path[0], "confirm");
+    assert.equal(result.error?.issues[0]?.path[0], "confirm");
   });
 
   test("accepts a new password entered twice", () => {

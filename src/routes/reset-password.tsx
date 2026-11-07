@@ -64,7 +64,7 @@ function ResetPasswordPage() {
     e.preventDefault();
     const parsed = passwordFormSchema.safeParse({ password, confirm });
     if (!parsed.success) {
-      toast.error(parsed.error.issues[0].message);
+      toast.error(parsed.error.issues[0]?.message ?? "Please check the new password");
       return;
     }
 
