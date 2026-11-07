@@ -8,7 +8,7 @@ const title = "Pose6D Downloads — Windows & Linux | RobotAI";
 const description = "Download Pose6D for Windows or Linux. Runtime, calibration tools, camera drivers and test object files for industrial 6DOF pose estimation.";
 
 const WINDOWS_URL =
-  "https://github.com/RobotAI-Global/pose6d-deploy/releases/download/v01.08-robot-vision/pose6d_0108.exe";
+  "https://github.com/RobotAI-Global/pose6d-deploy/releases/download/v01.09-robot-vision/pose6d_0109.exe";
 const TEMP_LINUX_URL =
   "https://github.com/RobotAI-Global/pose6d-deploy/releases/download/v18.15-linux-cpu/Pose6D-1815";
 
