@@ -16,6 +16,7 @@ import { Route as DownloadRouteImport } from './routes/download'
 import { Route as GuideRouteImport } from './routes/guide'
 import { Route as ManualRouteImport } from './routes/manual'
 import { Route as PricingRouteImport } from './routes/pricing'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as AuthenticatedAccountRouteImport } from './routes/_authenticated/account'
 import { Route as AuthenticatedAdminOrdersRouteImport } from './routes/_authenticated/admin/orders'
 import { Route as AuthenticatedCheckoutSuccessRouteImport } from './routes/_authenticated/checkout/success'
@@ -55,6 +56,11 @@ const PricingRoute = PricingRouteImport.update({
   path: '/pricing',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedAccountRoute = AuthenticatedAccountRouteImport.update({
   id: '/account',
   path: '/account',
@@ -86,6 +92,7 @@ export interface FileRoutesByFullPath {
   '/guide': typeof GuideRoute
   '/manual': typeof ManualRoute
   '/pricing': typeof PricingRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/account': typeof AuthenticatedAccountRoute
   '/admin/orders': typeof AuthenticatedAdminOrdersRoute
   '/checkout/success': typeof AuthenticatedCheckoutSuccessRoute
@@ -98,6 +105,7 @@ export interface FileRoutesByTo {
   '/guide': typeof GuideRoute
   '/manual': typeof ManualRoute
   '/pricing': typeof PricingRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/account': typeof AuthenticatedAccountRoute
   '/admin/orders': typeof AuthenticatedAdminOrdersRoute
   '/checkout/success': typeof AuthenticatedCheckoutSuccessRoute
@@ -112,6 +120,7 @@ export interface FileRoutesById {
   '/guide': typeof GuideRoute
   '/manual': typeof ManualRoute
   '/pricing': typeof PricingRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/_authenticated/account': typeof AuthenticatedAccountRoute
   '/_authenticated/admin/orders': typeof AuthenticatedAdminOrdersRoute
   '/_authenticated/checkout/success': typeof AuthenticatedCheckoutSuccessRoute
@@ -126,6 +135,7 @@ export interface FileRouteTypes {
     | '/guide'
     | '/manual'
     | '/pricing'
+    | '/reset-password'
     | '/account'
     | '/admin/orders'
     | '/checkout/success'
@@ -138,6 +148,7 @@ export interface FileRouteTypes {
     | '/guide'
     | '/manual'
     | '/pricing'
+    | '/reset-password'
     | '/account'
     | '/admin/orders'
     | '/checkout/success'
@@ -151,6 +162,7 @@ export interface FileRouteTypes {
     | '/guide'
     | '/manual'
     | '/pricing'
+    | '/reset-password'
     | '/_authenticated/account'
     | '/_authenticated/admin/orders'
     | '/_authenticated/checkout/success'
@@ -165,6 +177,7 @@ export interface RootRouteChildren {
   GuideRoute: typeof GuideRoute
   ManualRoute: typeof ManualRoute
   PricingRoute: typeof PricingRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
 }
 
@@ -217,6 +230,13 @@ declare module '@tanstack/react-router' {
       path: '/pricing'
       fullPath: '/pricing'
       preLoaderRoute: typeof PricingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/account': {
@@ -273,6 +293,7 @@ const rootRouteChildren: RootRouteChildren = {
   GuideRoute: GuideRoute,
   ManualRoute: ManualRoute,
   PricingRoute: PricingRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,
 }
 export const routeTree = rootRouteImport
