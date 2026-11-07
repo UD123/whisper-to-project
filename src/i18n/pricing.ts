@@ -89,6 +89,10 @@ const en: PricingDict = {
   faqTitle: "Licensing questions",
   faq: [
     {
+      q: "What is the difference between Demo and Perpetual software versions?",
+      a: "Demo version and Perpetual are the same. However, the Demo version will generate a small object position error once in a while. You can use the Demo version for development. When you are satisfied — purchase the Perpetual license.",
+    },
+    {
       q: "How is a license delivered?",
       a: "After checkout you receive a license key by email, together with the activation instructions from the user guide.",
     },
@@ -168,6 +172,10 @@ const zh: PricingDict = {
   note: "价格以美元计，不含当地税费。批量与集成商价格请联系 info@robotai.info。",
   faqTitle: "许可常见问题",
   faq: [
+    {
+      q: "评测版和永久版软件有什么区别？",
+      a: "评测版与永久版功能相同，但评测版偶尔会产生较小的物体定位误差。您可以先用评测版进行开发，满意后购买永久许可。",
+    },
     {
       q: "许可如何交付？",
       a: "完成付款后，许可密钥与激活说明将发送至您结账时使用的邮箱。",
