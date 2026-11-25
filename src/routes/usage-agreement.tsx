@@ -34,7 +34,7 @@ function UsageAgreementPage() {
           <h1 className="mt-3 text-3xl font-semibold tracking-[-0.02em] md:text-4xl">Usage Agreement</h1>
           <nav className="mt-8 rounded-md border border-border bg-card p-5">
             <p className="mono-label mb-3 text-muted-foreground">Contents</p>
-            <ol className="grid gap-1 text-sm sm:grid-cols-2">
+            <ol className="grid gap-1.5 text-base sm:grid-cols-2">
               {usageAgreement.sections.map((s) => (
                 <li key={s.title}>
                   <a href={`#${slug(s.title)}`} className="text-muted-foreground hover:text-foreground">{s.title}</a>
@@ -42,13 +42,13 @@ function UsageAgreementPage() {
               ))}
             </ol>
           </nav>
-          <div className="mt-10 space-y-4 text-sm leading-relaxed text-foreground/90">
+          <div className="mt-10 space-y-4 text-base leading-relaxed text-foreground/90">
             {usageAgreement.intro.map((p) => <p key={p}>{p}</p>)}
           </div>
           {usageAgreement.sections.map((s) => (
             <section key={s.title} id={slug(s.title)} className="mt-12 scroll-mt-28 border-t border-border pt-8">
-              <h2 className="font-mono text-base font-semibold tracking-tight">{s.title}</h2>
-              <div className="mt-4 space-y-4 text-sm leading-relaxed text-foreground/90">
+              <h2 className="text-lg font-semibold tracking-[-0.02em] md:text-xl">{s.title}</h2>
+              <div className="mt-4 space-y-4 text-base leading-relaxed text-foreground/90">
                 {s.paras.map((p) => <p key={p}>{p}</p>)}
               </div>
             </section>
