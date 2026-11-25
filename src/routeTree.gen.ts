@@ -17,6 +17,7 @@ import { Route as GuideRouteImport } from './routes/guide'
 import { Route as ManualRouteImport } from './routes/manual'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as UsageAgreementRouteImport } from './routes/usage-agreement'
 import { Route as AuthenticatedAccountRouteImport } from './routes/_authenticated/account'
 import { Route as AuthenticatedAdminOrdersRouteImport } from './routes/_authenticated/admin/orders'
 import { Route as AuthenticatedCheckoutSuccessRouteImport } from './routes/_authenticated/checkout/success'
@@ -61,6 +62,11 @@ const ResetPasswordRoute = ResetPasswordRouteImport.update({
   path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
+const UsageAgreementRoute = UsageAgreementRouteImport.update({
+  id: '/usage-agreement',
+  path: '/usage-agreement',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedAccountRoute = AuthenticatedAccountRouteImport.update({
   id: '/account',
   path: '/account',
@@ -93,6 +99,7 @@ export interface FileRoutesByFullPath {
   '/manual': typeof ManualRoute
   '/pricing': typeof PricingRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/usage-agreement': typeof UsageAgreementRoute
   '/account': typeof AuthenticatedAccountRoute
   '/admin/orders': typeof AuthenticatedAdminOrdersRoute
   '/checkout/success': typeof AuthenticatedCheckoutSuccessRoute
@@ -106,6 +113,7 @@ export interface FileRoutesByTo {
   '/manual': typeof ManualRoute
   '/pricing': typeof PricingRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/usage-agreement': typeof UsageAgreementRoute
   '/account': typeof AuthenticatedAccountRoute
   '/admin/orders': typeof AuthenticatedAdminOrdersRoute
   '/checkout/success': typeof AuthenticatedCheckoutSuccessRoute
@@ -121,6 +129,7 @@ export interface FileRoutesById {
   '/manual': typeof ManualRoute
   '/pricing': typeof PricingRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/usage-agreement': typeof UsageAgreementRoute
   '/_authenticated/account': typeof AuthenticatedAccountRoute
   '/_authenticated/admin/orders': typeof AuthenticatedAdminOrdersRoute
   '/_authenticated/checkout/success': typeof AuthenticatedCheckoutSuccessRoute
@@ -136,6 +145,7 @@ export interface FileRouteTypes {
     | '/manual'
     | '/pricing'
     | '/reset-password'
+    | '/usage-agreement'
     | '/account'
     | '/admin/orders'
     | '/checkout/success'
@@ -149,6 +159,7 @@ export interface FileRouteTypes {
     | '/manual'
     | '/pricing'
     | '/reset-password'
+    | '/usage-agreement'
     | '/account'
     | '/admin/orders'
     | '/checkout/success'
@@ -163,6 +174,7 @@ export interface FileRouteTypes {
     | '/manual'
     | '/pricing'
     | '/reset-password'
+    | '/usage-agreement'
     | '/_authenticated/account'
     | '/_authenticated/admin/orders'
     | '/_authenticated/checkout/success'
@@ -178,6 +190,7 @@ export interface RootRouteChildren {
   ManualRoute: typeof ManualRoute
   PricingRoute: typeof PricingRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
+  UsageAgreementRoute: typeof UsageAgreementRoute
   ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
 }
 
@@ -239,6 +252,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/usage-agreement': {
+      id: '/usage-agreement'
+      path: '/usage-agreement'
+      fullPath: '/usage-agreement'
+      preLoaderRoute: typeof UsageAgreementRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated/account': {
       id: '/_authenticated/account'
       path: '/account'
@@ -294,6 +314,7 @@ const rootRouteChildren: RootRouteChildren = {
   ManualRoute: ManualRoute,
   PricingRoute: PricingRoute,
   ResetPasswordRoute: ResetPasswordRoute,
+  UsageAgreementRoute: UsageAgreementRoute,
   ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,
 }
 export const routeTree = rootRouteImport
